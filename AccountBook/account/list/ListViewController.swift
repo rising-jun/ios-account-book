@@ -17,12 +17,10 @@ class ListViewController: BaseViewController{
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        
     }
     
-    
     private let viewModel = ListViewModel()
+    private var delegate: BookTableDelegate?
     private lazy var input = ListViewModel.Input(viewState: rx.viewDidLoad.map{ViewState.viewDidLoad})
     private lazy var output = viewModel.bind(input: input)
     private let disposeBag = DisposeBag()
@@ -37,7 +35,19 @@ class ListViewController: BaseViewController{
             self?.setUpView()
         }).disposed(by: disposeBag)
         
+        output.state?.map{$0.filterData ?? []}
+        .distinctUntilChanged()
+        .drive(v.filterPicker.rx.itemTitles){ _, item in
+            return item
+        }.disposed(by: disposeBag)
         
+        output.state?.map{$0.listData ?? []}
+        .drive(v.tableView.rx.items(cellIdentifier: "BookTableCell", cellType: BookTableCell.self)) { (row, element, cell) in
+            cell.priceLabel.text = element.price
+            cell.titleLabel.text = element.name
+            cell.categoryLabel.text = element.category
+            cell.awakeFromNib()
+        }.disposed(by: disposeBag)
         
     }
     
@@ -47,7 +57,10 @@ extension ListViewController{
     func setUpView(){
         view = v
         view.backgroundColor = .white
-        self.myInfoBtn.title = "나의카드"
+        self.myInfoBtn.title = "작성하기"
         self.navigationItem.setRightBarButton(self.myInfoBtn, animated: false)
+//        v.tableView.delegate = delegate
+//        v.tableView.dataSource = delegate
+        
     }
 }
