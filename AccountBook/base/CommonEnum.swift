@@ -12,7 +12,8 @@ enum PresentVC{
     case map
     case chart
     case profile
-    
+    case write
+    case modify
 }
 
 enum ViewState{

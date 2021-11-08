@@ -17,6 +17,7 @@ class ListViewModel{
     
     struct Input{
         let viewState: Observable<ViewState>?
+        let writeTouch: Observable<Void>?
     }
     
     struct Output{
@@ -35,6 +36,15 @@ class ListViewModel{
                 newState.viewLogic = .setUpView
                 newState.filterData = ["높은금액순", "최신순", "카테고리 별"]
                 newState.listData = [BookInfo(name: "지출시험", lat: 0.0, long: 0.0, price: "3000", category: "유흥", date: Date())]
+                return newState
+            }.bind(to: self.state)
+            .disposed(by: disposeBag)
+        
+        input.writeTouch?
+            .withLatestFrom(state)
+            .map{ [weak self] state -> ListViewState in
+                var newState = state
+                newState.presentVC = .write
                 return newState
             }.bind(to: self.state)
             .disposed(by: disposeBag)

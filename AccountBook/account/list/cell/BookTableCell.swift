@@ -19,12 +19,48 @@ class BookTableCell: UITableViewCell{
     override func awakeFromNib(){
         super.awakeFromNib()
         contentView.addSubViews(dateLabel, titleLabel, categoryLabel, priceLabel)
+
+        contentView.snp.makeConstraints { make in
+            make.height.equalTo(80)
+            make.width.equalTo(self)
+        }
         
+        dateLabel.textColor = .black
+        dateLabel.font = UIFont.boldSystemFont(ofSize: 30)
+        dateLabel.textAlignment = .center
         dateLabel.snp.makeConstraints { make in
             make.leading.equalTo(contentView.snp.leading).offset(10)
-            make.height.width.equalTo(50)
-            make.top.equalTo(self).offset(10)
+            make.height.width.equalTo(70)
+            make.top.equalTo(self).offset(5)
         }
+        
+        titleLabel.font = UIFont.boldSystemFont(ofSize: 24)
+        titleLabel.textColor = .black
+        titleLabel.snp.makeConstraints { make in
+            make.top.equalTo(contentView.snp.top).offset(10)
+            make.height.equalTo(40)
+            make.width.equalTo(100)
+            make.leading.equalTo(dateLabel.snp.trailing).offset(30)
+        }
+        
+        priceLabel.textColor = .red
+        priceLabel.font = UIFont.systemFont(ofSize: 24)
+        priceLabel.snp.makeConstraints { make in
+            make.trailing.equalTo(contentView.snp.trailing).offset(-10)
+            make.centerY.equalTo(contentView.snp.centerY)
+            make.height.equalTo(50)
+            make.width.equalTo(80)
+        }
+        
+        categoryLabel.textColor = .black
+        categoryLabel.font = UIFont.systemFont(ofSize: 18)
+        categoryLabel.snp.makeConstraints { make in
+            make.top.equalTo(titleLabel.snp.bottom).offset(5)
+            make.width.equalTo(100)
+            make.height.equalTo(20)
+            make.centerX.equalTo(titleLabel.snp.centerX)
+        }
+        
         
     }
     

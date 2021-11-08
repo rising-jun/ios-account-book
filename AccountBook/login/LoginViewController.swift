@@ -16,7 +16,7 @@ class LoginViewController: BaseViewController {
     let viewModel = LoginViewModel()
     private let disposeBag = DisposeBag()
     let nav = UINavigationController()
-    lazy var vcArr = [nav, MapViewController(), ChartViewController(), MyPageViewController()]
+    lazy var vcArr = [ListViewController(), MapViewController(), ChartViewController(), MyPageViewController()]
     lazy var vcNameArr = ["리스트", "맵", "차트", "내정보"]
     
     override func viewDidLoad() {
@@ -58,18 +58,19 @@ extension LoginViewController{
     }
     
     func presentVC(vcName: PresentVC){
+        
         if vcName == .list{
+            let nav = UINavigationController()
             let tabBar = UITabBarController()
-            tabBar.modalPresentationStyle = .fullScreen
-            nav.addChild(ListViewController())
+            //tabBar.modalPresentationStyle = .fullScreen
             
             for i in 0 ..< vcArr.count{
                 tabBar.addChild(vcArr[i])
                 vcArr[i].tabBarItem = UITabBarItem(title: vcNameArr[i], image: UIImage(), tag: i)
             }
             nav.modalPresentationStyle = .fullScreen
-            self.present(tabBar, animated: true, completion: nil)
-
+            nav.pushViewController(tabBar, animated: true)
+            self.present(nav, animated: true, completion: nil)
         }
         
     }

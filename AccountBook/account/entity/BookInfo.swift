@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import RxDataSources
 
 public struct BookInfo{
     
@@ -15,6 +16,22 @@ public struct BookInfo{
     var price: String
     var category: String
     var date: Date
+    
+}
+
+struct MySection{
+    var header: String
+    var items: [Item]
+
+}
+
+extension MySection: SectionModelType{
+    typealias Item = BookInfo
+    
+    init(original: MySection, items: [Item]) {
+        self = original
+        self.items = items
+    }
     
 }
 

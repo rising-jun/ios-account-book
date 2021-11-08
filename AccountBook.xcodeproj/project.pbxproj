@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		7212CA1C2738EB1B00965C13 /* WriteViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7212CA1B2738EB1B00965C13 /* WriteViewController.swift */; };
+		7212CA1E2738EB7600965C13 /* WriteView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7212CA1D2738EB7600965C13 /* WriteView.swift */; };
+		7212CA202738EBB000965C13 /* WriteViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7212CA1F2738EBB000965C13 /* WriteViewModel.swift */; };
 		7231737D2733A8D900FF27A4 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7231737C2733A8D900FF27A4 /* AppDelegate.swift */; };
 		723173812733A8D900FF27A4 /* IntroViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 723173802733A8D900FF27A4 /* IntroViewController.swift */; };
 		723173862733A8DB00FF27A4 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 723173852733A8DB00FF27A4 /* Assets.xcassets */; };
@@ -36,6 +39,9 @@
 
 /* Begin PBXFileReference section */
 		6B4118FAD393A51CB7B8B27B /* Pods_AccountBook.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_AccountBook.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		7212CA1B2738EB1B00965C13 /* WriteViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WriteViewController.swift; sourceTree = "<group>"; };
+		7212CA1D2738EB7600965C13 /* WriteView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WriteView.swift; sourceTree = "<group>"; };
+		7212CA1F2738EBB000965C13 /* WriteViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WriteViewModel.swift; sourceTree = "<group>"; };
 		723173792733A8D900FF27A4 /* AccountBook.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AccountBook.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		7231737C2733A8D900FF27A4 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		723173802733A8D900FF27A4 /* IntroViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntroViewController.swift; sourceTree = "<group>"; };
@@ -84,6 +90,24 @@
 				6B4118FAD393A51CB7B8B27B /* Pods_AccountBook.framework */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		7212CA192738EA7900965C13 /* record_account */ = {
+			isa = PBXGroup;
+			children = (
+				7212CA1A2738EA9700965C13 /* write */,
+			);
+			path = record_account;
+			sourceTree = "<group>";
+		};
+		7212CA1A2738EA9700965C13 /* write */ = {
+			isa = PBXGroup;
+			children = (
+				7212CA1B2738EB1B00965C13 /* WriteViewController.swift */,
+				7212CA1D2738EB7600965C13 /* WriteView.swift */,
+				7212CA1F2738EBB000965C13 /* WriteViewModel.swift */,
+			);
+			path = write;
 			sourceTree = "<group>";
 		};
 		723173702733A8D900FF27A4 = {
@@ -179,6 +203,7 @@
 		7290EDEC2733C33E00292E88 /* account */ = {
 			isa = PBXGroup;
 			children = (
+				7212CA192738EA7900965C13 /* record_account */,
 				7247EFA72734003800FDEE7B /* entity */,
 				7290EDED2733C35200292E88 /* list */,
 				7290EDF02733C39A00292E88 /* map */,
@@ -355,6 +380,8 @@
 				7290EDF52733C5B000292E88 /* ChartViewController.swift in Sources */,
 				7290EDEB2733C2AA00292E88 /* GoogleLoginToken.swift in Sources */,
 				7290EDEF2733C39000292E88 /* ListViewController.swift in Sources */,
+				7212CA1C2738EB1B00965C13 /* WriteViewController.swift in Sources */,
+				7212CA202738EBB000965C13 /* WriteViewModel.swift in Sources */,
 				7290EDD42733B3B400292E88 /* IntroView.swift in Sources */,
 				7290EDD82733B3FF00292E88 /* ViewModelProtocol.swift in Sources */,
 				7290EDE72733C0E500292E88 /* LoginView.swift in Sources */,
@@ -364,6 +391,7 @@
 				7247EFAF2734141500FDEE7B /* BookTableDelegate.swift in Sources */,
 				7290EDDD2733B54600292E88 /* LoginViewController.swift in Sources */,
 				7290EDF82733C9D500292E88 /* MyPageViewController.swift in Sources */,
+				7212CA1E2738EB7600965C13 /* WriteView.swift in Sources */,
 				7290EDD22733B38D00292E88 /* BaseClasses.swift in Sources */,
 				7290EDDA2733B43600292E88 /* CommonEnum.swift in Sources */,
 				7290EDE92733C26F00292E88 /* LoginViewModel.swift in Sources */,
