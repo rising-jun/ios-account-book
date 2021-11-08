@@ -10,6 +10,7 @@
 		7212CA1C2738EB1B00965C13 /* WriteViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7212CA1B2738EB1B00965C13 /* WriteViewController.swift */; };
 		7212CA1E2738EB7600965C13 /* WriteView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7212CA1D2738EB7600965C13 /* WriteView.swift */; };
 		7212CA202738EBB000965C13 /* WriteViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7212CA1F2738EBB000965C13 /* WriteViewModel.swift */; };
+		72256DD127394EB800D2BC03 /* PermissionCheck.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72256DD027394EB800D2BC03 /* PermissionCheck.swift */; };
 		7231737D2733A8D900FF27A4 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7231737C2733A8D900FF27A4 /* AppDelegate.swift */; };
 		723173812733A8D900FF27A4 /* IntroViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 723173802733A8D900FF27A4 /* IntroViewController.swift */; };
 		723173862733A8DB00FF27A4 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 723173852733A8DB00FF27A4 /* Assets.xcassets */; };
@@ -42,6 +43,7 @@
 		7212CA1B2738EB1B00965C13 /* WriteViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WriteViewController.swift; sourceTree = "<group>"; };
 		7212CA1D2738EB7600965C13 /* WriteView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WriteView.swift; sourceTree = "<group>"; };
 		7212CA1F2738EBB000965C13 /* WriteViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WriteViewModel.swift; sourceTree = "<group>"; };
+		72256DD027394EB800D2BC03 /* PermissionCheck.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PermissionCheck.swift; sourceTree = "<group>"; };
 		723173792733A8D900FF27A4 /* AccountBook.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AccountBook.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		7231737C2733A8D900FF27A4 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		723173802733A8D900FF27A4 /* IntroViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntroViewController.swift; sourceTree = "<group>"; };
@@ -110,6 +112,14 @@
 			path = write;
 			sourceTree = "<group>";
 		};
+		72256DCF27394E5000D2BC03 /* permission */ = {
+			isa = PBXGroup;
+			children = (
+				72256DD027394EB800D2BC03 /* PermissionCheck.swift */,
+			);
+			path = permission;
+			sourceTree = "<group>";
+		};
 		723173702733A8D900FF27A4 = {
 			isa = PBXGroup;
 			children = (
@@ -132,6 +142,7 @@
 			isa = PBXGroup;
 			children = (
 				7290EDD72733B3FF00292E88 /* ViewModelProtocol.swift */,
+				7247EFA72734003800FDEE7B /* entity */,
 				7290EDEC2733C33E00292E88 /* account */,
 				7290EDDB2733B53900292E88 /* login */,
 				7290EDCF2733B37200292E88 /* intro */,
@@ -203,8 +214,8 @@
 		7290EDEC2733C33E00292E88 /* account */ = {
 			isa = PBXGroup;
 			children = (
+				72256DCF27394E5000D2BC03 /* permission */,
 				7212CA192738EA7900965C13 /* record_account */,
-				7247EFA72734003800FDEE7B /* entity */,
 				7290EDED2733C35200292E88 /* list */,
 				7290EDF02733C39A00292E88 /* map */,
 				7290EDF12733C3A200292E88 /* chart */,
@@ -381,6 +392,7 @@
 				7290EDEB2733C2AA00292E88 /* GoogleLoginToken.swift in Sources */,
 				7290EDEF2733C39000292E88 /* ListViewController.swift in Sources */,
 				7212CA1C2738EB1B00965C13 /* WriteViewController.swift in Sources */,
+				72256DD127394EB800D2BC03 /* PermissionCheck.swift in Sources */,
 				7212CA202738EBB000965C13 /* WriteViewModel.swift in Sources */,
 				7290EDD42733B3B400292E88 /* IntroView.swift in Sources */,
 				7290EDD82733B3FF00292E88 /* ViewModelProtocol.swift in Sources */,

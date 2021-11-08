@@ -72,7 +72,7 @@ class WriteView: BaseView{
     
     lazy var mapView: MKMapView = {
         let mapView = MKMapView()
-        
+        mapView.mapType = .standard
         return mapView
     }()
     
@@ -114,28 +114,28 @@ class WriteView: BaseView{
             make.top.equalTo(priceLabel.snp.bottom).offset(20)
             make.leading.equalTo(self).offset(20)
             make.height.equalTo(60)
-            make.width.equalTo(60)
+            make.width.equalTo(80)
         }
         
         categoryPicker.snp.makeConstraints { make in
             make.top.equalTo(priceLabel.snp.bottom).offset(20)
             make.leading.equalTo(categoryLabel.snp.trailing).offset(20)
             make.trailing.equalTo(self).offset(-20)
-            make.height.equalTo(60)
+            make.height.equalTo(80)
         }
         
         dateLabel.snp.makeConstraints { make in
             make.top.equalTo(categoryLabel.snp.bottom).offset(20)
             make.leading.equalTo(self).offset(20)
             make.height.equalTo(60)
-            make.width.equalTo(60)
+            make.width.equalTo(80)
         }
         
         datePicker.snp.makeConstraints { make in
             make.top.equalTo(categoryLabel.snp.bottom).offset(20)
             make.leading.equalTo(dateLabel.snp.trailing).offset(20)
             make.trailing.equalTo(self).offset(-20)
-            make.height.equalTo(60)
+            make.height.equalTo(80)
         }
         
         mapLabel.snp.makeConstraints { make in

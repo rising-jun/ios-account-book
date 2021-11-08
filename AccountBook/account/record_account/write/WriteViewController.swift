@@ -9,18 +9,29 @@ import Foundation
 import RxCocoa
 import RxSwift
 import RxViewController
+import CoreLocation
 
 class WriteViewController: BaseViewController{
     
     lazy var v = WriteView(frame: view.frame)
     private let disposeBag = DisposeBag()
+    private var locationPublish = PublishSubject<CLAuthorizationStatus>()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
     }
     
     private let viewModel = WriteViewModel()
-    lazy var input = WriteViewModel.Input(viewState: self.rx.viewDidLoad.map{ViewState.viewDidLoad})
+    lazy var input = WriteViewModel.Input(viewState: self.rx.viewDidLoad.map{ViewState.viewDidLoad},
+                                          locationStatus: locationPublish.asObserver())
     lazy var output = viewModel.bind(input: input)
+    
+    override func setup() {
+        super.setup()
+        let callback: LocationPermissionCallback = self
+        let permissionCheck = PermissionCheck(locationCb: callback)
+        permissionCheck.getLocationPermission()
+    }
     
     override func bindViewModel(){
         super.bindViewModel()
@@ -38,6 +49,9 @@ class WriteViewController: BaseViewController{
             return item
         }.disposed(by: disposeBag)
     
+        
+        
+        
     }
     
 }
@@ -46,4 +60,12 @@ extension WriteViewController{
     func setUpView(){
         view = v
     }
+}
+
+extension WriteViewController: LocationPermissionCallback{
+    func getPermission(status: CLAuthorizationStatus) {
+        locationPublish.onNext(status)
+    }
+    
+    
 }

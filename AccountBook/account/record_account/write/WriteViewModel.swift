@@ -8,6 +8,7 @@
 import Foundation
 import RxSwift
 import RxCocoa
+import CoreLocation
 
 final class WriteViewModel: ViewModelType{
     var input: Input?
@@ -17,6 +18,8 @@ final class WriteViewModel: ViewModelType{
     
     struct Input{
         let viewState: Observable<ViewState>?
+        let locationStatus: Observable<CLAuthorizationStatus>?
+    
     }
     
     struct Output{
@@ -38,6 +41,14 @@ final class WriteViewModel: ViewModelType{
             }.bind(to: self.state)
             .disposed(by: disposeBag)
         
+        input.locationStatus?
+            .withLatestFrom(state){ a,state -> WriteState in
+                var newState = state
+                print("view model \(a)") //TODO get location 
+                return newState
+            }.bind(to: self.state)
+            .disposed(by: disposeBag)
+        
         output = Output(state: state.asDriver())
         return output!
     }
@@ -47,5 +58,5 @@ struct WriteState{
     var presentVC: PresentVC?
     var viewLogic: ViewLogic?
     var categoryData: [String]?
-    
+    var locationPermission: CLAuthorizationStatus?
 }
