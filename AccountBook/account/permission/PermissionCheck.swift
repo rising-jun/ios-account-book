@@ -10,6 +10,7 @@ import CoreLocation
 
 protocol LocationPermissionCallback{
     func getPermission(status: CLAuthorizationStatus)
+    func getPoint(coordinate: CLLocationCoordinate2D)
 }
 
 class PermissionCheck: NSObject{
@@ -33,6 +34,12 @@ extension PermissionCheck: CLLocationManagerDelegate{
     
     func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
         locationCb.getPermission(status: status)
+    }
+    
+    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        guard let location = locations.last else {return}
+        locationCb.getPoint(coordinate: location.coordinate)
+        
     }
     
 }

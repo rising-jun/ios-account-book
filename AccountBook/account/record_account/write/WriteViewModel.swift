@@ -16,12 +16,10 @@ final class WriteViewModel: ViewModelType{
     
     private let state = BehaviorRelay<WriteState>(value: WriteState())
     
-    private let locationManager = CLLocationManager()
-    
     struct Input{
         let viewState: Observable<ViewState>?
         let locState: Observable<CLAuthorizationStatus>?
-        
+        let coorState: Observable<CLLocationCoordinate2D>?
     }
     
     struct Output{
@@ -58,6 +56,15 @@ final class WriteViewModel: ViewModelType{
                 var newState = state
                 newState.viewLogic = .setUpView
                 newState.categoryData = ["식비", "생활비", "유흥비"]
+                return newState
+            }.bind(to: self.state)
+            .disposed(by: disposeBag)
+        
+        input.coorState?
+            .withLatestFrom(state){ [weak self] coor, state -> WriteState in
+                var newState = state
+                
+                
                 return newState
             }.bind(to: self.state)
             .disposed(by: disposeBag)

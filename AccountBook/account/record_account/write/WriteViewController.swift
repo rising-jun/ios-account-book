@@ -10,6 +10,7 @@ import RxSwift
 import RxCocoa
 import RxViewController
 import CoreLocation
+import MapKit
 
 class WriteViewController: BaseViewController{
     
@@ -20,6 +21,7 @@ class WriteViewController: BaseViewController{
     
     private var locationManager = CLLocationManager()
     private let locStatusSubject = BehaviorSubject<CLAuthorizationStatus>(value: .notDetermined)
+    private let coordiSubject = BehaviorSubject<CLLocationCoordinate2D>(value: CLLocationCoordinate2D())
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -27,12 +29,14 @@ class WriteViewController: BaseViewController{
     
     private let viewModel = WriteViewModel()
     lazy var input = WriteViewModel.Input(viewState: self.rx.viewDidLoad.map{ViewState.viewDidLoad},
-                                          locState: locStatusSubject.distinctUntilChanged().asObservable())
+                                          locState: locStatusSubject.distinctUntilChanged().asObservable(),
+                                          coorState: coordiSubject.filter{$0.latitude != 0.0}.asObservable())
     lazy var output = viewModel.bind(input: input)
     
     override func setup() {
         super.setup()
         permissionCheck = PermissionCheck(locationCb: self)
+        locationManager.desiredAccuracy = kCLLocationAccuracyBest
     }
     
     override func bindViewModel(){
@@ -61,6 +65,7 @@ class WriteViewController: BaseViewController{
                 // map to marking my location
                 print(" already have permission ")
                 self.locationManager.startUpdatingLocation()
+                self.mapViewInitSet()
                 break
             case .requestPermission:
                 self.locationManager.requestWhenInUseAuthorization()
@@ -76,6 +81,9 @@ class WriteViewController: BaseViewController{
             }
         }).disposed(by: disposeBag)
         
+        
+        
+        
     }
     
 }
@@ -87,12 +95,23 @@ extension WriteViewController{
         permissionCheck.getLocationPermission()
     }
     
+    func mapViewInitSet(){
+        self.v.mapView.showsUserLocation = true
+//        let zoomRange = MKMapView.CameraZoomRange(maxCenterCoordinateDistance: 2000000)
+//        self.v.mapView.setCameraZoomRange(zoomRange, animated: true)
+    
+    }
+    
     
 }
 
 extension WriteViewController: LocationPermissionCallback{
     func getPermission(status: CLAuthorizationStatus) {
         locStatusSubject.onNext(status)
+    }
+    
+    func getPoint(coordinate: CLLocationCoordinate2D) {
+        coordiSubject.onNext(coordinate)
     }
     
 }

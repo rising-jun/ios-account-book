@@ -35,6 +35,7 @@
 		7290EDF82733C9D500292E88 /* MyPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7290EDF72733C9D500292E88 /* MyPageViewController.swift */; };
 		7290EDFA2733CF7B00292E88 /* ListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7290EDF92733CF7B00292E88 /* ListView.swift */; };
 		7290EDFC2733CF8700292E88 /* ListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7290EDFB2733CF8700292E88 /* ListViewModel.swift */; };
+		72A9A710273A6BB0006A7FB3 /* SeoulLocation.gpx in Resources */ = {isa = PBXBuildFile; fileRef = 72A9A70F273A6BB0006A7FB3 /* SeoulLocation.gpx */; };
 		BA1BF4779E5D1784188B3816 /* Pods_AccountBook.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6B4118FAD393A51CB7B8B27B /* Pods_AccountBook.framework */; };
 /* End PBXBuildFile section */
 
@@ -70,6 +71,7 @@
 		7290EDF72733C9D500292E88 /* MyPageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPageViewController.swift; sourceTree = "<group>"; };
 		7290EDF92733CF7B00292E88 /* ListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListView.swift; sourceTree = "<group>"; };
 		7290EDFB2733CF8700292E88 /* ListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListViewModel.swift; sourceTree = "<group>"; };
+		72A9A70F273A6BB0006A7FB3 /* SeoulLocation.gpx */ = {isa = PBXFileReference; lastKnownFileType = file; path = SeoulLocation.gpx; sourceTree = SOURCE_ROOT; };
 		7BDD2B5C10DDF41297A5CB34 /* Pods-AccountBook.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AccountBook.release.xcconfig"; path = "Target Support Files/Pods-AccountBook/Pods-AccountBook.release.xcconfig"; sourceTree = "<group>"; };
 		CBBBCB28CF694D556499CBEE /* Pods-AccountBook.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AccountBook.debug.xcconfig"; path = "Target Support Files/Pods-AccountBook/Pods-AccountBook.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -141,6 +143,7 @@
 		7231737B2733A8D900FF27A4 /* AccountBook */ = {
 			isa = PBXGroup;
 			children = (
+				72A9A70F273A6BB0006A7FB3 /* SeoulLocation.gpx */,
 				7290EDD72733B3FF00292E88 /* ViewModelProtocol.swift */,
 				7247EFA72734003800FDEE7B /* entity */,
 				7290EDEC2733C33E00292E88 /* account */,
@@ -331,6 +334,7 @@
 			files = (
 				723173892733A8DB00FF27A4 /* LaunchScreen.storyboard in Resources */,
 				7290EDE52733C07F00292E88 /* GoogleService-Info.plist in Resources */,
+				72A9A710273A6BB0006A7FB3 /* SeoulLocation.gpx in Resources */,
 				723173862733A8DB00FF27A4 /* Assets.xcassets in Resources */,
 				7290EDE12733BC9100292E88 /* money-lottie.json in Resources */,
 			);
