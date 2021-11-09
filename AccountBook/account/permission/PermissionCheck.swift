@@ -12,7 +12,7 @@ protocol LocationPermissionCallback{
     func getPermission(status: CLAuthorizationStatus)
 }
 
-class PermissionCheck{
+class PermissionCheck: NSObject{
     private var locationCb: LocationPermissionCallback!
     
     init(locationCb: LocationPermissionCallback){
@@ -21,7 +21,7 @@ class PermissionCheck{
     
 }
 
-extension PermissionCheck{
+extension PermissionCheck: CLLocationManagerDelegate{
     
     func getLocationPermission(){
         if CLLocationManager.locationServicesEnabled() {
@@ -31,4 +31,15 @@ extension PermissionCheck{
         }
     }
     
+    func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
+        locationCb.getPermission(status: status)
+    }
+    
+}
+
+enum PermissionState{
+    case gotPermission
+    case requestPermission
+    case presentSetting
+    case none
 }
