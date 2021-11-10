@@ -28,7 +28,7 @@ class IntroViewController: BaseViewController {
     }
     
     lazy var input = IntroViewModel.Input(timeOver: Observable<Int>
-                                            .interval(.seconds(4), scheduler: MainScheduler.instance)
+                                            .interval(.seconds(3), scheduler: MainScheduler.instance)
                                             .take(1)
                                             .map{_ in return true},
                                           viewState: rx.viewDidLoad.map{ViewState.viewDidLoad})

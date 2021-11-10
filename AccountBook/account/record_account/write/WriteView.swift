@@ -15,6 +15,7 @@ class WriteView: BaseView{
     lazy var nameLabel: UILabel = {
        let label = UILabel()
         label.text = "상호명"
+        
         label.textAlignment = .center
         return label
     }()
@@ -30,6 +31,7 @@ class WriteView: BaseView{
        let label = UILabel()
         label.text = "금액"
         label.textAlignment = .center
+        label.textColor = .black
         return label
     }()
     
@@ -44,6 +46,7 @@ class WriteView: BaseView{
        let label = UILabel()
         label.text = "카테고리"
         label.textAlignment = .center
+        label.textColor = .black
         return label
     }()
     
@@ -53,19 +56,25 @@ class WriteView: BaseView{
        let label = UILabel()
         label.text = "시용일자"
         label.textAlignment = .center
+        label.textColor = .black
         return label
     }()
     
     lazy var datePicker: UIDatePicker = {
         let datePicker = UIDatePicker()
         datePicker.translatesAutoresizingMaskIntoConstraints = false
-        datePicker.preferredDatePickerStyle = .wheels
+        if #available(iOS 13.4, *) {
+            datePicker.preferredDatePickerStyle = .wheels
+        } else {
+            // Fallback on earlier versions
+        }
         return datePicker
     }()
     
     lazy var mapLabel: UILabel = {
        let label = UILabel()
         label.text = "위치"
+        label.textColor = .black
         label.textAlignment = .center
         return label
     }()
@@ -76,11 +85,19 @@ class WriteView: BaseView{
         return mapView
     }()
     
+    lazy var setLocModeButton: UIButton = {
+        let button = UIButton()
+        button.setTitle("직접설정", for: .normal)
+        //button.setTitleColor(<#T##color: UIColor?##UIColor?#>, for: <#T##UIControl.State#>)
+        button.titleLabel!.font = UIFont.systemFont(ofSize: 18)
+        return button
+    }()
+    
     override func setup() {
         super.setup()
         backgroundColor = .white
         
-        addSubViews(nameLabel, nameTF, priceLabel, priceTF, categoryLabel, categoryPicker, dateLabel, datePicker, mapLabel, mapView)
+        addSubViews(nameLabel, nameTF, priceLabel, priceTF, categoryLabel, categoryPicker, dateLabel, datePicker, mapLabel, mapView, setLocModeButton)
         
         nameLabel.snp.makeConstraints { make in
             make.top.equalTo(self).offset(104)
@@ -150,6 +167,14 @@ class WriteView: BaseView{
             make.leading.equalTo(self).offset(20)
             make.trailing.equalTo(self).offset(-20)
             make.height.equalTo(300)
+        }
+        
+        setLocModeButton.backgroundColor = .blue
+        setLocModeButton.snp.makeConstraints { make in
+            make.top.equalTo(mapView.snp.bottom).offset(10)
+            make.leading.equalTo(mapView.snp.leading)
+            make.width.equalTo(80)
+            make.height.equalTo(40)
         }
         
         

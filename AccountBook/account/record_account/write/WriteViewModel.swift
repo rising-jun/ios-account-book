@@ -20,6 +20,7 @@ final class WriteViewModel: ViewModelType{
         let viewState: Observable<ViewState>?
         let locState: Observable<CLAuthorizationStatus>?
         let coorState: Observable<CLLocationCoordinate2D>?
+        let mode: Observable<Void>?
     }
     
     struct Output{
@@ -61,14 +62,26 @@ final class WriteViewModel: ViewModelType{
             .disposed(by: disposeBag)
         
         input.coorState?
-            .withLatestFrom(state){ [weak self] coor, state -> WriteState in
+            .withLatestFrom(state){ coor, state -> WriteState in
                 var newState = state
-                
-                
+                newState.coordi = coor
                 return newState
             }.bind(to: self.state)
             .disposed(by: disposeBag)
         
+        input.mode?
+            .withLatestFrom(state)
+            .map{ [weak self] state -> WriteState in
+                var newState = state
+                if newState.locaSetMode == .auto{
+                    newState.locaSetMode = .directly
+                }else{
+                    newState.locaSetMode = .auto
+                }
+                print("mode: \(newState.locaSetMode)")
+                return newState
+            }.bind(to: self.state)
+            .disposed(by: disposeBag)
         
         output = Output(state: state.asDriver())
         return output!
@@ -80,9 +93,16 @@ struct WriteState{
     var viewLogic: ViewLogic?
     var categoryData: [String]?
     var locationPermission: PermissionState?
+    var coordi: CLLocationCoordinate2D?
+    var locaSetMode: LocationSetMode? = .auto
 }
 
 extension WriteViewModel{
     
     
+}
+
+enum LocationSetMode{
+    case auto
+    case directly
 }

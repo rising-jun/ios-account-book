@@ -36,6 +36,7 @@
 		7290EDFA2733CF7B00292E88 /* ListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7290EDF92733CF7B00292E88 /* ListView.swift */; };
 		7290EDFC2733CF8700292E88 /* ListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7290EDFB2733CF8700292E88 /* ListViewModel.swift */; };
 		72A9A710273A6BB0006A7FB3 /* SeoulLocation.gpx in Resources */ = {isa = PBXBuildFile; fileRef = 72A9A70F273A6BB0006A7FB3 /* SeoulLocation.gpx */; };
+		72C955F6273B9C590044C1E9 /* MapViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72C955F5273B9C590044C1E9 /* MapViewDelegate.swift */; };
 		BA1BF4779E5D1784188B3816 /* Pods_AccountBook.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6B4118FAD393A51CB7B8B27B /* Pods_AccountBook.framework */; };
 /* End PBXBuildFile section */
 
@@ -71,7 +72,8 @@
 		7290EDF72733C9D500292E88 /* MyPageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPageViewController.swift; sourceTree = "<group>"; };
 		7290EDF92733CF7B00292E88 /* ListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListView.swift; sourceTree = "<group>"; };
 		7290EDFB2733CF8700292E88 /* ListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListViewModel.swift; sourceTree = "<group>"; };
-		72A9A70F273A6BB0006A7FB3 /* SeoulLocation.gpx */ = {isa = PBXFileReference; lastKnownFileType = file; path = SeoulLocation.gpx; sourceTree = SOURCE_ROOT; };
+		72A9A70F273A6BB0006A7FB3 /* SeoulLocation.gpx */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = SeoulLocation.gpx; sourceTree = SOURCE_ROOT; };
+		72C955F5273B9C590044C1E9 /* MapViewDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewDelegate.swift; sourceTree = "<group>"; };
 		7BDD2B5C10DDF41297A5CB34 /* Pods-AccountBook.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AccountBook.release.xcconfig"; path = "Target Support Files/Pods-AccountBook/Pods-AccountBook.release.xcconfig"; sourceTree = "<group>"; };
 		CBBBCB28CF694D556499CBEE /* Pods-AccountBook.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AccountBook.debug.xcconfig"; path = "Target Support Files/Pods-AccountBook/Pods-AccountBook.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -217,6 +219,7 @@
 		7290EDEC2733C33E00292E88 /* account */ = {
 			isa = PBXGroup;
 			children = (
+				72C955F4273B9C490044C1E9 /* map_delegate */,
 				72256DCF27394E5000D2BC03 /* permission */,
 				7212CA192738EA7900965C13 /* record_account */,
 				7290EDED2733C35200292E88 /* list */,
@@ -261,6 +264,14 @@
 				7290EDF72733C9D500292E88 /* MyPageViewController.swift */,
 			);
 			path = mypage;
+			sourceTree = "<group>";
+		};
+		72C955F4273B9C490044C1E9 /* map_delegate */ = {
+			isa = PBXGroup;
+			children = (
+				72C955F5273B9C590044C1E9 /* MapViewDelegate.swift */,
+			);
+			path = map_delegate;
 			sourceTree = "<group>";
 		};
 		E182B94569BB019629002523 /* Pods */ = {
@@ -410,6 +421,7 @@
 				7212CA1E2738EB7600965C13 /* WriteView.swift in Sources */,
 				7290EDD22733B38D00292E88 /* BaseClasses.swift in Sources */,
 				7290EDDA2733B43600292E88 /* CommonEnum.swift in Sources */,
+				72C955F6273B9C590044C1E9 /* MapViewDelegate.swift in Sources */,
 				7290EDE92733C26F00292E88 /* LoginViewModel.swift in Sources */,
 				7231737D2733A8D900FF27A4 /* AppDelegate.swift in Sources */,
 				7290EDFC2733CF8700292E88 /* ListViewModel.swift in Sources */,
