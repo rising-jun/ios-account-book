@@ -24,8 +24,10 @@ class WriteViewController: BaseViewController{
     private let locStatusSubject = BehaviorSubject<CLAuthorizationStatus>(value: .notDetermined)
     private let coordiSubject = BehaviorSubject<CLLocationCoordinate2D>(value: CLLocationCoordinate2D())
     
+    private let writeButton = UIBarButtonItem()
+    
     lazy var pointAnnotaion = MKPointAnnotation()
-    private var mapViewDelegate = MapViewDelegate()
+    private var mapViewDelegate: MapViewDelegate!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -35,12 +37,17 @@ class WriteViewController: BaseViewController{
     lazy var input = WriteViewModel.Input(viewState: self.rx.viewDidLoad.map{ViewState.viewDidLoad},
                                           locState: locStatusSubject.distinctUntilChanged().asObservable(),
                                           coorState: coordiSubject.filter{$0.latitude != 0.0}.asObservable(),
-                                          mode: v.setLocModeButton.rx.tap.map{_ in Void()})
+                                          mode: v.setLocModeButton.rx.tap.map{_ in Void()},
+                                          nameInput: v.nameTF.rx.text.orEmpty.distinctUntilChanged(),
+                                          priceInput: v.priceTF.rx.text.orEmpty.distinctUntilChanged(),
+                                          categoryInput: v.categoryPicker.rx.itemSelected.map{$0.row},
+                                          writeAction: writeButton.rx.tap.map{_ in Void()})
     lazy var output = viewModel.bind(input: input)
     
     override func setup() {
         super.setup()
         permissionCheck = PermissionCheck(locationCb: self)
+        mapViewDelegate = MapViewDelegate(mapProtocol: self)
         locationManager.desiredAccuracy = kCLLocationAccuracyBest
     }
     
@@ -97,12 +104,22 @@ class WriteViewController: BaseViewController{
         .distinctUntilChanged()
         .drive(onNext: { [weak self] mode in
             guard let self = self else { return }
-            
             if let mode = mode {
                 self.setMapMode(mapMode: mode)
             }
-            
         }).disposed(by: disposeBag)
+        
+        output.state?.map{$0.priceformError}
+        .distinctUntilChanged()
+        .drive(onNext: { [weak self] check in
+            guard let self = self else { return }
+            if check == .possible{
+                self.v.availableUI()
+            }else{
+                self.v.unavailableUI()
+            }
+        }).disposed(by: disposeBag)
+        
         
         
     }
@@ -115,6 +132,8 @@ extension WriteViewController{
         locationManager.delegate = permissionCheck
         permissionCheck.getLocationPermission()
         v.mapView.delegate = mapViewDelegate
+        writeButton.title = "작성하기"
+        self.navigationItem.setRightBarButton(self.writeButton, animated: false)
     }
     
     func mapViewInitSet(coordi: CLLocationCoordinate2D){
@@ -132,8 +151,8 @@ extension WriteViewController{
         
         camera.pitch = 80.0
         camera.altitude = 100.0
+        
         self.v.mapView.setCamera(camera, animated: false)
-       
         
     }
     
@@ -151,7 +170,11 @@ extension WriteViewController{
     
 }
 
-extension WriteViewController: LocationPermissionCallback{
+extension WriteViewController: LocationPermissionCallback, MapProtocol{
+    func draggedPoint(coordi: CLLocationCoordinate2D) {
+        coordiSubject.onNext(coordi)
+    }
+    
     func getPermission(status: CLAuthorizationStatus) {
         locStatusSubject.onNext(status)
     }

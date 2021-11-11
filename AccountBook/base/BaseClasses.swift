@@ -246,3 +246,21 @@ extension UIImage{
 
 
 
+extension UITextField{
+    func setError(){
+        let rightView = UIView(frame: CGRect(x: 0, y: 0, width: 20, height: 20))
+        let errorImg = UIImageView(frame: CGRect(x: 0, y: 0, width: 20, height: 20))
+        errorImg.image = UIImage(named: "error")
+        errorImg.contentMode = .scaleAspectFit
+        rightView.addSubview(errorImg)
+        let rightPadding: CGFloat = 20 //--- change right padding
+        rightView.frame = CGRect(x: 0, y: 0, width: errorImg.frame.size.width + rightPadding , height: errorImg.frame.size.height)
+        self.rightView = rightView
+        self.rightViewMode = .always
+    }
+    
+    func reomoveErrorImg(){
+        rightView = nil
+    }
+    
+}

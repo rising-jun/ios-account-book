@@ -10,12 +10,12 @@ import RxDataSources
 
 public struct BookInfo{
     
-    var name: String
-    var lat: Double
-    var long: Double
-    var price: String
-    var category: String
-    var date: Date
+    var name: String = ""
+    var lat: Double = 0.0
+    var long: Double = 0.0
+    var price: String = ""
+    var category: String = ""
+    var date: Date = Date()
     
 }
 

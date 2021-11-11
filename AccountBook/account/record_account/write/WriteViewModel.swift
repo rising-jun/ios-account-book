@@ -9,6 +9,7 @@ import Foundation
 import RxSwift
 import RxCocoa
 import CoreLocation
+import FirebaseDatabase
 
 final class WriteViewModel: ViewModelType{
     var input: Input?
@@ -21,6 +22,11 @@ final class WriteViewModel: ViewModelType{
         let locState: Observable<CLAuthorizationStatus>?
         let coorState: Observable<CLLocationCoordinate2D>?
         let mode: Observable<Void>?
+        let nameInput: Observable<String>?
+        let priceInput: Observable<String>?
+        let categoryInput: Observable<Int>?
+        let writeAction: Observable<Void>?
+        
     }
     
     struct Output{
@@ -65,6 +71,8 @@ final class WriteViewModel: ViewModelType{
             .withLatestFrom(state){ coor, state -> WriteState in
                 var newState = state
                 newState.coordi = coor
+                newState.writeObject.lat = coor.latitude
+                newState.writeObject.long = coor.longitude
                 return newState
             }.bind(to: self.state)
             .disposed(by: disposeBag)
@@ -78,7 +86,54 @@ final class WriteViewModel: ViewModelType{
                 }else{
                     newState.locaSetMode = .auto
                 }
-                print("mode: \(newState.locaSetMode)")
+                return newState
+            }.bind(to: self.state)
+            .disposed(by: disposeBag)
+        
+        input.nameInput?
+            .withLatestFrom(state){ name, state -> WriteState in
+                var newState = state
+                print("name in viewmodel \(name)")
+                newState.writeObject.name = name
+                return newState
+            }.bind(to: self.state)
+            .disposed(by: disposeBag)
+        
+        input.priceInput?
+            .withLatestFrom(state){ [weak self] price, state -> WriteState in
+                var newState = state
+                
+                if self!.checkPrice(price: price){
+                    newState.writeObject.price = price
+                    newState.priceformError = .possible
+                }else{
+                    newState.priceformError = .impossible
+                }
+                return newState
+            }.bind(to: self.state)
+            .disposed(by: disposeBag)
+        
+        input.categoryInput?
+            .withLatestFrom(state){ [weak self] row, state -> WriteState in
+                var newState = state
+                print("category in viewmodel \(newState.categoryData![row])")
+                newState.writeObject.category = newState.categoryData![row]
+                return newState
+            }.bind(to: self.state)
+            .disposed(by: disposeBag)
+        
+        input.writeAction?
+            .withLatestFrom(state)
+            .map{ state in
+                var newState = state
+                if newState.priceformError == .impossible{
+                    
+                }else{
+                    var ref: DatabaseReference!
+                    ref = Database.database().reference()
+                    
+                    
+                }
                 return newState
             }.bind(to: self.state)
             .disposed(by: disposeBag)
@@ -95,9 +150,18 @@ struct WriteState{
     var locationPermission: PermissionState?
     var coordi: CLLocationCoordinate2D?
     var locaSetMode: LocationSetMode? = .auto
+    var priceformError: PossibleCheck?
+    var writeObject = BookInfo()
 }
 
 extension WriteViewModel{
+    
+    private func checkPrice(price: String) -> Bool{
+        // 정규식!
+        let regEx: String = "^[0-9]*$"
+        let regExTest = NSPredicate(format:"SELF MATCHES %@", regEx)
+        return regExTest.evaluate(with: price)
+    }
     
     
 }
@@ -105,4 +169,9 @@ extension WriteViewModel{
 enum LocationSetMode{
     case auto
     case directly
+}
+
+enum PossibleCheck{
+    case possible
+    case impossible
 }

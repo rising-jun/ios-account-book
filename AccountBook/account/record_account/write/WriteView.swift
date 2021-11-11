@@ -180,4 +180,16 @@ class WriteView: BaseView{
         
     }
     
+    func availableUI(){
+        priceTF.layer.borderColor = UIColor.gray.cgColor
+        priceTF.reomoveErrorImg()
+        //button.backgroundColor = .orange
+        
+    }
+    
+    func unavailableUI(){
+        priceTF.layer.borderColor = UIColor.red.cgColor
+        priceTF.setError()
+    }
+    
 }
