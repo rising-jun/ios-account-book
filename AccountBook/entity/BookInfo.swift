@@ -8,15 +8,14 @@
 import Foundation
 import RxDataSources
 
-public struct BookInfo{
+public struct BookInfo: Codable{
     
     var name: String = ""
     var lat: Double = 0.0
     var long: Double = 0.0
     var price: String = ""
     var category: String = ""
-    var date: Date = Date()
-    
+    var date: String = ""
 }
 
 struct MySection{
@@ -34,12 +33,3 @@ extension MySection: SectionModelType{
     }
     
 }
-
-//public struct Category{
-//    var dining: String = "dining"
-//    var coffee: String = "coffee"
-//    var life: String = "life"
-//    var culture: String = "culture"
-//    var transport: String = "transport"
-//    var etc: String = "etc"
-//}

@@ -129,8 +129,15 @@ final class WriteViewModel: ViewModelType{
                 if newState.priceformError == .impossible{
                     
                 }else{
-                    var ref: DatabaseReference!
-                    ref = Database.database().reference()
+                    if let userId = UserDefaults.standard.string(forKey: "token"){
+                        var ref: DatabaseReference!
+                        ref = Database.database().reference()
+                        
+                        
+                    }
+                    
+                    
+                    
                     
                     
                 }
