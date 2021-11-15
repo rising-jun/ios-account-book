@@ -46,8 +46,13 @@ final class LoginViewModel: ViewModelType{
                 var newState = state
                 self?.getGoogleToken()
                 self!.tokenPublish.map{
-                    UserDefaults.standard.setValue($0, forKey: "token")
-                    newState.userToken = $0
+                    
+                    if (UserDefaults.standard.string(forKey: "token") != ""){
+
+                    }else{
+                        let userToken = $0.replacingOccurrences(of: ".", with: "_")
+                        UserDefaults.standard.setValue(userToken, forKey: "token")
+                    }
                     newState.presentVC = .list
                     return newState
                 }.bind(to: self!.state)

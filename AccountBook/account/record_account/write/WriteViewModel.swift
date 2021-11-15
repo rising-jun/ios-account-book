@@ -137,9 +137,6 @@ final class WriteViewModel: ViewModelType{
                     }
                     
                     
-                    
-                    
-                    
                 }
                 return newState
             }.bind(to: self.state)

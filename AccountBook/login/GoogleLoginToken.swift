@@ -39,7 +39,7 @@ class GoogleLoginToken{
             let credential = GoogleAuthProvider.credential(withIDToken: idToken,
                                                            accessToken: authentication.accessToken)
             
-            print("googleToken : \(authentication.accessToken)")
+            //print("googleToken : \(authentication.accessToken)")
             //move data to viewmodel, publishSubject reference error resolving...
             self?.tokenPublish.onNext(authentication.accessToken)
         }

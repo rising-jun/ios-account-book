@@ -8,8 +8,12 @@
 import Foundation
 import RxDataSources
 
+public struct SnapInfo: Codable{
+    var account: [BookInfo]
+}
+
 public struct BookInfo: Codable{
-    
+    var userId: String = ""
     var name: String = ""
     var lat: Double = 0.0
     var long: Double = 0.0

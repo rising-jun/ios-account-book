@@ -78,6 +78,10 @@ class ListViewController: BaseViewController{
 }
 
 extension ListViewController{
+    func loadBookInfoFB(){
+        
+    }
+    
     func setUpView(){
         view = v
         view.backgroundColor = .white
