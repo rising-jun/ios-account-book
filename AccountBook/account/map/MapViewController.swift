@@ -12,5 +12,7 @@ class MapViewController: BaseViewController{
         super.viewDidLoad()
         
         view.backgroundColor = .blue
+        
+        
     }
 }

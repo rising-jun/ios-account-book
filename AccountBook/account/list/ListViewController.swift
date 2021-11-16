@@ -58,6 +58,7 @@ class ListViewController: BaseViewController{
         }).disposed(by: disposeBag)
         
         
+        
     }
     
     override func setup() {
@@ -78,9 +79,6 @@ class ListViewController: BaseViewController{
 }
 
 extension ListViewController{
-    func loadBookInfoFB(){
-        
-    }
     
     func setUpView(){
         view = v

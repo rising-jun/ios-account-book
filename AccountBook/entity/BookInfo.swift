@@ -9,7 +9,7 @@ import Foundation
 import RxDataSources
 
 public struct SnapInfo: Codable{
-    var account: [BookInfo]
+    var book_list: [BookInfo]
 }
 
 public struct BookInfo: Codable{

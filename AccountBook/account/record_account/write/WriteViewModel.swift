@@ -17,6 +17,8 @@ final class WriteViewModel: ViewModelType{
     
     private let state = BehaviorRelay<WriteState>(value: WriteState())
     
+    private var fbModel: FirebaseBookModel!
+    
     struct Input{
         let viewState: Observable<ViewState>?
         let locState: Observable<CLAuthorizationStatus>?
@@ -37,6 +39,8 @@ final class WriteViewModel: ViewModelType{
     
     func bind(input: Input) -> Output{
         self.input = input
+        
+        fbModel = FirebaseBookModel(fbCallBack: self)
         
         
         input.locState?
@@ -169,6 +173,15 @@ extension WriteViewModel{
     
     
 }
+
+extension WriteViewModel: FirebaseModelProtocol{
+    func bookInfoList(bookList: [BookInfo]) {
+        
+    }
+    
+    
+}
+
 
 enum LocationSetMode{
     case auto

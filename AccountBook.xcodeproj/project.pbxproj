@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		72059BFB2743A9B700AB0929 /* FirebaseBookModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72059BFA2743A9B700AB0929 /* FirebaseBookModel.swift */; };
 		7212CA1C2738EB1B00965C13 /* WriteViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7212CA1B2738EB1B00965C13 /* WriteViewController.swift */; };
 		7212CA1E2738EB7600965C13 /* WriteView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7212CA1D2738EB7600965C13 /* WriteView.swift */; };
 		7212CA202738EBB000965C13 /* WriteViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7212CA1F2738EBB000965C13 /* WriteViewModel.swift */; };
@@ -42,6 +43,7 @@
 
 /* Begin PBXFileReference section */
 		6B4118FAD393A51CB7B8B27B /* Pods_AccountBook.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_AccountBook.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		72059BFA2743A9B700AB0929 /* FirebaseBookModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseBookModel.swift; sourceTree = "<group>"; };
 		7212CA1B2738EB1B00965C13 /* WriteViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WriteViewController.swift; sourceTree = "<group>"; };
 		7212CA1D2738EB7600965C13 /* WriteView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WriteView.swift; sourceTree = "<group>"; };
 		7212CA1F2738EBB000965C13 /* WriteViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WriteViewModel.swift; sourceTree = "<group>"; };
@@ -98,6 +100,14 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		72059BF92743A97F00AB0929 /* firebase_model */ = {
+			isa = PBXGroup;
+			children = (
+				72059BFA2743A9B700AB0929 /* FirebaseBookModel.swift */,
+			);
+			path = firebase_model;
+			sourceTree = "<group>";
+		};
 		7212CA192738EA7900965C13 /* record_account */ = {
 			isa = PBXGroup;
 			children = (
@@ -147,6 +157,7 @@
 			children = (
 				72A9A70F273A6BB0006A7FB3 /* SeoulLocation.gpx */,
 				7290EDD72733B3FF00292E88 /* ViewModelProtocol.swift */,
+				72059BF92743A97F00AB0929 /* firebase_model */,
 				7247EFA72734003800FDEE7B /* entity */,
 				7290EDEC2733C33E00292E88 /* account */,
 				7290EDDB2733B53900292E88 /* login */,
@@ -401,6 +412,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				7247EFA92734004A00FDEE7B /* BookInfo.swift in Sources */,
+				72059BFB2743A9B700AB0929 /* FirebaseBookModel.swift in Sources */,
 				7290EDFA2733CF7B00292E88 /* ListView.swift in Sources */,
 				723173812733A8D900FF27A4 /* IntroViewController.swift in Sources */,
 				7290EDF52733C5B000292E88 /* ChartViewController.swift in Sources */,
