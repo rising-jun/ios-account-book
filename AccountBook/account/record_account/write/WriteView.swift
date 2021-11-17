@@ -64,7 +64,8 @@ class WriteView: BaseView{
         let datePicker = UIDatePicker()
         datePicker.translatesAutoresizingMaskIntoConstraints = false
         if #available(iOS 13.4, *) {
-            datePicker.preferredDatePickerStyle = .wheels
+            datePicker.preferredDatePickerStyle = .automatic
+            datePicker.datePickerMode = .dateAndTime
         } else {
             // Fallback on earlier versions
         }

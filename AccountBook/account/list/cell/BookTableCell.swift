@@ -46,7 +46,7 @@ class BookTableCell: UITableViewCell{
         priceLabel.textColor = .red
         priceLabel.font = UIFont.systemFont(ofSize: 18)
         priceLabel.snp.makeConstraints { make in
-            make.trailing.equalTo(contentView.snp.trailing).offset(-10)
+            make.trailing.equalTo(contentView.snp.trailing).offset(-0)
             make.centerY.equalTo(contentView.snp.centerY)
             make.height.equalTo(50)
             make.width.equalTo(80)

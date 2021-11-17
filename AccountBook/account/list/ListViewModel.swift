@@ -17,7 +17,7 @@ class ListViewModel{
     private let state = BehaviorRelay<ListViewState>(value: ListViewState())
     private var listData = PublishSubject<[BookInfo]>()
     
-    private var fbModel: FirebaseBookModel!
+    private var fbModel: FirebaseReadModel!
     
     struct Input{
         let viewState: Observable<ViewState>?
@@ -32,7 +32,7 @@ class ListViewModel{
     
     func bind(input: Input) -> Output{
         self.input = input
-        self.fbModel = FirebaseBookModel(fbCallBack: self)
+        self.fbModel = FirebaseReadModel(fbCallBack: self)
         
         input.viewState?
             .filter{$0 == .viewDidLoad}
@@ -70,7 +70,7 @@ class ListViewModel{
 extension ListViewModel{
 }
 
-extension ListViewModel: FirebaseModelProtocol{
+extension ListViewModel: FirebaseReadProtocol{
     func bookInfoList(bookList: [BookInfo]) {
         listData.onNext(bookList)
     }

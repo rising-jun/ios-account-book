@@ -17,7 +17,7 @@ final class WriteViewModel: ViewModelType{
     
     private let state = BehaviorRelay<WriteState>(value: WriteState())
     
-    private var fbModel: FirebaseBookModel!
+    private var fbModel: FirebaseWriteModel!
     
     struct Input{
         let viewState: Observable<ViewState>?
@@ -28,7 +28,8 @@ final class WriteViewModel: ViewModelType{
         let priceInput: Observable<String>?
         let categoryInput: Observable<Int>?
         let writeAction: Observable<Void>?
-        
+        let dateInput: Observable<Date>?
+        //뒤로가기 추가해야함
     }
     
     struct Output{
@@ -40,7 +41,7 @@ final class WriteViewModel: ViewModelType{
     func bind(input: Input) -> Output{
         self.input = input
         
-        fbModel = FirebaseBookModel(fbCallBack: self)
+        fbModel = FirebaseWriteModel()
         
         
         input.locState?
@@ -67,6 +68,7 @@ final class WriteViewModel: ViewModelType{
                 var newState = state
                 newState.viewLogic = .setUpView
                 newState.categoryData = ["식비", "생활비", "유흥비"]
+                newState.writeObject.category = newState.categoryData![0]
                 return newState
             }.bind(to: self.state)
             .disposed(by: disposeBag)
@@ -120,25 +122,32 @@ final class WriteViewModel: ViewModelType{
         input.categoryInput?
             .withLatestFrom(state){ [weak self] row, state -> WriteState in
                 var newState = state
-                print("category in viewmodel \(newState.categoryData![row])")
                 newState.writeObject.category = newState.categoryData![row]
+                return newState
+            }.bind(to: self.state)
+            .disposed(by: disposeBag)
+        
+        input.dateInput?
+            .withLatestFrom(state){ [weak self] date, state -> WriteState in
+                var newState = state
+                newState.writeObject.date = date.formatted()
                 return newState
             }.bind(to: self.state)
             .disposed(by: disposeBag)
         
         input.writeAction?
             .withLatestFrom(state)
-            .map{ state in
+            .map{ [weak self] state in
                 var newState = state
                 if newState.priceformError == .impossible{
                     
                 }else{
-                    if let userId = UserDefaults.standard.string(forKey: "token"){
-                        var ref: DatabaseReference!
-                        ref = Database.database().reference()
-                        
-                        
-                    }
+                    print("write possible now!")
+                    //write!
+                    newState.writeObject.userId = UserDefaults.standard.string(forKey: "token") ?? "null"
+                    self!.fbModel.writeBookInfo(bookInfo: newState.writeObject)
+                    
+                   
                     
                     
                 }
@@ -158,11 +167,13 @@ struct WriteState{
     var locationPermission: PermissionState?
     var coordi: CLLocationCoordinate2D?
     var locaSetMode: LocationSetMode? = .auto
-    var priceformError: PossibleCheck?
+    var priceformError: PossibleCheck? = .impossible
     var writeObject = BookInfo()
+    var dateInfo: String = ""
 }
 
 extension WriteViewModel{
+    
     
     private func checkPrice(price: String) -> Bool{
         // 정규식!
@@ -174,13 +185,6 @@ extension WriteViewModel{
     
 }
 
-extension WriteViewModel: FirebaseModelProtocol{
-    func bookInfoList(bookList: [BookInfo]) {
-        
-    }
-    
-    
-}
 
 
 enum LocationSetMode{

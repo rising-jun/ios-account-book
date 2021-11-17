@@ -25,6 +25,7 @@ class WriteViewController: BaseViewController{
     private let coordiSubject = BehaviorSubject<CLLocationCoordinate2D>(value: CLLocationCoordinate2D())
     
     private let writeButton = UIBarButtonItem()
+    private let backButton = UIBarButtonItem()
     
     lazy var pointAnnotaion = MKPointAnnotation()
     private var mapViewDelegate: MapViewDelegate!
@@ -41,7 +42,9 @@ class WriteViewController: BaseViewController{
                                           nameInput: v.nameTF.rx.text.orEmpty.distinctUntilChanged(),
                                           priceInput: v.priceTF.rx.text.orEmpty.distinctUntilChanged(),
                                           categoryInput: v.categoryPicker.rx.itemSelected.map{$0.row},
-                                          writeAction: writeButton.rx.tap.map{_ in Void()})
+                                          writeAction: writeButton.rx.tap.map{_ in Void()},
+                                          dateInput: v.datePicker.rx.date.asObservable())
+    
     lazy var output = viewModel.bind(input: input)
     
     override func setup() {
@@ -133,7 +136,11 @@ extension WriteViewController{
         permissionCheck.getLocationPermission()
         v.mapView.delegate = mapViewDelegate
         writeButton.title = "작성하기"
+        backButton.title = "뒤로가기"
         self.navigationItem.setRightBarButton(self.writeButton, animated: false)
+        self.navigationItem.hidesBackButton = true
+        self.navigationItem.setLeftBarButton(self.backButton, animated: false)
+        
     }
     
     func mapViewInitSet(coordi: CLLocationCoordinate2D){

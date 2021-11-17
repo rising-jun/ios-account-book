@@ -10,17 +10,17 @@ import RxSwift
 import RxCocoa
 import FirebaseFirestore
 
-protocol FirebaseModelProtocol{
+protocol FirebaseReadProtocol{
     func bookInfoList(bookList: [BookInfo])
     
 }
 
-class FirebaseBookModel{
+class FirebaseReadModel{
     
-    private var fbCallback: FirebaseModelProtocol!
+    private var fbCallback: FirebaseReadProtocol!
     private let disposeBag = DisposeBag()
     
-    init(fbCallBack: FirebaseModelProtocol){
+    init(fbCallBack: FirebaseReadProtocol){
         self.fbCallback = fbCallBack
     }
     
@@ -31,7 +31,7 @@ class FirebaseBookModel{
     
 }
 
-extension FirebaseBookModel{
+extension FirebaseReadModel{
     
     func readBookInfo(){
         let db = Firestore.firestore()
@@ -45,30 +45,6 @@ extension FirebaseBookModel{
                         self.fbCallback.bookInfoList(bookList: snapInfo.book_list)
                     }.disposed(by: self.disposeBag)
             }
-    }
-    
-    func writeBookInfo(){
-        if let userToken = UserDefaults.standard.string(forKey: "token"){
-            print("what is userId \(userToken)")
-            
-            var obj = [
-                "userId": userToken,
-                "name": "La Angeles",
-                "price": "20000",
-                "category": "USA",
-                "lat": 1,
-                "long": 2,
-                "date": "2021-11-15 10:20"] as [String : Any]
-            
-            let db = Firestore.firestore()
-            
-            db.collection("account_array")
-                .document("accountData")
-                .updateData(["book_list" : FieldValue.arrayUnion([obj])]){
-                    error in
-                    print(error)
-                }
-        }
     }
     
 }
