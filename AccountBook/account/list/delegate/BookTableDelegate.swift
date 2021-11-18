@@ -25,13 +25,21 @@ extension BookTableDelegate: UITableViewDelegate, UITableViewDataSource{
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let data = accountArr![indexPath.row]
         let cell = tableView.dequeueReusableCell(withIdentifier: "BookTableCell", for: indexPath) as? BookTableCell
+        
+        cell?.dateLabel.text = splitDateString(str: data.date)
         cell?.priceLabel.text = data.price
         cell?.titleLabel.text = data.name
         cell?.categoryLabel.text = data.category
         return cell!
     }
     
-    
-    
-    
+}
+
+extension BookTableDelegate{
+    func splitDateString(str: String) -> String{
+        let startIdx: String.Index = str.index(str.startIndex, offsetBy: 9)
+        let endIdx: String.Index = str.index(str.startIndex, offsetBy: 10)
+        var result = String(str[startIdx ..< endIdx])
+        return result
+    }
 }

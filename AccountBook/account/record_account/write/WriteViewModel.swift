@@ -16,7 +16,7 @@ final class WriteViewModel: ViewModelType{
     var output: Output?
     
     private let state = BehaviorRelay<WriteState>(value: WriteState())
-    
+    private let writeResult = PublishSubject<Bool>()
     private var fbModel: FirebaseWriteModel!
     
     struct Input{
@@ -29,6 +29,7 @@ final class WriteViewModel: ViewModelType{
         let categoryInput: Observable<Int>?
         let writeAction: Observable<Void>?
         let dateInput: Observable<Date>?
+        let backAction: Observable<Void>?
         //뒤로가기 추가해야함
     }
     
@@ -41,7 +42,7 @@ final class WriteViewModel: ViewModelType{
     func bind(input: Input) -> Output{
         self.input = input
         
-        fbModel = FirebaseWriteModel()
+        fbModel = FirebaseWriteModel(result: self)
         
         
         input.locState?
@@ -99,7 +100,6 @@ final class WriteViewModel: ViewModelType{
         input.nameInput?
             .withLatestFrom(state){ name, state -> WriteState in
                 var newState = state
-                print("name in viewmodel \(name)")
                 newState.writeObject.name = name
                 return newState
             }.bind(to: self.state)
@@ -148,12 +148,32 @@ final class WriteViewModel: ViewModelType{
                     self!.fbModel.writeBookInfo(bookInfo: newState.writeObject)
                     
                    
-                    
-                    
                 }
                 return newState
             }.bind(to: self.state)
             .disposed(by: disposeBag)
+        
+        input.backAction?
+            .withLatestFrom(state)
+            .map{ state -> WriteState in
+                var newState = state
+                newState.presentVC = .list
+                return newState
+            }.bind(to: self.state)
+            .disposed(by: disposeBag)
+        
+        writeResult.withLatestFrom(state){ result, state -> WriteState in
+            var newState = state
+            if result{
+                newState.presentVC = .list
+                newState.resultMsg = .success
+            }else{
+                newState.resultMsg = .failed
+            }
+            return newState
+        }.bind(to: self.state)
+        .disposed(by: disposeBag)
+        
         
         output = Output(state: state.asDriver())
         return output!
@@ -170,6 +190,7 @@ struct WriteState{
     var priceformError: PossibleCheck? = .impossible
     var writeObject = BookInfo()
     var dateInfo: String = ""
+    var resultMsg: WriteResultMsg?
 }
 
 extension WriteViewModel{
@@ -185,6 +206,15 @@ extension WriteViewModel{
     
 }
 
+extension WriteViewModel: FirebaseWriteProtocol{
+    func writeResult(result: Bool) {
+        print("writeResult!! : \(result)")
+        writeResult.onNext(result)
+    }
+    
+    
+}
+
 
 
 enum LocationSetMode{
@@ -195,4 +225,9 @@ enum LocationSetMode{
 enum PossibleCheck{
     case possible
     case impossible
+}
+
+enum WriteResultMsg{
+    case success
+    case failed
 }

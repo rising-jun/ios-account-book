@@ -43,7 +43,8 @@ class WriteViewController: BaseViewController{
                                           priceInput: v.priceTF.rx.text.orEmpty.distinctUntilChanged(),
                                           categoryInput: v.categoryPicker.rx.itemSelected.map{$0.row},
                                           writeAction: writeButton.rx.tap.map{_ in Void()},
-                                          dateInput: v.datePicker.rx.date.asObservable())
+                                          dateInput: v.datePicker.rx.date.asObservable(),
+                                          backAction: backButton.rx.tap.map{ _ in Void()})
     
     lazy var output = viewModel.bind(input: input)
     
@@ -123,7 +124,26 @@ class WriteViewController: BaseViewController{
             }
         }).disposed(by: disposeBag)
         
+        output.state?.map{$0.resultMsg}
+        .drive(onNext: { result in
+            switch result{
+            case .success:
+                print("success")
+                break
+            case .failed:
+                print("failed")
+                break
+            case .none:
+                break
+            }
+        }).disposed(by: disposeBag)
         
+        output.state?.map{$0.presentVC}
+        .filter{$0 != .write}
+        .drive(onNext: { [weak self] vc in
+            guard let self = self else { return }
+            self.presentVC(vcName: vc ?? .write)
+        }).disposed(by: disposeBag)
         
     }
     
@@ -171,8 +191,15 @@ extension WriteViewController{
             self.v.mapView.showsUserLocation = false
             self.v.mapView.addAnnotation(pointAnnotaion)
             
+        }
+    }
+    
+    func presentVC(vcName: PresentVC){
+        if vcName == .list{
+            self.navigationController?.popViewController(animated: true)
             
         }
+        
     }
     
 }

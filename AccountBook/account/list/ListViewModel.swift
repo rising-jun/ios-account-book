@@ -20,8 +20,9 @@ class ListViewModel{
     private var fbModel: FirebaseReadModel!
     
     struct Input{
-        let viewState: Observable<ViewState>?
+        let viewState: Observable<Void>?
         let writeTouch: Observable<Void>?
+        let returnListView: Observable<Void>?
     }
     
     struct Output{
@@ -35,32 +36,42 @@ class ListViewModel{
         self.fbModel = FirebaseReadModel(fbCallBack: self)
         
         input.viewState?
-            .filter{$0 == .viewDidLoad}
-            .withLatestFrom(state){[weak self] viewState, state -> ListViewState in
+            .withLatestFrom(state)
+            .map{[weak self] state -> ListViewState in
                 var newState = state
                 newState.viewLogic = .setUpView
                 newState.filterData = ["높은금액순", "최신순", "카테고리 별"]
                 self?.fbModel.readBookInfo()
-                newState.listData = [BookInfo(name: "지출시험", lat: 0.0, long: 0.0, price: "3000", category: "유흥", date: "2021-11-12 16:32")]
                 return newState
             }.bind(to: self.state)
             .disposed(by: disposeBag)
         
         input.writeTouch?
             .withLatestFrom(state)
-            .map{ [weak self] state -> ListViewState in
+            .map{ state -> ListViewState in
                 var newState = state
                 newState.presentVC = .write
                 return newState
             }.bind(to: self.state)
             .disposed(by: disposeBag)
         
-        listData.withLatestFrom(state){[weak self] list, state -> ListViewState in
+        listData.withLatestFrom(state){ list, state -> ListViewState in
             var newState = state
             newState.listData = list
             return newState
         }.bind(to: self.state)
         .disposed(by: disposeBag)
+        
+        input.returnListView?
+            .withLatestFrom(state)
+            .map{ [weak self] state -> ListViewState in
+                var newState = state
+                newState.presentVC = .list
+                self!.fbModel.readBookInfo()
+                return newState
+            }.bind(to: self.state)
+            .disposed(by: disposeBag)
+        
         
         output = Output(state: state.asDriver())
         return output!
@@ -68,14 +79,13 @@ class ListViewModel{
 }
 
 extension ListViewModel{
+
 }
 
 extension ListViewModel: FirebaseReadProtocol{
     func bookInfoList(bookList: [BookInfo]) {
         listData.onNext(bookList)
     }
-    
-    
 }
 
 struct ListViewState{

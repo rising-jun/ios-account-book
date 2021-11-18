@@ -10,12 +10,18 @@ import RxSwift
 import RxCocoa
 import FirebaseFirestore
 
+protocol FirebaseWriteProtocol{
+    func writeResult(result: Bool)
+}
+
 class FirebaseWriteModel{
     
     private let disposeBag = DisposeBag()
     
-    init(){
-        
+    private var result: FirebaseWriteProtocol!
+    
+    init(result: FirebaseWriteProtocol){
+        self.result = result
     }
     
     
@@ -31,16 +37,17 @@ extension FirebaseWriteModel{
         if let data = json!.data(using: .utf8) {
             do {
                 let result = try JSONSerialization.jsonObject(with: data, options: []) as? [String: Any]
-                print("result! : \(result)")
                 let db = Firestore.firestore()
                 db.collection("account_array")
                     .document("accountData")
                     .updateData(["book_list" : FieldValue.arrayUnion([result])]){
-                        error in
-                        print(error)
+                        [weak self] err in
                     }
+                self.result.writeResult(result: true)
             } catch {
                 print(error.localizedDescription)
+                print("catch")
+                self.result.writeResult(result: false)
             }
         }
         

@@ -22,10 +22,22 @@ class ListViewController: BaseViewController{
         super.viewDidLoad()
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        print(" view will appear ")
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        print(" view did appear ")
+    }
+    
     private let viewModel = ListViewModel()
     private var delegate: BookTableDelegate?
-    private lazy var input = ListViewModel.Input(viewState: rx.viewDidLoad.map{ViewState.viewDidLoad},
-                                                 writeTouch: myInfoBtn.rx.tap.map{ _ in Void()})
+    private lazy var input = ListViewModel.Input(viewState: rx.viewDidLoad.map{_ in Void()},
+                                                 writeTouch: myInfoBtn.rx.tap.map{ _ in Void()},
+                                                 returnListView: rx.viewWillAppear.map{_ in Void()})
     private lazy var output = viewModel.bind(input: input)
     private let disposeBag = DisposeBag()
     
@@ -91,9 +103,7 @@ extension ListViewController{
         if vcName == .write{
             let writeVC = WriteViewController()
             self.navigationController?.pushViewController(writeVC, animated: true)
-
         }
-        
     }
     
 }
