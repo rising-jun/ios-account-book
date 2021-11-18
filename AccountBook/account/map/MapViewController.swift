@@ -8,11 +8,12 @@
 import Foundation
 
 class MapViewController: BaseViewController{
+    
+    lazy var v = MapView(frame: view.frame)
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        view.backgroundColor = .blue
-        
-        
+        view = v
     }
 }
