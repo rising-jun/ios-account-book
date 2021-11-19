@@ -6,6 +6,11 @@
 //
 
 import Foundation
+import RxSwift
+import RxCocoa
+import RxViewController
+import RxMKMapView
+import MapKit
 
 class MapViewController: BaseViewController{
     
@@ -13,7 +18,52 @@ class MapViewController: BaseViewController{
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        view = v
     }
+    
+    
+    private let viewModel = MapViewModel()
+    private lazy var input = MapViewModel.Input(viewState: rx.viewDidLoad.map{_ in Void()})
+    private lazy var output = viewModel.bind(input: input)
+    private let disposeBag = DisposeBag()
+    
+    override func bindViewModel(){
+        super.bindViewModel()
+        
+        output.state?.map{$0.viewLogic}
+        .filter{$0 == .setUpView}
+        .distinctUntilChanged()
+        .drive(onNext: { [weak self] logic in
+            self?.setUpView()
+        }).disposed(by: disposeBag)
+        
+        
+        
+    }
+    
+}
+
+extension MapViewController{
+    func setUpView(){
+        view = v
+        mapViewInitSet(coordi: CLLocationCoordinate2D(latitude: 37.533544, longitude: 127.146997))
+    }
+    
+    func mapViewInitSet(coordi: CLLocationCoordinate2D){
+        self.v.mapView.showsUserLocation = true
+        self.v.mapView.showsBuildings = true
+        self.v.mapView.isPitchEnabled = true
+        
+        let lat = coordi.latitude
+        let long = coordi.longitude
+        let camera = MKMapCamera()
+        camera.centerCoordinate = CLLocationCoordinate2D(latitude: lat, longitude: long)
+        
+        
+        camera.pitch = 80.0
+        camera.altitude = 100.0
+        
+        self.v.mapView.setCamera(camera, animated: false)
+        
+    }
+    
 }

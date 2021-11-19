@@ -25,9 +25,10 @@ class MapView: BaseView{
         addSubViews(mapView)
         
         mapView.snp.makeConstraints { make in
-            make.center.equalTo(self)
+            make.centerX.equalTo(self)
             make.width.equalTo(400)
-            make.height.equalTo(700)
+            make.height.equalTo(500)
+            make.bottom.equalTo(self).offset(-120)
         }
         
     }
