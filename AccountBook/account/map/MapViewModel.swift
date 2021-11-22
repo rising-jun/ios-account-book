@@ -18,6 +18,8 @@ class MapViewModel: ViewModelType{
     
     private var fbReadModel: FirebaseReadModel!
     
+    private var bookListPublish = PublishSubject<[BookInfo]>()
+    
     
     struct Input{
         let viewState: Observable<Void>?
@@ -33,15 +35,21 @@ class MapViewModel: ViewModelType{
         fbReadModel = FirebaseReadModel(fbCallBack: self)
         
         input.viewState?
-            .withLatestFrom(state){ _, state -> MapState in
+            .withLatestFrom(state){ [weak self] _, state -> MapState in
                 var newState = state
                 newState.viewLogic = .setUpView
+                self!.fbReadModel.readBookInfo()
                 return newState
             }.bind(to: self.state)
             .disposed(by: disposeBag)
     
-        
-        
+        bookListPublish
+            .withLatestFrom(state){ list, state -> MapState in
+                var newState = state
+                newState.listData = list
+                return newState
+            }.bind(to: self.state)
+            .disposed(by: disposeBag)
         
         output = Output(state: state.asDriver())
         return output!
@@ -57,7 +65,7 @@ struct MapState{
 
 extension MapViewModel: FirebaseReadProtocol{
     func bookInfoList(bookList: [BookInfo]) {
-        
+        bookListPublish.onNext(bookList)
     }
     
     

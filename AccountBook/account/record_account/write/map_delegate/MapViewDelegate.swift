@@ -12,7 +12,7 @@ protocol MapProtocol{
     func draggedPoint(coordi: CLLocationCoordinate2D)
 }
 
-class MapViewDelegate: NSObject{
+class WriteMapViewDelegate: NSObject{
     private var mapProtocol: MapProtocol!
     
     init(mapProtocol: MapProtocol){
@@ -20,7 +20,7 @@ class MapViewDelegate: NSObject{
     }
 }
 
-extension MapViewDelegate: MKMapViewDelegate{
+extension WriteMapViewDelegate: MKMapViewDelegate{
     func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
         if annotation is MKUserLocation {
             return nil

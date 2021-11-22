@@ -38,7 +38,6 @@ extension FirebaseReadModel{
         let ref = db.collection("account_array").document("accountData")
             .getDocument{ (document, error) in
                 if let data = document?.data() {
-                    print("data \(data)")
                     let profileJson = try! JSONSerialization.data(withJSONObject: data, options: .prettyPrinted)
                     Observable<Data>.just(profileJson)
                         .decode(type: SnapInfo.self, decoder: JSONDecoder())

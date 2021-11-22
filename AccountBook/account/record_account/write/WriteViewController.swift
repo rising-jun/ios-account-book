@@ -28,7 +28,7 @@ class WriteViewController: BaseViewController{
     private let backButton = UIBarButtonItem()
     
     lazy var pointAnnotaion = MKPointAnnotation()
-    private var mapViewDelegate: MapViewDelegate!
+    private var mapViewDelegate: WriteMapViewDelegate!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -51,7 +51,7 @@ class WriteViewController: BaseViewController{
     override func setup() {
         super.setup()
         permissionCheck = PermissionCheck(locationCb: self)
-        mapViewDelegate = MapViewDelegate(mapProtocol: self)
+        mapViewDelegate = WriteMapViewDelegate(mapProtocol: self)
         locationManager.desiredAccuracy = kCLLocationAccuracyBest
     }
     

@@ -15,6 +15,7 @@ import MapKit
 class MapViewController: BaseViewController{
     
     lazy var v = MapView(frame: view.frame)
+    private var mapDelegate = MapDelegate()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -29,6 +30,7 @@ class MapViewController: BaseViewController{
     override func bindViewModel(){
         super.bindViewModel()
         
+        
         output.state?.map{$0.viewLogic}
         .filter{$0 == .setUpView}
         .distinctUntilChanged()
@@ -36,6 +38,14 @@ class MapViewController: BaseViewController{
             self?.setUpView()
         }).disposed(by: disposeBag)
         
+        output.state?.map{$0.listData ?? []}
+        .filter{$0.count > 0}
+        .drive(onNext: { [weak self] bookList in
+            var paidView = PaidAnnotation(index: 0, latitude: 37.533544, longitude: 127.146997, bookInfo: bookList.first!)
+            self?.v.mapView.addAnnotation(paidView)
+            
+            self!.v.mapView.delegate = self!.mapDelegate
+        }).disposed(by: disposeBag)
         
         
     }
@@ -46,6 +56,7 @@ extension MapViewController{
     func setUpView(){
         view = v
         mapViewInitSet(coordi: CLLocationCoordinate2D(latitude: 37.533544, longitude: 127.146997))
+        
     }
     
     func mapViewInitSet(coordi: CLLocationCoordinate2D){
