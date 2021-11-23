@@ -20,7 +20,9 @@
 		723173812733A8D900FF27A4 /* IntroViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 723173802733A8D900FF27A4 /* IntroViewController.swift */; };
 		723173862733A8DB00FF27A4 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 723173852733A8DB00FF27A4 /* Assets.xcassets */; };
 		723173892733A8DB00FF27A4 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 723173872733A8DB00FF27A4 /* LaunchScreen.storyboard */; };
-		72356DE8274CD1F700CA9DF4 /* chartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72356DE7274CD1F700CA9DF4 /* chartView.swift */; };
+		72356DE8274CD1F700CA9DF4 /* ChartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72356DE7274CD1F700CA9DF4 /* ChartView.swift */; };
+		72356DEA274CD23500CA9DF4 /* ChartViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72356DE9274CD23500CA9DF4 /* ChartViewModel.swift */; };
+		72356DED274CD4BB00CA9DF4 /* PieChartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72356DEC274CD4BB00CA9DF4 /* PieChartView.swift */; };
 		7247EFA92734004A00FDEE7B /* BookInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7247EFA82734004A00FDEE7B /* BookInfo.swift */; };
 		7247EFAB27340E9E00FDEE7B /* BookTableCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7247EFAA27340E9E00FDEE7B /* BookTableCell.swift */; };
 		7247EFAF2734141500FDEE7B /* BookTableDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7247EFAE2734141500FDEE7B /* BookTableDelegate.swift */; };
@@ -65,7 +67,9 @@
 		723173852733A8DB00FF27A4 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		723173882733A8DB00FF27A4 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		7231738A2733A8DB00FF27A4 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		72356DE7274CD1F700CA9DF4 /* chartView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = chartView.swift; sourceTree = "<group>"; };
+		72356DE7274CD1F700CA9DF4 /* ChartView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChartView.swift; sourceTree = "<group>"; };
+		72356DE9274CD23500CA9DF4 /* ChartViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChartViewModel.swift; sourceTree = "<group>"; };
+		72356DEC274CD4BB00CA9DF4 /* PieChartView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PieChartView.swift; sourceTree = "<group>"; };
 		7247EFA82734004A00FDEE7B /* BookInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookInfo.swift; sourceTree = "<group>"; };
 		7247EFAA27340E9E00FDEE7B /* BookTableCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookTableCell.swift; sourceTree = "<group>"; };
 		7247EFAE2734141500FDEE7B /* BookTableDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookTableDelegate.swift; sourceTree = "<group>"; };
@@ -206,6 +210,14 @@
 			path = AccountBook;
 			sourceTree = "<group>";
 		};
+		72356DEB274CD4A600CA9DF4 /* pie_chart */ = {
+			isa = PBXGroup;
+			children = (
+				72356DEC274CD4BB00CA9DF4 /* PieChartView.swift */,
+			);
+			path = pie_chart;
+			sourceTree = "<group>";
+		};
 		7247EFA72734003800FDEE7B /* entity */ = {
 			isa = PBXGroup;
 			children = (
@@ -300,8 +312,10 @@
 		7290EDF12733C3A200292E88 /* chart */ = {
 			isa = PBXGroup;
 			children = (
+				72356DEB274CD4A600CA9DF4 /* pie_chart */,
 				7290EDF42733C5B000292E88 /* ChartViewController.swift */,
-				72356DE7274CD1F700CA9DF4 /* chartView.swift */,
+				72356DE7274CD1F700CA9DF4 /* ChartView.swift */,
+				72356DE9274CD23500CA9DF4 /* ChartViewModel.swift */,
 			);
 			path = chart;
 			sourceTree = "<group>";
@@ -465,9 +479,11 @@
 				7290EDD42733B3B400292E88 /* IntroView.swift in Sources */,
 				7290EDD82733B3FF00292E88 /* ViewModelProtocol.swift in Sources */,
 				7290EDE72733C0E500292E88 /* LoginView.swift in Sources */,
+				72356DEA274CD23500CA9DF4 /* ChartViewModel.swift in Sources */,
 				7247EFAB27340E9E00FDEE7B /* BookTableCell.swift in Sources */,
 				7290EDF32733C5A500292E88 /* MapViewController.swift in Sources */,
 				7290EDD62733B3E300292E88 /* IntroViewModel.swift in Sources */,
+				72356DED274CD4BB00CA9DF4 /* PieChartView.swift in Sources */,
 				72AE480027464D61003FA631 /* MapViewModel.swift in Sources */,
 				7247EFAF2734141500FDEE7B /* BookTableDelegate.swift in Sources */,
 				7290EDDD2733B54600292E88 /* LoginViewController.swift in Sources */,
@@ -480,7 +496,7 @@
 				7290EDE92733C26F00292E88 /* LoginViewModel.swift in Sources */,
 				7231737D2733A8D900FF27A4 /* AppDelegate.swift in Sources */,
 				7290EDFC2733CF8700292E88 /* ListViewModel.swift in Sources */,
-				72356DE8274CD1F700CA9DF4 /* chartView.swift in Sources */,
+				72356DE8274CD1F700CA9DF4 /* ChartView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
