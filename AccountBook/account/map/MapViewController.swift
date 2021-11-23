@@ -41,10 +41,19 @@ class MapViewController: BaseViewController{
         output.state?.map{$0.listData ?? []}
         .filter{$0.count > 0}
         .drive(onNext: { [weak self] bookList in
-            var paidView = PaidAnnotation(index: 0, latitude: 37.533544, longitude: 127.146997, bookInfo: bookList.first!)
-            self?.v.mapView.addAnnotation(paidView)
+//            var paidView = PaidAnnotation(index: 0, latitude: 37.533544, longitude: 127.146997, bookInfo: bookList.first!)
+//            self?.v.mapView.addAnnotation(paidView)
+            guard let self = self else { return }
             
-            self!.v.mapView.delegate = self!.mapDelegate
+            for i in bookList{
+                let pointAnnotation = MKPointAnnotation()
+                pointAnnotation.title = i.name
+                pointAnnotation.subtitle = i.price
+                pointAnnotation.coordinate = CLLocationCoordinate2D(latitude: i.lat, longitude: i.long)
+                self.v.mapView.addAnnotation(pointAnnotation)
+            }
+            
+            self.v.mapView.delegate = self.mapDelegate
         }).disposed(by: disposeBag)
         
         

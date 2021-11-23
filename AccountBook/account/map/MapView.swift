@@ -27,7 +27,7 @@ class MapView: BaseView{
         mapView.snp.makeConstraints { make in
             make.centerX.equalTo(self)
             make.width.equalTo(400)
-            make.height.equalTo(500)
+            make.height.equalTo(600)
             make.bottom.equalTo(self).offset(-120)
         }
         

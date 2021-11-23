@@ -15,20 +15,29 @@ class MapDelegate: NSObject{
 extension MapDelegate: MKMapViewDelegate{
     
     func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {
-        print(" s e l e c t e d")
+        
     }
     
     func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
-        var annotationView: MKAnnotationView?
+//        var annotationView: MKAnnotationView?
+//        if let annotation = annotation as? PaidAnnotation {
+//            annotationView = PaidAnnotationView(annotation: annotation, reuseIdentifier: NSStringFromClass(PaidAnnotationView.self))
+//            //self.postAnnotationViews.append(annotationView as! PaidAnnotationView)
+//        }
         
-        print("hi delegate")
-        
-        if let annotation = annotation as? PaidAnnotation {
-            annotationView = PaidAnnotationView(annotation: annotation, reuseIdentifier: NSStringFromClass(PaidAnnotationView.self))
-            //self.postAnnotationViews.append(annotationView as! PaidAnnotationView)
-            print("it is paid annotation!")
-        }
-        return annotationView
+        guard annotation is MKPointAnnotation else { return nil }
+
+            let identifier = "Annotation"
+            var annotationView = mapView.dequeueReusableAnnotationView(withIdentifier: identifier)
+
+            if annotationView == nil {
+                annotationView = MKPinAnnotationView(annotation: annotation, reuseIdentifier: identifier)
+                annotationView!.canShowCallout = true
+            } else {
+                annotationView!.annotation = annotation
+            }
+
+            return annotationView
     }
     
     private func setupPaiedAnnotation(for annotation: MKAnnotation, on mapView: MKMapView) -> MKAnnotationView {
