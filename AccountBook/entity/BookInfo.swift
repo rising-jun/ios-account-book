@@ -37,3 +37,10 @@ extension MySection: SectionModelType{
     }
     
 }
+
+struct ChartInfo{
+    var category: String
+    var per: Double
+    var val: Double
+    
+}

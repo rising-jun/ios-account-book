@@ -8,6 +8,7 @@
 import Foundation
 import RxSwift
 import RxCocoa
+import Charts
 
 class ChartViewController: BaseViewController{
     
@@ -34,6 +35,28 @@ class ChartViewController: BaseViewController{
         .drive(onNext: { [weak self] logic in
             self?.setUpView()
         }).disposed(by: disposeBag)
+     
+        output.state?.map{$0.chartList ?? []}
+        .filter{$0.count > 0}
+        .drive(onNext: { [weak self] chartList in
+            guard let self = self else { return }
+            var entryList: [PieChartDataEntry] = []
+            for i in chartList{
+                let entry = PieChartDataEntry(value: i.val, label: i.category)
+                entryList.append(entry)
+            }
+            let dataSet = PieChartDataSet(entries: entryList, label: "PieChart")
+            dataSet.colors = ChartColorTemplates.joyful()
+            dataSet.valueColors = [UIColor.black]
+            let data = PieChartData(dataSet: dataSet)
+            
+            self.v.pieView.data = data
+            //All other additions to this function will go here
+
+            //This must stay at end of function
+            self.v.pieView.notifyDataSetChanged()
+        }).disposed(by: disposeBag)
+        
         
     }
     
@@ -43,4 +66,6 @@ extension ChartViewController{
     func setUpView(){
         view = v
     }
+    
+    
 }

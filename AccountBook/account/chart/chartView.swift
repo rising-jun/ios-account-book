@@ -8,26 +8,22 @@
 import Foundation
 import SnapKit
 import UIKit
+import Charts
 
 class ChartView: BaseView{
+    
+    lazy var pieView = PieChartView()
     
     override func setup() {
         super.setup()
         backgroundColor = .white
+        addSubViews(pieView)
+        pieView.snp.makeConstraints { make in
+            make.center.equalTo(self)
+            make.width.equalTo(self)
+            make.height.equalTo(self)
+        }
         
-        let width = self.frame.width
-        let height = self.frame.height
-        
-        let pieChartView = PieChartView(frame: CGRect(x: 0, y: 0, width: width, height: height))
-        pieChartView.center = self.center
-        
-        pieChartView.slices = [Slice(percent: 0.4, color: UIColor.systemOrange),
-                               Slice(percent: 0.3, color: UIColor.systemTeal),
-                               Slice(percent: 0.2, color: UIColor.systemRed),
-                               Slice(percent: 0.1, color: UIColor.systemIndigo)]
-        
-        self.addSubview(pieChartView)
-        pieChartView.animateChart()
         
     }
     
