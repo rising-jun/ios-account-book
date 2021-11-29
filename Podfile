@@ -7,4 +7,19 @@ target 'AccountBook' do
 
   # Pods for AccountBook
 
+  pod 'RxViewController'
+  pod 'Charts'
+  pod 'RxCocoa'
+  pod 'RxGesture'
+  pod 'Firebase/Auth'
+  pod 'Firebase/Storage'
+  pod 'RxMKMapView'
+  pod 'RxDataSources'
+  pod 'Firebase/Firestore'
+  pod 'SnapKit'
+  pod 'GoogleSignIn'
+  pod 'Firebase/Database'
+  pod 'lottie-ios'
+
+
 end
