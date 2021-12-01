@@ -21,7 +21,7 @@ class ChartView: BaseView{
         pieView.snp.makeConstraints { make in
             make.center.equalTo(self)
             make.width.equalTo(self)
-            make.height.equalTo(self)
+            make.height.equalTo(600)
         }
         
         

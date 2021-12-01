@@ -23,9 +23,8 @@ class IntroView: BaseView{
         return label
     }()
     
-    override func setup() {
+    override func setup(){
         super.setup()
-        
         backgroundColor = .cyan
         addSubViews(titleLabel, animationView)
         

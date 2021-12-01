@@ -19,7 +19,7 @@ class ListView: BaseView{
         
         addSubViews(filterPicker, tableView)
         
-        filterPicker.backgroundColor = .yellow
+        filterPicker.backgroundColor = .white
         filterPicker.snp.makeConstraints { make in
             make.top.equalTo(self).offset(104)
             make.leading.equalTo(self).offset(15)
@@ -27,7 +27,7 @@ class ListView: BaseView{
             make.height.equalTo(40)
         }
         
-        tableView.backgroundColor = .yellow
+        tableView.backgroundColor = .white
         tableView.snp.makeConstraints { make in
             make.top.equalTo(filterPicker.snp.bottom).offset(15)
             make.bottom.equalTo(self).offset(-104)

@@ -46,6 +46,7 @@ class ChartViewController: BaseViewController{
                 entryList.append(entry)
             }
             let dataSet = PieChartDataSet(entries: entryList, label: "PieChart")
+            dataSet.entryLabelColor = UIColor.black
             dataSet.colors = ChartColorTemplates.joyful()
             dataSet.valueColors = [UIColor.black]
             let data = PieChartData(dataSet: dataSet)
