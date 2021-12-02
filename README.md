@@ -23,5 +23,6 @@
    
 ## 사용 라이브러리
      
-     'RxSwift', 'RxViewController', 'Charts', 'RxCocoa', 'RxGesture', 'Firebase/Auth', 'Firebase/Storage', 
-     'RxMKMapView', 'RxDataSources', 'Firebase/Firestore', 'SnapKit', 'GoogleSignIn', 'Firebase/Database', 'lottie-ios'
+     'RxSwift', 'RxViewController', 'Charts', 'RxCocoa', 'RxGesture', 
+     'Firebase/Auth', 'Firebase/Storage', 'RxMKMapView', 'RxDataSources', 
+     'Firebase/Firestore', 'SnapKit', 'GoogleSignIn', 'Firebase/Database', 'lottie-ios'
