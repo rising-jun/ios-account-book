@@ -236,6 +236,13 @@
 			path = cell;
 			sourceTree = "<group>";
 		};
+		726B03072757627700F1D66D /* chartview */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = chartview;
+			sourceTree = "<group>";
+		};
 		7290EDCF2733B37200292E88 /* intro */ = {
 			isa = PBXGroup;
 			children = (
@@ -306,6 +313,7 @@
 		7290EDF12733C3A200292E88 /* chart */ = {
 			isa = PBXGroup;
 			children = (
+				726B03072757627700F1D66D /* chartview */,
 				7290EDF42733C5B000292E88 /* ChartViewController.swift */,
 				72356DE7274CD1F700CA9DF4 /* ChartView.swift */,
 				72356DE9274CD23500CA9DF4 /* ChartViewModel.swift */,

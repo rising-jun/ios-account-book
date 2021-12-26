@@ -101,6 +101,7 @@ class WriteViewController: BaseViewController{
             guard let self = self else { return }
             if let coor = coordi{
                 self.mapViewInitSet(coordi: coor)
+                
             }
         }).disposed(by: disposeBag)
         
