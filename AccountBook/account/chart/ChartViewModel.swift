@@ -16,7 +16,7 @@ class ChartViewModel: ViewModelType{
     private let state = BehaviorRelay<ChartState>(value: ChartState())
     private let disposeBag = DisposeBag()
     
-    private var fbReadModel: FirebaseReadRepository!
+    private var fbReadModel = FirebaseReadRepository()
     
     private var bookListPublish = PublishSubject<[ChartInfo]>()
     

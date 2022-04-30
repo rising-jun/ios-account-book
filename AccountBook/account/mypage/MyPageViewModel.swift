@@ -32,7 +32,6 @@ class MyPageViewModel: ViewModelType{
     
     func bind(input: Input) -> Output{
         self.input = input
-        fbReadModel = FirebaseReadRepository(fbCallBack: self)
         
         input.viewState?
             .withLatestFrom(state){ [weak self] _, state -> MyPageState in
@@ -77,15 +76,4 @@ extension MyPageViewModel{
 struct MyPageState{
     var viewLogic: ViewLogic?
     var paySum: Int?
-}
-
-extension MyPageViewModel: FirebaseReadProtocol{
-    func bookInfoList(bookList: [BookInfo]) {
-        var sum: Int = 0
-        for i in bookList{
-            sum += Int(i.price) ?? 0
-        }
-        paySumPublish.onNext(sum)
-    }
-    
 }

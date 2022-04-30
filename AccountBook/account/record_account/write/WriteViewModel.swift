@@ -16,7 +16,7 @@ final class WriteViewModel: ViewModelType{
     var output: Output?
     
     private let state = BehaviorRelay<WriteState>(value: WriteState())
-    private let writeResult = PublishSubject<Bool>()
+    private let writeResult = PublishSubject<FirebaseWriteResult>()
     private var fbModel: FirebaseWriteRepository!
     
     struct Input{
@@ -41,10 +41,7 @@ final class WriteViewModel: ViewModelType{
     
     func bind(input: Input) -> Output{
         self.input = input
-        
-        fbModel = FirebaseWriteRepository(result: self)
-        
-        
+
         input.locState?
             .withLatestFrom(state){ locStatus, state -> WriteState in
                 var newState = state
@@ -145,7 +142,9 @@ final class WriteViewModel: ViewModelType{
                     print("write possible now!")
                     //write!
                     newState.writeObject.userId = UserDefaults.standard.string(forKey: "token") ?? "null"
-                    self!.fbModel.writeBookInfo(bookInfo: newState.writeObject)
+                    self!.fbModel.writeBookInfo(bookInfo: newState.writeObject) { result in
+                        
+                    }
                     
                    
                 }
@@ -164,10 +163,11 @@ final class WriteViewModel: ViewModelType{
         
         writeResult.withLatestFrom(state){ result, state -> WriteState in
             var newState = state
-            if result{
+            switch result{
+            case .success:
                 newState.presentVC = .list
                 newState.resultMsg = .success
-            }else{
+            case .failed(let error):
                 newState.resultMsg = .failed
             }
             return newState
@@ -206,8 +206,8 @@ extension WriteViewModel{
     
 }
 
-extension WriteViewModel: FirebaseWriteProtocol{
-    func writeResult(result: Bool) {
+extension WriteViewModel{
+    func writeResult(result: FirebaseWriteResult) {
         print("writeResult!! : \(result)")
         writeResult.onNext(result)
     }

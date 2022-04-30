@@ -10,22 +10,13 @@ import RxSwift
 import RxCocoa
 import FirebaseFirestore
 
-protocol FirebaseWriteProtocol{
-    func writeResult(result: Bool)
-}
-
 struct FirebaseWriteRepository{
     private let disposeBag = DisposeBag()
-    private var result: FirebaseWriteProtocol!
-    init(result: FirebaseWriteProtocol){
-        self.result = result
-    }
-
 }
 
 extension FirebaseWriteRepository{
     
-    func writeBookInfo(bookInfo: BookInfo){
+    func writeBookInfo(bookInfo: BookInfo, completion: @escaping(Result<FirebaseWriteResult, FireBaseError>) -> Void){
         let jsonEncoder = JSONEncoder()
         let jsonData = try! jsonEncoder.encode(bookInfo)
         let json = String(data: jsonData, encoding: .utf8)
@@ -36,18 +27,16 @@ extension FirebaseWriteRepository{
                 let db = Firestore.firestore()
                 db.collection("account_array")
                     .document("accountData")
-                    .updateData(["book_list" : FieldValue.arrayUnion([result])]){
-                        err in
-                    }
-                self.result.writeResult(result: true)
+                    .updateData(["book_list" : FieldValue.arrayUnion([result])])
+                completion(.success(.success))
             } catch {
-                print(error.localizedDescription)
-                print("catch")
-                self.result.writeResult(result: false)
+                completion(.failure(.writeError))
             }
         }
-        
-        
     }
-    
+}
+
+enum FirebaseWriteResult{
+    case success
+    case failed(error: FireBaseError)
 }
