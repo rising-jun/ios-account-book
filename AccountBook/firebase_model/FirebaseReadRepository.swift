@@ -26,7 +26,7 @@ struct FirebaseReadRepository{
 }
 
 extension FirebaseReadRepository{
-    func readBookInfo(){
+    func readBookInfo(completion: @escaping(Result<[BookInfo], FireBaseError>) -> Void){
         let db = Firestore.firestore()
         let ref = db.collection("account_array").document("accountData")
             .getDocument{ (document, error) in
@@ -35,12 +35,15 @@ extension FirebaseReadRepository{
                     Observable<Data>.just(profileJson)
                         .decode(type: SnapInfo.self, decoder: JSONDecoder())
                         .subscribe(onNext: { snapInfo in
-                            fbCallback.bookInfoList(bookList: snapInfo.book_list)
+                            completion(.success(snapInfo.bookList))
                         }, onError: { error in
-                            print("error in read FB \(error)")
+                            completion(.failure(error))
                         }).disposed(by: self.disposeBag)
                 }
             }
     }
     
+}
+enum FireBaseError: Error{
+    case snapError
 }

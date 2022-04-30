@@ -79,7 +79,14 @@ class ListViewModel{
 }
 
 extension ListViewModel{
-
+    func bookInfoList(result: Result<[BookInfo], FireBaseError>) {
+        switch result{
+        case .success(let bookList):
+            listData.onNext(bookList)
+        case .failure(let error):
+            print(error)
+        }
+    }
 }
 
 extension ListViewModel: FirebaseReadProtocol{
@@ -93,5 +100,4 @@ struct ListViewState{
     var viewLogic: ViewLogic?
     var filterData: [String]?
     var listData: [BookInfo]?
-
 }
