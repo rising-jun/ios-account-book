@@ -32,7 +32,6 @@ class MapViewModel: ViewModelType{
     
     func bind(input: Input) -> Output{
         self.input = input
-        fbReadModel = FirebaseReadRepository(fbCallBack: self)
         
         input.viewState?
             .withLatestFrom(state){ [weak self] _, state -> MapState in
@@ -63,12 +62,4 @@ struct MapState{
     var presentVC: PresentVC?
     var viewLogic: ViewLogic?
     var listData: [BookInfo]?
-}
-
-extension MapViewModel: FirebaseReadProtocol{
-    func bookInfoList(bookList: [BookInfo]) {
-        bookListPublish.onNext(bookList)
-    }
-    
-    
 }

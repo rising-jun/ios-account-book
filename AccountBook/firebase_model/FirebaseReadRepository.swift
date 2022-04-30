@@ -10,19 +10,8 @@ import RxSwift
 import RxCocoa
 import FirebaseFirestore
 
-protocol FirebaseReadProtocol{
-    func bookInfoList(bookList: [BookInfo])
-    
-}
-
 struct FirebaseReadRepository{
-    
-    private var fbCallback: FirebaseReadProtocol!
     private let disposeBag = DisposeBag()
-    
-    init(fbCallBack: FirebaseReadProtocol){
-        self.fbCallback = fbCallBack
-    }
 }
 
 extension FirebaseReadRepository{

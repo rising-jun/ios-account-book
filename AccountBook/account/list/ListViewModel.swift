@@ -33,7 +33,6 @@ class ListViewModel{
     
     func bind(input: Input) -> Output{
         self.input = input
-        self.fbModel = FirebaseReadRepository(fbCallBack: self)
         
         input.viewState?
             .withLatestFrom(state)
@@ -90,12 +89,6 @@ extension ListViewModel{
         case .failure(let error):
             print(error)
         }
-    }
-}
-
-extension ListViewModel: FirebaseReadProtocol{
-    func bookInfoList(bookList: [BookInfo]) {
-        listData.onNext(bookList)
     }
 }
 
