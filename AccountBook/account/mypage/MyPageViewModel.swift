@@ -16,7 +16,7 @@ class MyPageViewModel: ViewModelType{
     private let state = BehaviorRelay<MyPageState>(value: MyPageState())
     private let disposeBag = DisposeBag()
     
-    private var fbReadModel: FirebaseReadModel!
+    private var fbReadModel: FirebaseReadRepository!
     
     private var paySumPublish = PublishSubject<Int>()
     
@@ -32,7 +32,7 @@ class MyPageViewModel: ViewModelType{
     
     func bind(input: Input) -> Output{
         self.input = input
-        fbReadModel = FirebaseReadModel(fbCallBack: self)
+        fbReadModel = FirebaseReadRepository(fbCallBack: self)
         
         input.viewState?
             .withLatestFrom(state){ [weak self] _, state -> MyPageState in

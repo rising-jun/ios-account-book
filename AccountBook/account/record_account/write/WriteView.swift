@@ -89,7 +89,6 @@ class WriteView: BaseView{
     lazy var setLocModeButton: UIButton = {
         let button = UIButton()
         button.setTitle("직접설정", for: .normal)
-        //button.setTitleColor(<#T##color: UIColor?##UIColor?#>, for: <#T##UIControl.State#>)
         button.titleLabel!.font = UIFont.systemFont(ofSize: 18)
         return button
     }()

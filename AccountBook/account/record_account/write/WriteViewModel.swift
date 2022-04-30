@@ -17,7 +17,7 @@ final class WriteViewModel: ViewModelType{
     
     private let state = BehaviorRelay<WriteState>(value: WriteState())
     private let writeResult = PublishSubject<Bool>()
-    private var fbModel: FirebaseWriteModel!
+    private var fbModel: FirebaseWriteRepository!
     
     struct Input{
         let viewState: Observable<ViewState>?
@@ -42,7 +42,7 @@ final class WriteViewModel: ViewModelType{
     func bind(input: Input) -> Output{
         self.input = input
         
-        fbModel = FirebaseWriteModel(result: self)
+        fbModel = FirebaseWriteRepository(result: self)
         
         
         input.locState?

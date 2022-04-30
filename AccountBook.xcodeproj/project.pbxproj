@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		72059BFB2743A9B700AB0929 /* FirebaseReadModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72059BFA2743A9B700AB0929 /* FirebaseReadModel.swift */; };
+		72059BFB2743A9B700AB0929 /* FirebaseReadRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72059BFA2743A9B700AB0929 /* FirebaseReadRepository.swift */; };
 		7212CA1C2738EB1B00965C13 /* WriteViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7212CA1B2738EB1B00965C13 /* WriteViewController.swift */; };
 		7212CA1E2738EB7600965C13 /* WriteView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7212CA1D2738EB7600965C13 /* WriteView.swift */; };
 		7212CA202738EBB000965C13 /* WriteViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7212CA1F2738EBB000965C13 /* WriteViewModel.swift */; };
@@ -15,7 +15,7 @@
 		721956D5274B7F4300FDB085 /* PaidAnnotationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 721956D4274B7F4300FDB085 /* PaidAnnotationView.swift */; };
 		721956D7274B86DE00FDB085 /* PaidAnnotation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 721956D6274B86DE00FDB085 /* PaidAnnotation.swift */; };
 		72256DD127394EB800D2BC03 /* PermissionCheck.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72256DD027394EB800D2BC03 /* PermissionCheck.swift */; };
-		723152A22744D48100014FF6 /* FirebaseWriteModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 723152A12744D48100014FF6 /* FirebaseWriteModel.swift */; };
+		723152A22744D48100014FF6 /* FirebaseWriteRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 723152A12744D48100014FF6 /* FirebaseWriteRepository.swift */; };
 		7231737D2733A8D900FF27A4 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7231737C2733A8D900FF27A4 /* AppDelegate.swift */; };
 		723173812733A8D900FF27A4 /* IntroViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 723173802733A8D900FF27A4 /* IntroViewController.swift */; };
 		723173862733A8DB00FF27A4 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 723173852733A8DB00FF27A4 /* Assets.xcassets */; };
@@ -53,7 +53,7 @@
 
 /* Begin PBXFileReference section */
 		6B4118FAD393A51CB7B8B27B /* Pods_AccountBook.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_AccountBook.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		72059BFA2743A9B700AB0929 /* FirebaseReadModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseReadModel.swift; sourceTree = "<group>"; };
+		72059BFA2743A9B700AB0929 /* FirebaseReadRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseReadRepository.swift; sourceTree = "<group>"; };
 		7212CA1B2738EB1B00965C13 /* WriteViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WriteViewController.swift; sourceTree = "<group>"; };
 		7212CA1D2738EB7600965C13 /* WriteView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WriteView.swift; sourceTree = "<group>"; };
 		7212CA1F2738EBB000965C13 /* WriteViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WriteViewModel.swift; sourceTree = "<group>"; };
@@ -61,7 +61,7 @@
 		721956D4274B7F4300FDB085 /* PaidAnnotationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaidAnnotationView.swift; sourceTree = "<group>"; };
 		721956D6274B86DE00FDB085 /* PaidAnnotation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaidAnnotation.swift; sourceTree = "<group>"; };
 		72256DD027394EB800D2BC03 /* PermissionCheck.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PermissionCheck.swift; sourceTree = "<group>"; };
-		723152A12744D48100014FF6 /* FirebaseWriteModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseWriteModel.swift; sourceTree = "<group>"; };
+		723152A12744D48100014FF6 /* FirebaseWriteRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseWriteRepository.swift; sourceTree = "<group>"; };
 		723173792733A8D900FF27A4 /* AccountBook.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AccountBook.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		7231737C2733A8D900FF27A4 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		723173802733A8D900FF27A4 /* IntroViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntroViewController.swift; sourceTree = "<group>"; };
@@ -123,8 +123,8 @@
 		72059BF92743A97F00AB0929 /* firebase_model */ = {
 			isa = PBXGroup;
 			children = (
-				72059BFA2743A9B700AB0929 /* FirebaseReadModel.swift */,
-				723152A12744D48100014FF6 /* FirebaseWriteModel.swift */,
+				72059BFA2743A9B700AB0929 /* FirebaseReadRepository.swift */,
+				723152A12744D48100014FF6 /* FirebaseWriteRepository.swift */,
 			);
 			path = firebase_model;
 			sourceTree = "<group>";
@@ -236,6 +236,13 @@
 			path = cell;
 			sourceTree = "<group>";
 		};
+		726B03072757627700F1D66D /* chartview */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = chartview;
+			sourceTree = "<group>";
+		};
 		7290EDCF2733B37200292E88 /* intro */ = {
 			isa = PBXGroup;
 			children = (
@@ -306,6 +313,7 @@
 		7290EDF12733C3A200292E88 /* chart */ = {
 			isa = PBXGroup;
 			children = (
+				726B03072757627700F1D66D /* chartview */,
 				7290EDF42733C5B000292E88 /* ChartViewController.swift */,
 				72356DE7274CD1F700CA9DF4 /* ChartView.swift */,
 				72356DE9274CD23500CA9DF4 /* ChartViewModel.swift */,
@@ -458,14 +466,14 @@
 			buildActionMask = 2147483647;
 			files = (
 				7247EFA92734004A00FDEE7B /* BookInfo.swift in Sources */,
-				72059BFB2743A9B700AB0929 /* FirebaseReadModel.swift in Sources */,
+				72059BFB2743A9B700AB0929 /* FirebaseReadRepository.swift in Sources */,
 				7290EDFA2733CF7B00292E88 /* ListView.swift in Sources */,
 				721956D5274B7F4300FDB085 /* PaidAnnotationView.swift in Sources */,
 				721956D2274B6BC000FDB085 /* MapDelegate.swift in Sources */,
 				723173812733A8D900FF27A4 /* IntroViewController.swift in Sources */,
 				7290EDF52733C5B000292E88 /* ChartViewController.swift in Sources */,
 				726B0304275742DF00F1D66D /* MyPageView.swift in Sources */,
-				723152A22744D48100014FF6 /* FirebaseWriteModel.swift in Sources */,
+				723152A22744D48100014FF6 /* FirebaseWriteRepository.swift in Sources */,
 				721956D7274B86DE00FDB085 /* PaidAnnotation.swift in Sources */,
 				7290EDEB2733C2AA00292E88 /* GoogleLoginToken.swift in Sources */,
 				726B03062757431100F1D66D /* MyPageViewModel.swift in Sources */,

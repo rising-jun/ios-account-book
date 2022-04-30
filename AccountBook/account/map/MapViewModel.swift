@@ -16,7 +16,7 @@ class MapViewModel: ViewModelType{
     private let state = BehaviorRelay<MapState>(value: MapState())
     private let disposeBag = DisposeBag()
     
-    private var fbReadModel: FirebaseReadModel!
+    private var fbReadModel: FirebaseReadRepository!
     
     private var bookListPublish = PublishSubject<[BookInfo]>()
     
@@ -32,7 +32,7 @@ class MapViewModel: ViewModelType{
     
     func bind(input: Input) -> Output{
         self.input = input
-        fbReadModel = FirebaseReadModel(fbCallBack: self)
+        fbReadModel = FirebaseReadRepository(fbCallBack: self)
         
         input.viewState?
             .withLatestFrom(state){ [weak self] _, state -> MapState in

@@ -16,7 +16,7 @@ class ChartViewModel: ViewModelType{
     private let state = BehaviorRelay<ChartState>(value: ChartState())
     private let disposeBag = DisposeBag()
     
-    private var fbReadModel: FirebaseReadModel!
+    private var fbReadModel: FirebaseReadRepository!
     
     private var bookListPublish = PublishSubject<[ChartInfo]>()
     
@@ -32,7 +32,7 @@ class ChartViewModel: ViewModelType{
     
     func bind(input: Input) -> Output{
         self.input = input
-        fbReadModel = FirebaseReadModel(fbCallBack: self)
+        fbReadModel = FirebaseReadRepository(fbCallBack: self)
         
         input.viewState?
             .withLatestFrom(state){ [weak self] _, state -> ChartState in
