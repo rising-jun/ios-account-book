@@ -6,11 +6,17 @@ target 'AccountBook' do
   use_frameworks!
 
   # Pods for AccountBook
-
+  pod 'Firebase/Firestore'
   pod 'RxViewController'
   pod 'Charts'
   pod 'RxCocoa'
   pod 'RxGesture'
   pod 'Firebase/Auth'
   pod 'Firebase/Storage'
+  pod 'RxMKMapView'
+  pod 'RxDataSources'
+  pod 'SnapKit'
+  pod 'GoogleSignIn'
+  pod 'Firebase/Database'
+  pod 'lottie-ios'
 end

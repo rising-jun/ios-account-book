@@ -38,7 +38,9 @@ class MapViewModel: ViewModelType{
             .withLatestFrom(state){ [weak self] _, state -> MapState in
                 var newState = state
                 newState.viewLogic = .setUpView
-                self!.fbReadModel.readBookInfo()
+                self!.fbReadModel.readBookInfo { result in
+                    
+                }
                 return newState
             }.bind(to: self.state)
             .disposed(by: disposeBag)

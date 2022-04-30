@@ -32,13 +32,15 @@ class ChartViewModel: ViewModelType{
     
     func bind(input: Input) -> Output{
         self.input = input
-        fbReadModel = FirebaseReadRepository(fbCallBack: self)
+        //fbReadModel = FirebaseReadRepository(fbCallBack: self)
         
         input.viewState?
             .withLatestFrom(state){ [weak self] _, state -> ChartState in
                 var newState = state
                 newState.viewLogic = .setUpView
-                self!.fbReadModel.readBookInfo()
+                self!.fbReadModel.readBookInfo { result in
+                    self!.bookInfoList(result: result)
+                }
                 return newState
             }.bind(to: self.state)
             .disposed(by: disposeBag)
@@ -64,9 +66,15 @@ struct ChartState{
     var chartList: [ChartInfo]?
 }
 
-extension ChartViewModel: FirebaseReadProtocol{
-    func bookInfoList(bookList: [BookInfo]) {
-        bookListPublish.onNext(convertChartList(bookList))
+extension ChartViewModel{
+    func bookInfoList(result: Result<[BookInfo], FireBaseError>) {
+        switch result{
+        case .success(let books):
+            bookListPublish.onNext(convertChartList(books))
+        case .failure(let error):
+            print(error)
+        }
+       
     }
     
     func categoryColor(_ category: String) -> UIColor{

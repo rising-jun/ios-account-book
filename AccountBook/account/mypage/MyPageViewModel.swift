@@ -38,7 +38,9 @@ class MyPageViewModel: ViewModelType{
             .withLatestFrom(state){ [weak self] _, state -> MyPageState in
                 var newState = state
                 newState.viewLogic = .setUpView
-                self!.fbReadModel.readBookInfo()
+                self!.fbReadModel.readBookInfo { result in
+                    self!.bookInfoList(result: result)
+                }
                 return newState
             }.bind(to: self.state)
             .disposed(by: disposeBag)
@@ -56,6 +58,20 @@ class MyPageViewModel: ViewModelType{
         return output!
     }
     
+}
+extension MyPageViewModel{
+    func bookInfoList(result: Result<[BookInfo], FireBaseError>) {
+        switch result{
+        case .success(let bookList):
+            var sum: Int = 0
+            for i in bookList{
+                sum += Int(i.price) ?? 0
+            }
+            paySumPublish.onNext(sum)
+        case .failure(let error):
+            print(error)
+        }
+    }
 }
 
 struct MyPageState{

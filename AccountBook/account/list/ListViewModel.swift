@@ -41,7 +41,9 @@ class ListViewModel{
                 var newState = state
                 newState.viewLogic = .setUpView
                 newState.filterData = ["높은금액순", "최신순", "카테고리 별"]
-                self?.fbModel.readBookInfo()
+                self?.fbModel.readBookInfo(completion: { result in
+                    self?.bookInfoList(result: result)
+                })
                 return newState
             }.bind(to: self.state)
             .disposed(by: disposeBag)
@@ -67,7 +69,9 @@ class ListViewModel{
             .map{ [weak self] state -> ListViewState in
                 var newState = state
                 newState.presentVC = .list
-                self!.fbModel.readBookInfo()
+                self?.fbModel.readBookInfo(completion: { result in
+                    self?.bookInfoList(result: result)
+                })
                 return newState
             }.bind(to: self.state)
             .disposed(by: disposeBag)

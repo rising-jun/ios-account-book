@@ -35,9 +35,9 @@ extension FirebaseReadRepository{
                     Observable<Data>.just(profileJson)
                         .decode(type: SnapInfo.self, decoder: JSONDecoder())
                         .subscribe(onNext: { snapInfo in
-                            completion(.success(snapInfo.bookList))
+                            completion(.success(snapInfo.book_list))
                         }, onError: { error in
-                            completion(.failure(error))
+                            completion(.failure(.snapError))
                         }).disposed(by: self.disposeBag)
                 }
             }
