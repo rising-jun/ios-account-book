@@ -41,8 +41,6 @@ class MapViewController: BaseViewController{
         output.state?.map{$0.listData ?? []}
         .filter{$0.count > 0}
         .drive(onNext: { [weak self] bookList in
-//            var paidView = PaidAnnotation(index: 0, latitude: 37.533544, longitude: 127.146997, bookInfo: bookList.first!)
-//            self?.v.mapView.addAnnotation(paidView)
             guard let self = self else { return }
             
             for i in bookList{

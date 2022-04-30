@@ -14,20 +14,16 @@ protocol FirebaseWriteProtocol{
     func writeResult(result: Bool)
 }
 
-class FirebaseWriteModel{
-    
+struct FirebaseWriteRepository{
     private let disposeBag = DisposeBag()
-    
     private var result: FirebaseWriteProtocol!
-    
     init(result: FirebaseWriteProtocol){
         self.result = result
     }
-    
-    
+
 }
 
-extension FirebaseWriteModel{
+extension FirebaseWriteRepository{
     
     func writeBookInfo(bookInfo: BookInfo){
         let jsonEncoder = JSONEncoder()
@@ -41,7 +37,7 @@ extension FirebaseWriteModel{
                 db.collection("account_array")
                     .document("accountData")
                     .updateData(["book_list" : FieldValue.arrayUnion([result])]){
-                        [weak self] err in
+                        err in
                     }
                 self.result.writeResult(result: true)
             } catch {

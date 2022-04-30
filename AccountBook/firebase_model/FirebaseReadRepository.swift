@@ -15,7 +15,7 @@ protocol FirebaseReadProtocol{
     
 }
 
-class FirebaseReadModel{
+struct FirebaseReadRepository{
     
     private var fbCallback: FirebaseReadProtocol!
     private let disposeBag = DisposeBag()
@@ -23,16 +23,9 @@ class FirebaseReadModel{
     init(fbCallBack: FirebaseReadProtocol){
         self.fbCallback = fbCallBack
     }
-    
-    init(){
-        
-    }
-    
-    
 }
 
-extension FirebaseReadModel{
-    
+extension FirebaseReadRepository{
     func readBookInfo(){
         let db = Firestore.firestore()
         let ref = db.collection("account_array").document("accountData")
@@ -41,15 +34,12 @@ extension FirebaseReadModel{
                     let profileJson = try! JSONSerialization.data(withJSONObject: data, options: .prettyPrinted)
                     Observable<Data>.just(profileJson)
                         .decode(type: SnapInfo.self, decoder: JSONDecoder())
-                        .subscribe(onNext: {[weak self] snapInfo in
-                            guard let self = self else { return }
-                            self.fbCallback.bookInfoList(bookList: snapInfo.book_list)
+                        .subscribe(onNext: { snapInfo in
+                            fbCallback.bookInfoList(bookList: snapInfo.book_list)
                         }, onError: { error in
                             print("error in read FB \(error)")
                         }).disposed(by: self.disposeBag)
                 }
-                
-                
             }
     }
     

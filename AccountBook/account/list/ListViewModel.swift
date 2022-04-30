@@ -17,7 +17,7 @@ class ListViewModel{
     private let state = BehaviorRelay<ListViewState>(value: ListViewState())
     private var listData = PublishSubject<[BookInfo]>()
     
-    private var fbModel: FirebaseReadModel!
+    private var fbModel: FirebaseReadRepository!
     
     struct Input{
         let viewState: Observable<Void>?
@@ -33,7 +33,7 @@ class ListViewModel{
     
     func bind(input: Input) -> Output{
         self.input = input
-        self.fbModel = FirebaseReadModel(fbCallBack: self)
+        self.fbModel = FirebaseReadRepository(fbCallBack: self)
         
         input.viewState?
             .withLatestFrom(state)
