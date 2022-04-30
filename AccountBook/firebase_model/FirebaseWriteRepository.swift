@@ -10,12 +10,15 @@ import RxSwift
 import RxCocoa
 import FirebaseFirestore
 
+protocol BookWriteRepository{
+    func writeBookInfo(bookInfo: BookInfo, completion: @escaping(Result<FirebaseWriteResult, FireBaseError>) -> Void)
+}
+
 struct FirebaseWriteRepository{
     private let disposeBag = DisposeBag()
 }
 
-extension FirebaseWriteRepository{
-    
+extension FirebaseWriteRepository: BookWriteRepository{
     func writeBookInfo(bookInfo: BookInfo, completion: @escaping(Result<FirebaseWriteResult, FireBaseError>) -> Void){
         let jsonEncoder = JSONEncoder()
         let jsonData = try! jsonEncoder.encode(bookInfo)
