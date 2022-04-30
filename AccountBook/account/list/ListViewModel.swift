@@ -17,7 +17,7 @@ class ListViewModel{
     private let state = BehaviorRelay<ListViewState>(value: ListViewState())
     private var listData = PublishSubject<[BookInfo]>()
     
-    private var fbModel: FirebaseReadRepository!
+    private var fbModel = FirebaseReadRepository()
     
     struct Input{
         let viewState: Observable<Void>?

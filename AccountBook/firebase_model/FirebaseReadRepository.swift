@@ -35,4 +35,5 @@ extension FirebaseReadRepository{
 }
 enum FireBaseError: Error{
     case snapError
+    case writeError
 }

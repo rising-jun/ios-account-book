@@ -16,7 +16,7 @@ class MapViewModel: ViewModelType{
     private let state = BehaviorRelay<MapState>(value: MapState())
     private let disposeBag = DisposeBag()
     
-    private var fbReadModel: FirebaseReadRepository!
+    private var fbReadModel = FirebaseReadRepository()
     
     private var bookListPublish = PublishSubject<[BookInfo]>()
     
