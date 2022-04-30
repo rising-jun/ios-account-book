@@ -15,15 +15,11 @@ class MapViewModel: ViewModelType{
     
     private let state = BehaviorRelay<MapState>(value: MapState())
     private let disposeBag = DisposeBag()
-    
     private var fbReadModel = FirebaseReadRepository()
-    
     private var bookListPublish = PublishSubject<[BookInfo]>()
-    
     
     struct Input{
         let viewState: Observable<Void>?
-        
     }
     
     struct Output{
@@ -38,7 +34,7 @@ class MapViewModel: ViewModelType{
                 var newState = state
                 newState.viewLogic = .setUpView
                 self!.fbReadModel.readBookInfo { result in
-                    
+                    self!.updateBooks(result: result)
                 }
                 return newState
             }.bind(to: self.state)
@@ -47,7 +43,12 @@ class MapViewModel: ViewModelType{
         bookListPublish
             .withLatestFrom(state){ list, state -> MapState in
                 var newState = state
-                newState.listData = list
+                if newState.annotationEntities == nil{
+                    newState.annotationEntities = []
+                }
+                var entities = newState.annotationEntities
+                let _ = list.map{entities?.append(PaidAnnotationEntity(name: $0.name, subTitle: $0.price, lat: $0.lat, long: $0.long))}
+                newState.annotationEntities = entities
                 return newState
             }.bind(to: self.state)
             .disposed(by: disposeBag)
@@ -57,9 +58,18 @@ class MapViewModel: ViewModelType{
     }
     
 }
-
+extension MapViewModel{
+    private func updateBooks(result: Result<[BookInfo], FireBaseError>){
+        switch result{
+        case .success(let books):
+            bookListPublish.onNext(books)
+        case .failure(let error):
+            print(error)
+        }
+    }
+}
 struct MapState{
     var presentVC: PresentVC?
     var viewLogic: ViewLogic?
-    var listData: [BookInfo]?
+    var annotationEntities: [PaidAnnotationEntity]?
 }

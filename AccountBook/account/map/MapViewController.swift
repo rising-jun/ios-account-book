@@ -16,11 +16,7 @@ class MapViewController: BaseViewController{
     
     lazy var v = MapView(frame: view.frame)
     private var mapDelegate = MapDelegate()
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-    }
-    
+    private lazy var annotations: [MKPointAnnotation] = []
     
     private let viewModel = MapViewModel()
     private lazy var input = MapViewModel.Input(viewState: rx.viewDidLoad.map{_ in Void()})
@@ -30,7 +26,6 @@ class MapViewController: BaseViewController{
     override func bindViewModel(){
         super.bindViewModel()
         
-        
         output.state?.map{$0.viewLogic}
         .filter{$0 == .setUpView}
         .distinctUntilChanged()
@@ -38,35 +33,37 @@ class MapViewController: BaseViewController{
             self?.setUpView()
         }).disposed(by: disposeBag)
         
-        output.state?.map{$0.listData ?? []}
+        output.state?.map{$0.annotationEntities ?? []}
         .filter{$0.count > 0}
-        .drive(onNext: { [weak self] bookList in
+        .drive(onNext: { [weak self] annotationEntities in
             guard let self = self else { return }
-            
-            for i in bookList{
-                let pointAnnotation = MKPointAnnotation()
-                pointAnnotation.title = i.name
-                pointAnnotation.subtitle = i.price
-                pointAnnotation.coordinate = CLLocationCoordinate2D(latitude: i.lat, longitude: i.long)
-                self.v.mapView.addAnnotation(pointAnnotation)
-            }
-            
-            self.v.mapView.delegate = self.mapDelegate
+            self.makeAnnotationViews(by: annotationEntities)
+            self.addAnnotation(to: self.v.mapView)
         }).disposed(by: disposeBag)
-        
-        
     }
     
-}
-
-extension MapViewController{
-    func setUpView(){
+    private func makeAnnotationViews(by annotationEntities: [PaidAnnotationEntity]){
+        let _ = annotationEntities.map{
+            let pointAnnotation = MKPointAnnotation()
+            pointAnnotation.title = $0.name
+            pointAnnotation.subtitle = $0.subTitle
+            pointAnnotation.coordinate = CLLocationCoordinate2D(latitude: $0.lat, longitude: $0.long)
+            self.annotations.append(pointAnnotation)
+        }
+    }
+    
+    private func addAnnotation(to mapView: MKMapView){
+        self.v.mapView.addAnnotations(annotations)
+        self.v.mapView.delegate = self.mapDelegate
+    }
+    
+    private func setUpView(){
         view = v
         mapViewInitSet(coordi: CLLocationCoordinate2D(latitude: 37.533544, longitude: 127.146997))
         
     }
     
-    func mapViewInitSet(coordi: CLLocationCoordinate2D){
+    private func mapViewInitSet(coordi: CLLocationCoordinate2D){
         self.v.mapView.showsUserLocation = true
         self.v.mapView.showsBuildings = true
         self.v.mapView.isPitchEnabled = true
@@ -75,13 +72,8 @@ extension MapViewController{
         let long = coordi.longitude
         let camera = MKMapCamera()
         camera.centerCoordinate = CLLocationCoordinate2D(latitude: lat, longitude: long)
-        
-        
         camera.pitch = 80.0
         camera.altitude = 100.0
-        
         self.v.mapView.setCamera(camera, animated: false)
-        
     }
-    
 }

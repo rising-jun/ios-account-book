@@ -33,15 +33,14 @@ class PaidAnnotationView: MKAnnotationView{
             make.width.equalTo(100)
             make.height.equalTo(100)
         }
-        
+
         clusteringIdentifier = "PaidAnnotationView"
         setupUI()
     }
     
     required init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
+        super.init(coder: aDecoder)
     }
-    
     
     private func setupUI() {
         backgroundColor = .white
@@ -61,9 +60,5 @@ class PaidAnnotationView: MKAnnotationView{
             make.width.equalTo(80)
             make.height.equalTo(30)
         }
-        
-        
-        
     }
-    
 }
