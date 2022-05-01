@@ -10,38 +10,47 @@ import RxSwift
 import RxCocoa
 import RxViewController
 
-class IntroViewController: BaseViewController {
+class IntroViewController: BaseViewController, DependencySetable {
     
-    lazy var v = IntroView(frame: view.frame)
-    lazy var viewModel = IntroViewModel()
+    override init(){
+        super.init()
+        DependencyInjector.injecting(to: self)
+    }
+    
+    required init?(coder: NSCoder) {
+        super.init(coder: coder)
+    }
+    
+    private var viewModel: IntroViewModel?
+    private var dependency: IntroDependency?{
+        didSet{
+            self.viewModel = dependency?.viewModel
+        }
+    }
+    private lazy var v = IntroView(frame: view.frame)
     private let disposeBag = DisposeBag()
+    
+    func setDependency(dependency: Dependency) {
+        self.dependency = dependency as? IntroDependency
+    }
     
     let loginVC = LoginViewController()
     
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        // Do any additional setup after loading the view.
-        
-        
-        
-    }
-    
-    lazy var input = IntroViewModel.Input(viewState: rx.viewDidLoad.map{ViewState.viewDidLoad})
-    lazy var output = viewModel.bind(input: input)
+    private lazy var input = IntroViewModel.Input(viewState: rx.viewDidLoad.map{ViewState.viewDidLoad})
+    private lazy var output = viewModel?.bind(input: input)
     
     
     override func bindViewModel(){
         super.bindViewModel()
         
-        output.state?.map{$0.viewLogic}
+        output?.state?.map{$0.viewLogic}
             .filter{$0 == .setUpView}
             .distinctUntilChanged()
             .drive(onNext: { [weak self] logic in
             self?.setUpView()
         }).disposed(by: disposeBag)
         
-        output.state?.map{$0.presentVC ?? .intro}
+        output?.state?.map{$0.presentVC ?? .intro}
             .distinctUntilChanged()
             .drive(onNext: { [weak self] presentVC in
             self?.presentVC(vcName: presentVC)

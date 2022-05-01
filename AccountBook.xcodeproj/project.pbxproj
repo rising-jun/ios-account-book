@@ -26,6 +26,8 @@
 		7247EFAB27340E9E00FDEE7B /* BookTableCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7247EFAA27340E9E00FDEE7B /* BookTableCell.swift */; };
 		7247EFAF2734141500FDEE7B /* BookTableDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7247EFAE2734141500FDEE7B /* BookTableDelegate.swift */; };
 		7259B2FA281E83850009C31A /* Timer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7259B2F9281E83850009C31A /* Timer.swift */; };
+		7259B2FD281E8F440009C31A /* DependencyInjector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7259B2FC281E8F440009C31A /* DependencyInjector.swift */; };
+		7259B2FF281E934F0009C31A /* IntroDependency.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7259B2FE281E934F0009C31A /* IntroDependency.swift */; };
 		726B00F0281D632600A9B537 /* PaidAnnotationEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 726B00EF281D632600A9B537 /* PaidAnnotationEntity.swift */; };
 		726B0304275742DF00F1D66D /* MyPageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 726B0303275742DF00F1D66D /* MyPageView.swift */; };
 		726B03062757431100F1D66D /* MyPageViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 726B03052757431100F1D66D /* MyPageViewModel.swift */; };
@@ -76,6 +78,8 @@
 		7247EFAA27340E9E00FDEE7B /* BookTableCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookTableCell.swift; sourceTree = "<group>"; };
 		7247EFAE2734141500FDEE7B /* BookTableDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookTableDelegate.swift; sourceTree = "<group>"; };
 		7259B2F9281E83850009C31A /* Timer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Timer.swift; sourceTree = "<group>"; };
+		7259B2FC281E8F440009C31A /* DependencyInjector.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DependencyInjector.swift; sourceTree = "<group>"; };
+		7259B2FE281E934F0009C31A /* IntroDependency.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntroDependency.swift; sourceTree = "<group>"; };
 		726B00EF281D632600A9B537 /* PaidAnnotationEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaidAnnotationEntity.swift; sourceTree = "<group>"; };
 		726B0303275742DF00F1D66D /* MyPageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPageView.swift; sourceTree = "<group>"; };
 		726B03052757431100F1D66D /* MyPageViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPageViewModel.swift; sourceTree = "<group>"; };
@@ -199,6 +203,7 @@
 		7231737B2733A8D900FF27A4 /* AccountBook */ = {
 			isa = PBXGroup;
 			children = (
+				7259B2FB281E8F370009C31A /* dependency */,
 				72A9A70F273A6BB0006A7FB3 /* SeoulLocation.gpx */,
 				7290EDD72733B3FF00292E88 /* ViewModelProtocol.swift */,
 				72059BF92743A97F00AB0929 /* firebase_model */,
@@ -241,6 +246,14 @@
 			path = cell;
 			sourceTree = "<group>";
 		};
+		7259B2FB281E8F370009C31A /* dependency */ = {
+			isa = PBXGroup;
+			children = (
+				7259B2FC281E8F440009C31A /* DependencyInjector.swift */,
+			);
+			path = dependency;
+			sourceTree = "<group>";
+		};
 		726B03072757627700F1D66D /* chartview */ = {
 			isa = PBXGroup;
 			children = (
@@ -255,6 +268,7 @@
 				7290EDD32733B3B400292E88 /* IntroView.swift */,
 				7290EDD52733B3E300292E88 /* IntroViewModel.swift */,
 				7259B2F9281E83850009C31A /* Timer.swift */,
+				7259B2FE281E934F0009C31A /* IntroDependency.swift */,
 			);
 			path = intro;
 			sourceTree = "<group>";
@@ -482,6 +496,7 @@
 				726B0304275742DF00F1D66D /* MyPageView.swift in Sources */,
 				723152A22744D48100014FF6 /* FirebaseWriteRepository.swift in Sources */,
 				721956D7274B86DE00FDB085 /* PaidAnnotation.swift in Sources */,
+				7259B2FF281E934F0009C31A /* IntroDependency.swift in Sources */,
 				7290EDEB2733C2AA00292E88 /* GoogleLoginToken.swift in Sources */,
 				726B03062757431100F1D66D /* MyPageViewModel.swift in Sources */,
 				7290EDEF2733C39000292E88 /* ListViewController.swift in Sources */,
@@ -493,6 +508,7 @@
 				7290EDE72733C0E500292E88 /* LoginView.swift in Sources */,
 				72356DEA274CD23500CA9DF4 /* ChartViewModel.swift in Sources */,
 				7247EFAB27340E9E00FDEE7B /* BookTableCell.swift in Sources */,
+				7259B2FD281E8F440009C31A /* DependencyInjector.swift in Sources */,
 				7290EDF32733C5A500292E88 /* MapViewController.swift in Sources */,
 				7290EDD62733B3E300292E88 /* IntroViewModel.swift in Sources */,
 				72AE480027464D61003FA631 /* MapViewModel.swift in Sources */,
