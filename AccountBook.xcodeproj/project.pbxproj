@@ -25,6 +25,8 @@
 		7247EFA92734004A00FDEE7B /* BookInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7247EFA82734004A00FDEE7B /* BookInfo.swift */; };
 		7247EFAB27340E9E00FDEE7B /* BookTableCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7247EFAA27340E9E00FDEE7B /* BookTableCell.swift */; };
 		7247EFAF2734141500FDEE7B /* BookTableDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7247EFAE2734141500FDEE7B /* BookTableDelegate.swift */; };
+		7259B2FA281E83850009C31A /* Timer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7259B2F9281E83850009C31A /* Timer.swift */; };
+		726B00F0281D632600A9B537 /* PaidAnnotationEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 726B00EF281D632600A9B537 /* PaidAnnotationEntity.swift */; };
 		726B0304275742DF00F1D66D /* MyPageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 726B0303275742DF00F1D66D /* MyPageView.swift */; };
 		726B03062757431100F1D66D /* MyPageViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 726B03052757431100F1D66D /* MyPageViewModel.swift */; };
 		7290EDD22733B38D00292E88 /* BaseClasses.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7290EDD12733B38D00292E88 /* BaseClasses.swift */; };
@@ -73,6 +75,8 @@
 		7247EFA82734004A00FDEE7B /* BookInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookInfo.swift; sourceTree = "<group>"; };
 		7247EFAA27340E9E00FDEE7B /* BookTableCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookTableCell.swift; sourceTree = "<group>"; };
 		7247EFAE2734141500FDEE7B /* BookTableDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookTableDelegate.swift; sourceTree = "<group>"; };
+		7259B2F9281E83850009C31A /* Timer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Timer.swift; sourceTree = "<group>"; };
+		726B00EF281D632600A9B537 /* PaidAnnotationEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaidAnnotationEntity.swift; sourceTree = "<group>"; };
 		726B0303275742DF00F1D66D /* MyPageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPageView.swift; sourceTree = "<group>"; };
 		726B03052757431100F1D66D /* MyPageViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPageViewModel.swift; sourceTree = "<group>"; };
 		7290EDD12733B38D00292E88 /* BaseClasses.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseClasses.swift; sourceTree = "<group>"; };
@@ -161,6 +165,7 @@
 			children = (
 				721956D4274B7F4300FDB085 /* PaidAnnotationView.swift */,
 				721956D6274B86DE00FDB085 /* PaidAnnotation.swift */,
+				726B00EF281D632600A9B537 /* PaidAnnotationEntity.swift */,
 			);
 			path = annotation;
 			sourceTree = "<group>";
@@ -249,6 +254,7 @@
 				723173802733A8D900FF27A4 /* IntroViewController.swift */,
 				7290EDD32733B3B400292E88 /* IntroView.swift */,
 				7290EDD52733B3E300292E88 /* IntroViewModel.swift */,
+				7259B2F9281E83850009C31A /* Timer.swift */,
 			);
 			path = intro;
 			sourceTree = "<group>";
@@ -468,6 +474,7 @@
 				7247EFA92734004A00FDEE7B /* BookInfo.swift in Sources */,
 				72059BFB2743A9B700AB0929 /* FirebaseReadRepository.swift in Sources */,
 				7290EDFA2733CF7B00292E88 /* ListView.swift in Sources */,
+				726B00F0281D632600A9B537 /* PaidAnnotationEntity.swift in Sources */,
 				721956D5274B7F4300FDB085 /* PaidAnnotationView.swift in Sources */,
 				721956D2274B6BC000FDB085 /* MapDelegate.swift in Sources */,
 				723173812733A8D900FF27A4 /* IntroViewController.swift in Sources */,
@@ -491,6 +498,7 @@
 				72AE480027464D61003FA631 /* MapViewModel.swift in Sources */,
 				7247EFAF2734141500FDEE7B /* BookTableDelegate.swift in Sources */,
 				7290EDDD2733B54600292E88 /* LoginViewController.swift in Sources */,
+				7259B2FA281E83850009C31A /* Timer.swift in Sources */,
 				7290EDF82733C9D500292E88 /* MyPageViewController.swift in Sources */,
 				7212CA1E2738EB7600965C13 /* WriteView.swift in Sources */,
 				72AE47FE27464D59003FA631 /* MapView.swift in Sources */,
