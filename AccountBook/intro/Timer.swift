@@ -16,7 +16,7 @@ struct Timer{
     }
 }
 
-extension Timer: TimerStartable{
+extension Timer: TimerUsable{
     func timerStart(completion: @escaping(Result<Void, TimerError>) -> Void) {
         animationTimer?.subscribe(onNext: { _ in
             completion(.success(()))
@@ -26,7 +26,7 @@ extension Timer: TimerStartable{
     }
 }
 
-protocol TimerStartable{
+protocol TimerUsable{
     func timerStart(completion: @escaping(Result<Void, TimerError>) -> Void)
 }
 enum TimerError: Error{

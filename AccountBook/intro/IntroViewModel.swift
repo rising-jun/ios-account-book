@@ -13,8 +13,12 @@ final class IntroViewModel: ViewModelType{
     var input: Input?
     var output: Output?
     
+    init(timer: TimerUsable){
+        self.timer = timer
+    }
+    
     private let state = BehaviorRelay<IntroState>(value: IntroState())
-    private let timer = Timer(timerSec: 3)
+    private let timer: TimerUsable
     private let presentSubject = PublishSubject<PresentVC>()
     struct Input{
         let viewState: Observable<ViewState>?
