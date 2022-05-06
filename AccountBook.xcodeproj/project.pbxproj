@@ -28,6 +28,7 @@
 		7259B2FA281E83850009C31A /* Timer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7259B2F9281E83850009C31A /* Timer.swift */; };
 		7259B2FD281E8F440009C31A /* DependencyInjector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7259B2FC281E8F440009C31A /* DependencyInjector.swift */; };
 		7259B2FF281E934F0009C31A /* IntroDependency.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7259B2FE281E934F0009C31A /* IntroDependency.swift */; };
+		726336562825066A009ACE8C /* LoginDependency.swift in Sources */ = {isa = PBXBuildFile; fileRef = 726336552825066A009ACE8C /* LoginDependency.swift */; };
 		726B00F0281D632600A9B537 /* PaidAnnotationEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 726B00EF281D632600A9B537 /* PaidAnnotationEntity.swift */; };
 		726B0304275742DF00F1D66D /* MyPageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 726B0303275742DF00F1D66D /* MyPageView.swift */; };
 		726B03062757431100F1D66D /* MyPageViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 726B03052757431100F1D66D /* MyPageViewModel.swift */; };
@@ -80,6 +81,7 @@
 		7259B2F9281E83850009C31A /* Timer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Timer.swift; sourceTree = "<group>"; };
 		7259B2FC281E8F440009C31A /* DependencyInjector.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DependencyInjector.swift; sourceTree = "<group>"; };
 		7259B2FE281E934F0009C31A /* IntroDependency.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntroDependency.swift; sourceTree = "<group>"; };
+		726336552825066A009ACE8C /* LoginDependency.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginDependency.swift; sourceTree = "<group>"; };
 		726B00EF281D632600A9B537 /* PaidAnnotationEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaidAnnotationEntity.swift; sourceTree = "<group>"; };
 		726B0303275742DF00F1D66D /* MyPageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPageView.swift; sourceTree = "<group>"; };
 		726B03052757431100F1D66D /* MyPageViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPageViewModel.swift; sourceTree = "<group>"; };
@@ -205,7 +207,6 @@
 			children = (
 				7259B2FB281E8F370009C31A /* dependency */,
 				72A9A70F273A6BB0006A7FB3 /* SeoulLocation.gpx */,
-				7290EDD72733B3FF00292E88 /* ViewModelProtocol.swift */,
 				72059BF92743A97F00AB0929 /* firebase_model */,
 				7247EFA72734003800FDEE7B /* entity */,
 				7290EDEC2733C33E00292E88 /* account */,
@@ -276,6 +277,7 @@
 		7290EDD02733B37E00292E88 /* base */ = {
 			isa = PBXGroup;
 			children = (
+				7290EDD72733B3FF00292E88 /* ViewModelProtocol.swift */,
 				7290EDD12733B38D00292E88 /* BaseClasses.swift */,
 				7290EDD92733B43600292E88 /* CommonEnum.swift */,
 			);
@@ -289,6 +291,7 @@
 				7290EDE62733C0E500292E88 /* LoginView.swift */,
 				7290EDE82733C26F00292E88 /* LoginViewModel.swift */,
 				7290EDEA2733C2AA00292E88 /* GoogleLoginToken.swift */,
+				726336552825066A009ACE8C /* LoginDependency.swift */,
 			);
 			path = login;
 			sourceTree = "<group>";
@@ -500,6 +503,7 @@
 				7290EDEB2733C2AA00292E88 /* GoogleLoginToken.swift in Sources */,
 				726B03062757431100F1D66D /* MyPageViewModel.swift in Sources */,
 				7290EDEF2733C39000292E88 /* ListViewController.swift in Sources */,
+				726336562825066A009ACE8C /* LoginDependency.swift in Sources */,
 				7212CA1C2738EB1B00965C13 /* WriteViewController.swift in Sources */,
 				72256DD127394EB800D2BC03 /* PermissionCheck.swift in Sources */,
 				7212CA202738EBB000965C13 /* WriteViewModel.swift in Sources */,

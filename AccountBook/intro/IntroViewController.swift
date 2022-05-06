@@ -11,7 +11,11 @@ import RxCocoa
 import RxViewController
 
 class IntroViewController: BaseViewController, DependencySetable {
+    func setDependency(dependency: IntroDependency) {
+        self.dependency = dependency
+    }
     
+    typealias DependencyType = IntroDependency
     override init(){
         super.init()
         DependencyInjector.injecting(to: self)
@@ -19,6 +23,7 @@ class IntroViewController: BaseViewController, DependencySetable {
     
     required init?(coder: NSCoder) {
         super.init(coder: coder)
+        DependencyInjector.injecting(to: self)
     }
     
     private var viewModel: IntroViewModel?
@@ -30,9 +35,6 @@ class IntroViewController: BaseViewController, DependencySetable {
     private lazy var v = IntroView(frame: view.frame)
     private let disposeBag = DisposeBag()
     
-    func setDependency(dependency: Dependency) {
-        self.dependency = dependency as? IntroDependency
-    }
     
     let loginVC = LoginViewController()
     
@@ -42,23 +44,23 @@ class IntroViewController: BaseViewController, DependencySetable {
     
     override func bindViewModel(){
         super.bindViewModel()
+        guard let output = output else { return }
         
-        output?.state?.map{$0.viewLogic}
+        output.state?.map{$0.viewLogic}
             .filter{$0 == .setUpView}
             .distinctUntilChanged()
             .drive(onNext: { [weak self] logic in
             self?.setUpView()
         }).disposed(by: disposeBag)
         
-        output?.state?.map{$0.presentVC ?? .intro}
+        output.state?.map{$0.presentVC ?? .intro}
             .distinctUntilChanged()
             .drive(onNext: { [weak self] presentVC in
             self?.presentVC(vcName: presentVC)
         }).disposed(by: disposeBag)
-        
     }
-    
 }
+
 extension IntroViewController{
     
     func setUpView(){
@@ -72,8 +74,6 @@ extension IntroViewController{
             loginVC.modalPresentationStyle = .fullScreen
             present(loginVC, animated: true, completion: nil)
         }
-        
     }
-    
 }
 
