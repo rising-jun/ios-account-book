@@ -8,19 +8,25 @@
 import Foundation
 
 final class DependencyInjector{
-    static func injecting(to compose: DependencySetable){
+    static func injecting<T: DependencySetable>(to compose: T){
         if compose is IntroViewController{
-            compose.setDependency(dependency: IntroDependency(viewModel: IntroViewModel(timer: Timer(timerSec: 3))))
+            guard let viewController = compose as? IntroViewController else { return }
+            viewController.setDependency(dependency: IntroDependency(viewModel: IntroViewModel(timer: Timer(timerSec: 3))))
         }
-        
+        if compose is LoginViewController{
+            guard let viewController = compose as? LoginViewController else { return }
+            viewController.setDependency(dependency: LoginDependency(viewModel: LoginViewModel(googleLoginable: GoogleLoginToken())))
+        }
     }
 }
 
 protocol DependencySetable{
-    func setDependency(dependency: Dependency)
+    associatedtype DependencyType
+    func setDependency(dependency: DependencyType)
 }
 
 protocol Dependency{
+    associatedtype ViewModelType
 }
 
 
