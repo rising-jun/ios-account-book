@@ -8,40 +8,41 @@
 import Foundation
 import CoreLocation
 
-protocol LocationPermissionCallback{
+protocol PermissionCheckable{
+    func getLocationPermission()
+}
+
+protocol PermissionDelegate{
     func getPermission(status: CLAuthorizationStatus)
     func getPoint(coordinate: CLLocationCoordinate2D)
 }
 
-class PermissionCheck: NSObject{
-    private var locationCb: LocationPermissionCallback!
-    
-    init(locationCb: LocationPermissionCallback){
-        self.locationCb = locationCb
+final class PermissionCheck: NSObject{
+    private var delegate: PermissionDelegate?
+    func setLocationDelegate(delegate: PermissionDelegate){
+        self.delegate = delegate
     }
-    
+}
+
+extension PermissionCheck: PermissionCheckable{
+    func getLocationPermission(){
+        if CLLocationManager.locationServicesEnabled() {
+            delegate?.getPermission(status: CLLocationManager.authorizationStatus())
+        }else{
+            delegate?.getPermission(status: .notDetermined)
+        }
+    }
 }
 
 extension PermissionCheck: CLLocationManagerDelegate{
-    
-    func getLocationPermission(){
-        if CLLocationManager.locationServicesEnabled() {
-            locationCb.getPermission(status: CLLocationManager.authorizationStatus())
-        }else{
-            locationCb.getPermission(status: .notDetermined)
-        }
-    }
-    
     func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
-        locationCb.getPermission(status: status)
+        delegate?.getPermission(status: status)
     }
     
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         guard let location = locations.last else {return}
-        locationCb.getPoint(coordinate: location.coordinate)
-        
+        delegate?.getPoint(coordinate: location.coordinate)
     }
-    
 }
 
 enum PermissionState{
