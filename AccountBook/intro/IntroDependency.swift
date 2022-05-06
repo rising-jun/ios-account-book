@@ -8,5 +8,6 @@
 import Foundation
 
 struct IntroDependency: Dependency{
+    typealias ViewModelType = IntroViewModel
     let viewModel: IntroViewModel
 }
