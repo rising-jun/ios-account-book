@@ -13,6 +13,7 @@ import MapKit
 import RxMKMapView
 
 class WriteViewController: BaseViewController, DependencySetable{
+    typealias DependencyType = WriteDependency
 
     override init(){
         super.init()
@@ -27,8 +28,6 @@ class WriteViewController: BaseViewController, DependencySetable{
     func setDependency(dependency: WriteDependency) {
         self.dependency = dependency
     }
-    
-    typealias DependencyType = WriteDependency
     
     lazy var v = WriteView(frame: view.frame)
     private var dependency: WriteDependency?{
@@ -197,9 +196,4 @@ extension WriteViewController: PermissionDelegate, MapDraggedDelegate{
     func getPoint(coordinate: CLLocationCoordinate2D) {
         coordiSubject.onNext(coordinate)
     }
-}
-
-struct WriteDependency: Dependency{
-    typealias ViewModelType = WriteViewModel
-    let viewModel: WriteViewModel
 }

@@ -17,6 +17,11 @@ final class DependencyInjector{
             guard let viewController = compose as? LoginViewController else { return }
             viewController.setDependency(dependency: LoginDependency(viewModel: LoginViewModel(googleLoginable: GoogleLoginToken())))
         }
+        
+        if compose is WriteViewController{
+            guard let viewController = compose as? WriteViewController else { return }
+            viewController.setDependency(dependency: WriteDependency(viewModel: WriteViewModel(firebaseWriteable: FirebaseWriteRepository(), writeExpressionCheckable: RegularExpression())))
+        }
     }
 }
 

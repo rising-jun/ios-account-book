@@ -8,13 +8,18 @@
 import Foundation
 import CoreLocation
 
-protocol PermissionDelegate{
+protocol PermissionCheckable{
+    func getLocationPermission()
+    func setLocationDelegate(delegate: PermissionDelegate)
+}
+
+protocol PermissionDelegate: AnyObject{
     func getPermission(status: CLAuthorizationStatus)
     func getPoint(coordinate: CLLocationCoordinate2D)
 }
 
-final class PermissionCheck: NSObject{
-    private var delegate: PermissionDelegate?
+final class PermissionCheck: NSObject, PermissionCheckable{
+    weak var delegate: PermissionDelegate?
     func setLocationDelegate(delegate: PermissionDelegate){
         self.delegate = delegate
     }
