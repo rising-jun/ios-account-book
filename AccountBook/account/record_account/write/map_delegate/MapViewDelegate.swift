@@ -8,43 +8,40 @@
 import Foundation
 import MapKit
 
-protocol MapProtocol{
+protocol MapDraggedDelegate{
     func draggedPoint(coordi: CLLocationCoordinate2D)
 }
 
-class WriteMapViewDelegate: NSObject{
-    private var mapProtocol: MapProtocol!
+final class WriteMapViewDelegate: NSObject{
+    private var delegate: MapDraggedDelegate?
     
-    init(mapProtocol: MapProtocol){
-        self.mapProtocol = mapProtocol
+    func setMapDraggedDelegate(from delegate: MapDraggedDelegate){
+        self.delegate = delegate
     }
 }
 
 extension WriteMapViewDelegate: MKMapViewDelegate{
     func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
-        if annotation is MKUserLocation {
-            return nil
+        if annotation is MKUserLocation { return nil }
+
+        guard let pinAnnotationView = mapView.dequeueReusableAnnotationView(withIdentifier: MKAnnotationView.reuseId) else {
+            let pinAnnotationView = MKPinAnnotationView(annotation: annotation, reuseIdentifier: MKAnnotationView.reuseId)
+            pinAnnotationView.isDraggable = true
+            pinAnnotationView.canShowCallout = true
+            return pinAnnotationView
         }
-        let reuseId = "pin"
-        
-        var pav: MKPinAnnotationView? = mapView.dequeueReusableAnnotationView(withIdentifier: reuseId) as? MKPinAnnotationView
-        if pav == nil {
-            pav = MKPinAnnotationView(annotation: annotation, reuseIdentifier: reuseId)
-            pav?.isDraggable = true
-            pav?.canShowCallout = true
-        } else {
-            pav?.annotation = annotation
-        }
-        
-        return pav
+        pinAnnotationView.annotation = annotation
+        return pinAnnotationView
     }
     
     func mapView(_ mapView: MKMapView, annotationView view: MKAnnotationView, didChange newState: MKAnnotationView.DragState, fromOldState oldState: MKAnnotationView.DragState) {
         if newState == MKAnnotationView.DragState.ending {
             if let droppedAt = view.annotation?.coordinate{
-                mapProtocol.draggedPoint(coordi: droppedAt)
+                delegate?.draggedPoint(coordi: droppedAt)
             }
         }
     }
-    
+}
+extension MKAnnotationView{
+    static let reuseId = "pin"
 }

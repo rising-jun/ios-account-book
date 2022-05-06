@@ -69,7 +69,7 @@ extension IntroViewController{
         v.animationView.play()
     }
     
-    func presentVC(vcName: PresentVC){
+    func presentVC(vcName: ViewControllerType){
         if vcName == .login {
             loginVC.modalPresentationStyle = .fullScreen
             present(loginVC, animated: true, completion: nil)

@@ -63,7 +63,7 @@ final class LoginViewModel: ViewModelType{
 }
 
 struct LoginState{
-    var presentVC: PresentVC?
+    var presentVC: ViewControllerType?
     var viewLogic: ViewLogic?
     var userToken: String?
     

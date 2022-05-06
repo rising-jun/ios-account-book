@@ -99,7 +99,7 @@ extension ListViewController{
         self.tabBarController?.navigationItem.setRightBarButton(self.myInfoBtn, animated: false)
     }
     
-    func presentVC(vcName: PresentVC){
+    func presentVC(vcName: ViewControllerType){
         if vcName == .write{
             let writeVC = WriteViewController()
             self.navigationController?.pushViewController(writeVC, animated: true)

@@ -93,6 +93,8 @@ class WriteView: BaseView{
         return button
     }()
     
+    lazy var pointAnnotaion = MKPointAnnotation()
+    
     override func setup() {
         super.setup()
         backgroundColor = .white
@@ -176,15 +178,11 @@ class WriteView: BaseView{
             make.width.equalTo(80)
             make.height.equalTo(40)
         }
-        
-        
     }
     
     func availableUI(){
         priceTF.layer.borderColor = UIColor.gray.cgColor
         priceTF.reomoveErrorImg()
-        //button.backgroundColor = .orange
-        
     }
     
     func unavailableUI(){
@@ -192,4 +190,28 @@ class WriteView: BaseView{
         priceTF.setError()
     }
     
+    func mapViewInitSet(coordi: CLLocationCoordinate2D){
+        mapView.showsUserLocation = true
+        mapView.showsBuildings = true
+        mapView.isPitchEnabled = true
+        let lat = coordi.latitude
+        let long = coordi.longitude
+        let camera = MKMapCamera()
+        camera.centerCoordinate = CLLocationCoordinate2D(latitude: lat, longitude: long)
+        pointAnnotaion.coordinate = coordi
+        pointAnnotaion.title = "여기!"
+        camera.pitch = 80.0
+        camera.altitude = 100.0
+        mapView.setCamera(camera, animated: false)
+    }
+    
+    func setMapMode(mapMode: LocationSetMode){
+        if mapMode == .auto{
+            mapView.showsUserLocation = true
+            mapView.removeAnnotation(pointAnnotaion)
+        }else{
+            mapView.showsUserLocation = false
+            mapView.addAnnotation(pointAnnotaion)
+        }
+    }
 }

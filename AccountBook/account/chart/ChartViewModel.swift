@@ -61,7 +61,7 @@ class ChartViewModel: ViewModelType{
 }
 
 struct ChartState{
-    var presentVC: PresentVC?
+    var presentVC: ViewControllerType?
     var viewLogic: ViewLogic?
     var chartList: [ChartInfo]?
 }

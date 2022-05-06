@@ -17,7 +17,11 @@ final class WriteViewModel: ViewModelType{
     
     private let state = BehaviorRelay<WriteState>(value: WriteState())
     private let writeResult = PublishSubject<FirebaseWriteResult>()
-    private var fbModel: FirebaseWriteRepository!
+    private var firebaseWriteable: FirebaseWriteable?
+    
+    init(firebaseWriteable: FirebaseWriteable){
+        self.firebaseWriteable = firebaseWriteable
+    }
     
     struct Input{
         let viewState: Observable<ViewState>?
@@ -62,11 +66,12 @@ final class WriteViewModel: ViewModelType{
         
         input.viewState?
             .filter{$0 == .viewDidLoad}
-            .withLatestFrom(state){ [weak self] viewState, state -> WriteState in
+            .withLatestFrom(state){ viewState, state -> WriteState in
                 var newState = state
                 newState.viewLogic = .setUpView
                 newState.categoryData = ["식비", "생활비", "유흥비"]
-                newState.writeObject.category = newState.categoryData![0]
+                guard let categoryData = newState.categoryData else { return state }
+                newState.writeObject.category = categoryData[0]
                 return newState
             }.bind(to: self.state)
             .disposed(by: disposeBag)
@@ -104,9 +109,9 @@ final class WriteViewModel: ViewModelType{
         
         input.priceInput?
             .withLatestFrom(state){ [weak self] price, state -> WriteState in
+                guard let self = self else { return state }
                 var newState = state
-                
-                if self!.checkPrice(price: price){
+                if self.checkPrice(price: price){
                     newState.writeObject.price = price
                     newState.priceformError = .possible
                 }else{
@@ -117,15 +122,16 @@ final class WriteViewModel: ViewModelType{
             .disposed(by: disposeBag)
         
         input.categoryInput?
-            .withLatestFrom(state){ [weak self] row, state -> WriteState in
+            .withLatestFrom(state){ row, state -> WriteState in
                 var newState = state
-                newState.writeObject.category = newState.categoryData![row]
+                guard let categoryData = newState.categoryData else { return state }
+                newState.writeObject.category = categoryData[row]
                 return newState
             }.bind(to: self.state)
             .disposed(by: disposeBag)
         
         input.dateInput?
-            .withLatestFrom(state){ [weak self] date, state -> WriteState in
+            .withLatestFrom(state){ date, state -> WriteState in
                 var newState = state
                 newState.writeObject.date = date.formatted()
                 return newState
@@ -135,6 +141,7 @@ final class WriteViewModel: ViewModelType{
         input.writeAction?
             .withLatestFrom(state)
             .map{ [weak self] state in
+                guard let self = self else { return state }
                 var newState = state
                 if newState.priceformError == .impossible{
                     
@@ -142,11 +149,9 @@ final class WriteViewModel: ViewModelType{
                     print("write possible now!")
                     //write!
                     newState.writeObject.userId = UserDefaults.standard.string(forKey: "token") ?? "null"
-                    self!.fbModel.writeBookInfo(bookInfo: newState.writeObject) { result in
+                    self.firebaseWriteable?.writeBookInfo(bookInfo: newState.writeObject) { result in
                         
                     }
-                    
-                   
                 }
                 return newState
             }.bind(to: self.state)
@@ -174,14 +179,13 @@ final class WriteViewModel: ViewModelType{
         }.bind(to: self.state)
         .disposed(by: disposeBag)
         
-        
         output = Output(state: state.asDriver())
         return output!
     }
 }
 
 struct WriteState{
-    var presentVC: PresentVC?
+    var presentVC: ViewControllerType?
     var viewLogic: ViewLogic?
     var categoryData: [String]?
     var locationPermission: PermissionState?
@@ -194,16 +198,12 @@ struct WriteState{
 }
 
 extension WriteViewModel{
-    
-    
     private func checkPrice(price: String) -> Bool{
         // 정규식!
         let regEx: String = "^[0-9]*$"
         let regExTest = NSPredicate(format:"SELF MATCHES %@", regEx)
         return regExTest.evaluate(with: price)
     }
-    
-    
 }
 
 extension WriteViewModel{
@@ -211,11 +211,7 @@ extension WriteViewModel{
         print("writeResult!! : \(result)")
         writeResult.onNext(result)
     }
-    
-    
 }
-
-
 
 enum LocationSetMode{
     case auto
