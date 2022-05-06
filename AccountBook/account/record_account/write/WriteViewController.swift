@@ -43,13 +43,13 @@ class WriteViewController: BaseViewController, DependencySetable{
     private let disposeBag = DisposeBag()
     private var permissionCheck: PermissionCheck?
     private var locationManager = CLLocationManager()
-    private let locStatusSubject = BehaviorSubject<CLAuthorizationStatus>(value: .notDetermined)
+    private let locationStatusSubject = BehaviorSubject<CLAuthorizationStatus>(value: .notDetermined)
     private let coordiSubject = BehaviorSubject<CLLocationCoordinate2D>(value: CLLocationCoordinate2D())
     private let writeButton = UIBarButtonItem()
     private let backButton = UIBarButtonItem()
 
     lazy var input = WriteViewModel.Input(viewState: self.rx.viewDidLoad.map{ViewState.viewDidLoad},
-                                          locState: locStatusSubject.distinctUntilChanged().asObservable(),
+                                          locState: locationStatusSubject.distinctUntilChanged().asObservable(),
                                           coorState: coordiSubject.filter{$0.latitude != 0.0}.asObservable(),
                                           mode: v.setLocModeButton.rx.tap.map{_ in Void()},
                                           nameInput: v.nameTF.rx.text.orEmpty.distinctUntilChanged(),
@@ -191,7 +191,7 @@ extension WriteViewController: PermissionDelegate, MapDraggedDelegate{
     }
     
     func getPermission(status: CLAuthorizationStatus) {
-        locStatusSubject.onNext(status)
+        locationStatusSubject.onNext(status)
     }
     
     func getPoint(coordinate: CLLocationCoordinate2D) {
