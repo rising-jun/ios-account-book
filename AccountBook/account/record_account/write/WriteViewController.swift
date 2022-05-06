@@ -26,9 +26,7 @@ class WriteViewController: BaseViewController{
     
     private let writeButton = UIBarButtonItem()
     private let backButton = UIBarButtonItem()
-    
-    lazy var pointAnnotaion = MKPointAnnotation()
-    private var mapViewDelegate: WriteMapViewDelegate!
+    private var mapViewDelegate: WriteMapViewDelegate?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -52,7 +50,8 @@ class WriteViewController: BaseViewController{
         super.setup()
         permissionCheck = PermissionCheck()
         permissionCheck.setLocationDelegate(delegate: self)
-        mapViewDelegate = WriteMapViewDelegate(mapProtocol: self)
+        mapViewDelegate = WriteMapViewDelegate()
+        mapViewDelegate?.setMapDraggedDelegate(from: self)
         locationManager.desiredAccuracy = kCLLocationAccuracyBest
     }
     
@@ -102,7 +101,6 @@ class WriteViewController: BaseViewController{
             guard let self = self else { return }
             if let coor = coordi{
                 self.mapViewInitSet(coordi: coor)
-                
             }
         }).disposed(by: disposeBag)
         
@@ -162,51 +160,25 @@ extension WriteViewController{
         self.navigationItem.setRightBarButton(self.writeButton, animated: false)
         self.navigationItem.hidesBackButton = true
         self.navigationItem.setLeftBarButton(self.backButton, animated: false)
-        
     }
     
     func mapViewInitSet(coordi: CLLocationCoordinate2D){
-        self.v.mapView.showsUserLocation = true
-        self.v.mapView.showsBuildings = true
-        self.v.mapView.isPitchEnabled = true
-        
-        let lat = coordi.latitude
-        let long = coordi.longitude
-        let camera = MKMapCamera()
-        camera.centerCoordinate = CLLocationCoordinate2D(latitude: lat, longitude: long)
-        
-        pointAnnotaion.coordinate = coordi
-        pointAnnotaion.title = "여기!"
-        
-        camera.pitch = 80.0
-        camera.altitude = 100.0
-        
-        self.v.mapView.setCamera(camera, animated: false)
-        
+        v.mapViewInitSet(coordi: coordi)
     }
     
     func setMapMode(mapMode: LocationSetMode){
-        if mapMode == .auto{
-            self.v.mapView.showsUserLocation = true
-            self.v.mapView.removeAnnotation(pointAnnotaion)
-        }else{
-            self.v.mapView.showsUserLocation = false
-            self.v.mapView.addAnnotation(pointAnnotaion)
-            
-        }
+        v.setMapMode(mapMode: mapMode)
     }
     
     func presentVC(vcName: PresentVC){
         if vcName == .list{
             self.navigationController?.popViewController(animated: true)
-            
+
         }
-        
     }
-    
 }
 
-extension WriteViewController: PermissionDelegate, MapProtocol{
+extension WriteViewController: PermissionDelegate, MapDraggedDelegate{
     func draggedPoint(coordi: CLLocationCoordinate2D) {
         coordiSubject.onNext(coordi)
     }
