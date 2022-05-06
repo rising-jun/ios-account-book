@@ -8,10 +8,6 @@
 import Foundation
 import CoreLocation
 
-protocol PermissionCheckable{
-    func getLocationPermission()
-}
-
 protocol PermissionDelegate{
     func getPermission(status: CLAuthorizationStatus)
     func getPoint(coordinate: CLLocationCoordinate2D)
@@ -24,7 +20,7 @@ final class PermissionCheck: NSObject{
     }
 }
 
-extension PermissionCheck: PermissionCheckable{
+extension PermissionCheck{
     func getLocationPermission(){
         if CLLocationManager.locationServicesEnabled() {
             delegate?.getPermission(status: CLLocationManager.authorizationStatus())
