@@ -50,7 +50,8 @@ class WriteViewController: BaseViewController{
     
     override func setup() {
         super.setup()
-        permissionCheck = PermissionCheck(locationCb: self)
+        permissionCheck = PermissionCheck()
+        permissionCheck.setLocationDelegate(delegate: self)
         mapViewDelegate = WriteMapViewDelegate(mapProtocol: self)
         locationManager.desiredAccuracy = kCLLocationAccuracyBest
     }
@@ -205,7 +206,7 @@ extension WriteViewController{
     
 }
 
-extension WriteViewController: LocationPermissionCallback, MapProtocol{
+extension WriteViewController: PermissionDelegate, MapProtocol{
     func draggedPoint(coordi: CLLocationCoordinate2D) {
         coordiSubject.onNext(coordi)
     }
