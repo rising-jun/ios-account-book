@@ -93,7 +93,7 @@ extension ListViewModel{
 }
 
 struct ListViewState{
-    var presentVC: PresentVC?
+    var presentVC: ViewControllerType?
     var viewLogic: ViewLogic?
     var filterData: [String]?
     var listData: [BookInfo]?

@@ -22,11 +22,10 @@ final class WriteMapViewDelegate: NSObject{
 
 extension WriteMapViewDelegate: MKMapViewDelegate{
     func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
-        guard let annotation = annotation as? MKUserLocation else { return MKAnnotationView() }
-        let reuseId = "pin"
-        
-        guard let pinAnnotationView = mapView.dequeueReusableAnnotationView(withIdentifier: reuseId) as? MKPinAnnotationView else {
-            var pinAnnotationView = MKPinAnnotationView(annotation: annotation, reuseIdentifier: reuseId)
+        if annotation is MKUserLocation { return nil }
+
+        guard let pinAnnotationView = mapView.dequeueReusableAnnotationView(withIdentifier: MKAnnotationView.reuseId) else {
+            let pinAnnotationView = MKPinAnnotationView(annotation: annotation, reuseIdentifier: MKAnnotationView.reuseId)
             pinAnnotationView.isDraggable = true
             pinAnnotationView.canShowCallout = true
             return pinAnnotationView
@@ -42,4 +41,7 @@ extension WriteMapViewDelegate: MKMapViewDelegate{
             }
         }
     }
+}
+extension MKAnnotationView{
+    static let reuseId = "pin"
 }

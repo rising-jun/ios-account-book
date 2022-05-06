@@ -68,7 +68,7 @@ extension LoginViewController{
         UIApplication.shared.windows.first?.rootViewController = self
     }
     
-    func presentVC(vcName: PresentVC){
+    func presentVC(vcName: ViewControllerType){
         
         if vcName == .list{
             let nav = UINavigationController()

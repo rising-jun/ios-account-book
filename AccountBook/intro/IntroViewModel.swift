@@ -19,7 +19,7 @@ final class IntroViewModel: ViewModelType{
     
     private let state = BehaviorRelay<IntroState>(value: IntroState())
     private let timer: TimerUsable
-    private let presentSubject = PublishSubject<PresentVC>()
+    private let presentSubject = PublishSubject<ViewControllerType>()
     struct Input{
         let viewState: Observable<ViewState>?
     }
@@ -68,7 +68,7 @@ final class IntroViewModel: ViewModelType{
 
 
 struct IntroState{
-    var presentVC: PresentVC?
+    var presentVC: ViewControllerType?
     var timeOver: Bool?
     var viewLogic: ViewLogic?
     

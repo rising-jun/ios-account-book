@@ -69,7 +69,7 @@ extension MapViewModel{
     }
 }
 struct MapState{
-    var presentVC: PresentVC?
+    var presentVC: ViewControllerType?
     var viewLogic: ViewLogic?
     var annotationEntities: [PaidAnnotationEntity]?
 }

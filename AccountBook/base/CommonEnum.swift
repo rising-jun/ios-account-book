@@ -5,7 +5,7 @@
 //  Created by 김동준 on 2021/11/04.
 //
 
-enum PresentVC{
+enum ViewControllerType{
     case intro
     case login
     case list
