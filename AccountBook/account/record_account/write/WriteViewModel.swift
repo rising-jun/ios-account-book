@@ -17,10 +17,11 @@ final class WriteViewModel: ViewModelType{
     
     private let state = BehaviorRelay<WriteState>(value: WriteState())
     private let writeResult = PublishSubject<FirebaseWriteResult>()
-    private var firebaseWriteable: FirebaseWriteable?
-    
-    init(firebaseWriteable: FirebaseWriteable){
+    private let firebaseWriteable: FirebaseWriteable?
+    private let writeExpressionCheckable: WriteExpressionCheckable
+    init(firebaseWriteable: FirebaseWriteable, writeExpressionCheckable: WriteExpressionCheckable){
         self.firebaseWriteable = firebaseWriteable
+        self.writeExpressionCheckable = writeExpressionCheckable
     }
     
     struct Input{
@@ -111,7 +112,7 @@ final class WriteViewModel: ViewModelType{
             .withLatestFrom(state){ [weak self] price, state -> WriteState in
                 guard let self = self else { return state }
                 var newState = state
-                if self.checkPrice(price: price){
+                if self.writeExpressionCheckable.checkPrice(price: price){
                     newState.writeObject.price = price
                     newState.priceformError = .possible
                 }else{
@@ -195,15 +196,6 @@ struct WriteState{
     var writeObject = BookInfo()
     var dateInfo: String = ""
     var resultMsg: WriteResultMsg?
-}
-
-extension WriteViewModel{
-    private func checkPrice(price: String) -> Bool{
-        // 정규식!
-        let regEx: String = "^[0-9]*$"
-        let regExTest = NSPredicate(format:"SELF MATCHES %@", regEx)
-        return regExTest.evaluate(with: price)
-    }
 }
 
 extension WriteViewModel{

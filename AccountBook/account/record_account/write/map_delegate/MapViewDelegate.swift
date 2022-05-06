@@ -8,12 +8,12 @@
 import Foundation
 import MapKit
 
-protocol MapDraggedDelegate{
+protocol MapDraggedDelegate: AnyObject{
     func draggedPoint(coordi: CLLocationCoordinate2D)
 }
 
 final class WriteMapViewDelegate: NSObject{
-    private var delegate: MapDraggedDelegate?
+    weak var delegate: MapDraggedDelegate?
     
     func setMapDraggedDelegate(from delegate: MapDraggedDelegate){
         self.delegate = delegate
