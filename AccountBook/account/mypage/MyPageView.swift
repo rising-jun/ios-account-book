@@ -5,11 +5,9 @@
 //  Created by 김동준 on 2021/12/01.
 //
 
-import Foundation
-import UIKit
 import SnapKit
 
-class MyPageView: BaseView{
+final class MyPageView: BaseView{
     
     lazy var sumLabel: UILabel = {
         let label = UILabel()
@@ -26,7 +24,6 @@ class MyPageView: BaseView{
         label.font = UIFont.boldSystemFont(ofSize: 24)
         return label
     }()
-    
     
     override func setup() {
         super.setup()
@@ -46,9 +43,5 @@ class MyPageView: BaseView{
             make.width.equalTo(200)
             make.height.equalTo(40)
         }
-        
-        
     }
-    
-    
 }

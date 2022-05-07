@@ -5,12 +5,11 @@
 //  Created by 김동준 on 2021/11/04.
 //
 
-import UIKit
 import RxSwift
 import RxCocoa
 import RxViewController
 
-class IntroViewController: BaseViewController, DependencySetable {
+final class IntroViewController: BaseViewController, DependencySetable {
     typealias DependencyType = IntroDependency
     
     override init(){
@@ -33,9 +32,8 @@ class IntroViewController: BaseViewController, DependencySetable {
         }
     }
     private var viewModel: IntroViewModel?
-    private lazy var v = IntroView(frame: view.frame)
+    private lazy var introView = IntroView(frame: view.frame)
     private let disposeBag = DisposeBag()
-    let loginVC = LoginViewController()
     private lazy var input = IntroViewModel.Input(viewState: rx.viewDidLoad.map{ViewState.viewDidLoad})
     private lazy var output = viewModel?.bind(input: input)
     
@@ -51,26 +49,26 @@ class IntroViewController: BaseViewController, DependencySetable {
             self?.setUpView()
         }).disposed(by: disposeBag)
         
-        output.state?.map{$0.presentVC ?? .intro}
+        output.state?.map{$0.presentViewController ?? .intro}
             .distinctUntilChanged()
-            .drive(onNext: { [weak self] presentVC in
-            self?.presentVC(vcName: presentVC)
+            .drive(onNext: { [weak self] presentViewController in
+            self?.presentViewController(viewController: presentViewController)
         }).disposed(by: disposeBag)
     }
 }
 
 extension IntroViewController{
-    
-    func setUpView(){
-        view = v
-        v.animationView.loopMode = .playOnce
-        v.animationView.play()
+    private func setUpView(){
+        view = introView
+        introView.animationView.loopMode = .playOnce
+        introView.animationView.play()
     }
     
-    func presentVC(vcName: ViewControllerType){
-        if vcName == .login {
-            loginVC.modalPresentationStyle = .fullScreen
-            present(loginVC, animated: true, completion: nil)
+    private func presentViewController(viewController: ViewControllerType){
+        lazy var loginViewController = LoginViewController()
+        if viewController == .login {
+            loginViewController.modalPresentationStyle = .fullScreen
+            present(loginViewController, animated: true, completion: nil)
         }
     }
 }

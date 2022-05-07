@@ -19,7 +19,7 @@ final class LoginViewModel: ViewModelType{
     private let state = BehaviorRelay<LoginState>(value: LoginState())
     private let disposeBag = DisposeBag()
     private var tokenPublish = PublishSubject<String>()
-    let googleLoginable: GoogleLoginable
+    private let googleLoginable: GoogleLoginable
     
     struct Input{
         let viewState: Observable<ViewState>?
@@ -49,24 +49,23 @@ final class LoginViewModel: ViewModelType{
         
         tokenPublish.withLatestFrom(state){ userUID, state -> LoginState in
             var newState = state
-            newState.presentVC = .list
+            newState.presentViewController = .list
             guard let _ = UserDefaults.standard.string(forKey: "token") else {
                 UserDefaults.standard.setValue(userUID, forKey: "token")
                 return newState
             }
             return newState
         }.bind(to: self.state)
-            .disposed(by: disposeBag)
-        output = Output(state: state.asDriver())
-        return output!
+        .disposed(by: disposeBag)
+
+        return Output(state: state.asDriver())
     }
 }
 
 struct LoginState{
-    var presentVC: ViewControllerType?
+    var presentViewController: ViewControllerType?
     var viewLogic: ViewLogic?
     var userToken: String?
-    
 }
 
 extension LoginViewModel{

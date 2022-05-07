@@ -5,12 +5,11 @@
 //  Created by 김동준 on 2021/11/04.
 //
 
-import Foundation
 import UIKit
 import SnapKit
 import GoogleSignIn
 
-class LoginView: BaseView{
+final class LoginView: BaseView{
     
     lazy var titleLabel: UILabel = {
        let label = UILabel()

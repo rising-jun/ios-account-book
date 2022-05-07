@@ -5,21 +5,19 @@
 //  Created by 김동준 on 2021/11/22.
 //
 
-import Foundation
 import MapKit
 import SnapKit
-import UIKit
 
-class PaidAnnotationView: MKAnnotationView{
+final class PaidAnnotationView: MKAnnotationView{
     
-    lazy var nameLabel: UILabel = {
+    private lazy var nameLabel: UILabel = {
        let label = UILabel()
         label.text = "상호명"
         label.textAlignment = .center
         return label
     }()
     
-    lazy var priceLabel: UILabel = {
+    private lazy var priceLabel: UILabel = {
        let label = UILabel()
         label.text = "상호명"
         label.textAlignment = .center

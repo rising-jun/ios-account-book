@@ -65,13 +65,6 @@ extension UILabel{
 }
 
 
-//protocol ViewModelType: class {
-//    associatedtype Input
-//    associatedtype Output
-//
-//    func transform(input: Input) -> Output
-//}
-
 extension UIView {
     func addSubViews(_ views: UIView...) {
         for view in views {
@@ -193,13 +186,9 @@ extension UIColor {
 extension UIImage{
     
     func crop(to: CGSize) -> UIImage {
-        
         guard let cgimage = self.cgImage else { return self }
-
         let contextImage: UIImage = UIImage(cgImage: cgimage)
-
         guard let newCgImage = contextImage.cgImage else { return self }
-
         let contextSize: CGSize = contextImage.size
 
         //Set to square
@@ -245,10 +234,7 @@ extension UIImage{
 
         return resized ?? self
       }
-    
 }
-
-
 
 extension UITextField{
     func setError(){
@@ -266,5 +252,4 @@ extension UITextField{
     func reomoveErrorImg(){
         rightView = nil
     }
-    
 }

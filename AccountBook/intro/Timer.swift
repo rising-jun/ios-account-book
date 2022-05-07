@@ -29,6 +29,7 @@ extension Timer: TimerUsable{
 protocol TimerUsable{
     func timerStart(completion: @escaping(Result<Void, TimerError>) -> Void)
 }
+
 enum TimerError: Error{
     case timerError
 }

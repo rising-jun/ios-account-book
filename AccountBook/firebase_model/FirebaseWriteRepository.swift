@@ -20,21 +20,23 @@ struct FirebaseWriteRepository{
 extension FirebaseWriteRepository: FirebaseWriteable{
     func writeBookInfo(bookInfo: BookInfo, completion: @escaping(Result<FirebaseWriteResult, FireBaseError>) -> Void){
         let jsonEncoder = JSONEncoder()
-        let jsonData = try! jsonEncoder.encode(bookInfo)
-        let json = String(data: jsonData, encoding: .utf8)
-        
-        if let data = json!.data(using: .utf8) {
-            do {
-                let result = try JSONSerialization.jsonObject(with: data, options: []) as? [String: Any]
-                let db = Firestore.firestore()
-                db.collection("account_array")
-                    .document("accountData")
-                    .updateData(["book_list" : FieldValue.arrayUnion([result])])
-                completion(.success(.success))
-            } catch {
-                completion(.failure(.writeError))
-            }
+        guard let jsonData = try? jsonEncoder.encode(bookInfo) else {
+            return completion(.failure(.jsonParsingError))
         }
+        let json = String(data: jsonData, encoding: .utf8)
+        guard let data = json?.data(using: .utf8) else {
+            return completion(.failure(.jsonParsingError))
+        }
+        
+        guard let result = try? JSONSerialization.jsonObject(with: data, options: []) else {
+            return completion(.failure(.jsonParsingError))
+        }
+        guard let resultJson = result as? [String: Any] else { return completion(.failure(.jsonParsingError))}
+        let firebaseDatabase = Firestore.firestore()
+        firebaseDatabase.collection("account_array")
+            .document("accountData")
+            .updateData(["book_list" : FieldValue.arrayUnion([resultJson])])
+        completion(.success(.success))
     }
 }
 

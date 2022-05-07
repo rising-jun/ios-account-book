@@ -5,7 +5,6 @@
 //  Created by 김동준 on 2021/11/04.
 //
 
-import Foundation
 import RxSwift
 import RxCocoa
 
@@ -34,7 +33,7 @@ final class IntroViewModel: ViewModelType{
         self.input = input
         presentSubject.withLatestFrom(state){ _, state -> IntroState in
             var newState = state
-            newState.presentVC = .login
+            newState.presentViewController = .login
             return newState
         }.bind(to: self.state)
             .disposed(by: disposeBag)
@@ -51,8 +50,7 @@ final class IntroViewModel: ViewModelType{
             }.bind(to: self.state)
             .disposed(by: disposeBag)
         
-        output = Output(state: state.asDriver())
-        return output!
+        return Output(state: state.asDriver())
     }
     
     private func timerStarted(result: Result<Void, TimerError>){
@@ -65,10 +63,8 @@ final class IntroViewModel: ViewModelType{
     }
 }
 
-
-
 struct IntroState{
-    var presentVC: ViewControllerType?
+    var presentViewController: ViewControllerType?
     var timeOver: Bool?
     var viewLogic: ViewLogic?
     

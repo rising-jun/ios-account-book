@@ -5,11 +5,10 @@
 //  Created by 김동준 on 2021/11/23.
 //
 
-import Foundation
 import RxSwift
 import RxCocoa
 
-class ChartViewModel: ViewModelType{
+final class ChartViewModel: ViewModelType{
     var input: Input?
     var output: Output?
     
@@ -52,57 +51,56 @@ class ChartViewModel: ViewModelType{
             }.bind(to: self.state)
             .disposed(by: disposeBag)
         
-        output = Output(state: state.asDriver())
-        return output!
+        return Output(state: state.asDriver())
     }
     
 }
 
 struct ChartState{
-    var presentVC: ViewControllerType?
+    var presentViewController: ViewControllerType?
     var viewLogic: ViewLogic?
     var chartList: [ChartInfo]?
 }
 
 extension ChartViewModel{
-    func bookInfoList(result: Result<[BookInfo], FireBaseError>) {
+    private func bookInfoList(result: Result<[BookInfo], FireBaseError>) {
         switch result{
         case .success(let books):
-            bookListPublish.onNext(convertChartList(books))
+            bookListPublish.onNext(convertChartList(from: books))
         case .failure(let error):
             print(error)
         }
-       
     }
     
-    func categoryColor(_ category: String) -> UIColor{
+    private func categoryColor(_ category: String) -> UIColor{
         switch category{
         case "생활비":
             return .blue
-            break
         case "유흥비":
             return .black
         case "식비":
             return .brown
-            break
         default:
             return .darkGray
         }
     }
     
-    func convertChartList(_ bookList: [BookInfo]) -> [ChartInfo]{
-        var chartList: [ChartInfo] = [ChartInfo(category: "생활비", per: 0.0, val: 0),ChartInfo(category: "유흥비", per: 0.0, val: 0),ChartInfo(category: "식비", per: 0.0, val: 0)]
-        
-        for i in bookList{
-            switch i.category{
+    private func convertChartList(from bookList: [BookInfo]) -> [ChartInfo]{
+        let chartList: [ChartInfo] = [ChartInfo(category: "생활비", percent: 0.0, value: 0),ChartInfo(category: "유흥비", percent: 0.0, value: 0),ChartInfo(category: "식비", percent: 0.0, value: 0)]
+        for book in bookList{
+            guard let price = Double(book.price) else { return [] }
+            switch book.category{
             case "생활비":
-                chartList[0].val += Double(i.price) ?? 0.0
+                let value = chartList[0].value
+                chartList[0].setValue(value: value + price)
                 break
             case "유흥비":
-                chartList[1].val += Double(i.price) ?? 0.0
+                let value = chartList[1].value
+                chartList[1].setValue(value: value + price)
                 break
             case "식비":
-                chartList[2].val += Double(i.price) ?? 0.0
+                let value = chartList[2].value
+                chartList[2].setValue(value: value + price)
                 break
             default:
                 break
