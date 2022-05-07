@@ -32,6 +32,12 @@ final class DependencyInjector{
             guard let viewController = compose as? MapViewController else { return }
             viewController.setDependency(dependency: MapDependency(viewModel: MapViewModel(firebaseReadable: FirebaseReadRepository())))
         }
+        
+        if compose is ChartViewController{
+            guard let viewController = compose as? ChartViewController else { return }
+            viewController.setDependency(dependency: ChartDependency(viewModel: ChartViewModel(firebaseReadable: FirebaseReadRepository())))
+        }
+        
     }
 }
 
