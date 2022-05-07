@@ -16,8 +16,11 @@ class ListViewModel{
     
     private let state = BehaviorRelay<ListViewState>(value: ListViewState())
     private var listData = PublishSubject<[BookInfo]>()
+    private var firebaseReadable: FirebaseReadable
     
-    private var fbModel = FirebaseReadRepository()
+    init(firebaseReadable: FirebaseReadable){
+        self.firebaseReadable = firebaseReadable
+    }
     
     struct Input{
         let viewState: Observable<Void>?
@@ -40,7 +43,7 @@ class ListViewModel{
                 var newState = state
                 newState.viewLogic = .setUpView
                 newState.filterData = ["높은금액순", "최신순", "카테고리 별"]
-                self?.fbModel.readBookInfo(completion: { result in
+                self?.firebaseReadable.readBookInfo(completion: { result in
                     self?.bookInfoList(result: result)
                 })
                 return newState
@@ -68,7 +71,7 @@ class ListViewModel{
             .map{ [weak self] state -> ListViewState in
                 var newState = state
                 newState.presentVC = .list
-                self?.fbModel.readBookInfo(completion: { result in
+                self?.firebaseReadable.readBookInfo(completion: { result in
                     self?.bookInfoList(result: result)
                 })
                 return newState

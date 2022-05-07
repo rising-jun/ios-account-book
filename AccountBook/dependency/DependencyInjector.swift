@@ -22,6 +22,11 @@ final class DependencyInjector{
             guard let viewController = compose as? WriteViewController else { return }
             viewController.setDependency(dependency: WriteDependency(viewModel: WriteViewModel(firebaseWriteable: FirebaseWriteRepository(), writeExpressionCheckable: RegularExpression())))
         }
+        
+        if compose is ListViewController{
+            guard let viewController = compose as? ListViewController else { return }
+            viewController.setDependency(dependency: ListDependency(viewmodel: ListViewModel(firebaseReadable: FirebaseReadRepository())))
+        }
     }
 }
 

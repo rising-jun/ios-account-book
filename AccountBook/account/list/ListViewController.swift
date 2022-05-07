@@ -12,37 +12,41 @@ import RxCocoa
 import RxViewController
 import RxDataSources
 
-class ListViewController: BaseViewController{
+class ListViewController: BaseViewController, DependencySetable{
+    typealias DependencyType = ListDependency
+    
+    override init(){
+        super.init()
+        DependencyInjector.injecting(to: self)
+    }
+    
+    required init?(coder: NSCoder) {
+        super.init(coder: coder)
+        DependencyInjector.injecting(to: self)
+    }
     
     lazy var myInfoBtn = UIBarButtonItem()
     lazy var v = ListView(frame: view.frame)
     private var dataSource: RxTableViewSectionedReloadDataSource<MySection>!
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
+    private var dependency: ListDependency?{
+        didSet{
+            self.viewModel = dependency?.viewmodel
+        }
     }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        
-        print(" view will appear ")
-    }
-    
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-        print(" view did appear ")
-    }
-    
-    private let viewModel = ListViewModel()
+    private var viewModel: ListViewModel?
     private var delegate: BookTableDelegate?
     private lazy var input = ListViewModel.Input(viewState: rx.viewDidLoad.map{_ in Void()},
                                                  writeTouch: myInfoBtn.rx.tap.map{ _ in Void()},
                                                  returnListView: rx.viewWillAppear.map{_ in Void()})
-    private lazy var output = viewModel.bind(input: input)
+    private lazy var output = viewModel?.bind(input: input)
     private let disposeBag = DisposeBag()
+    func setDependency(dependency: ListDependency) {
+        self.dependency = dependency
+    }
     
     override func bindViewModel(){
         super.bindViewModel()
+        guard let output = output else { return }
         
         output.state?.map{$0.viewLogic}
         .filter{$0 == .setUpView}
@@ -68,9 +72,6 @@ class ListViewController: BaseViewController{
             .drive(onNext: { [weak self] presentVC in
             self?.presentVC(vcName: presentVC)
         }).disposed(by: disposeBag)
-        
-        
-        
     }
     
     override func setup() {
@@ -79,7 +80,6 @@ class ListViewController: BaseViewController{
         dataSource = RxTableViewSectionedReloadDataSource<MySection>(
             configureCell: { dataSource, tableView, indexPath, item in
                 let cell = tableView.dequeueReusableCell(withIdentifier: "BookTableCell", for: indexPath) as! BookTableCell
-                cell.awakeFromNib()
                 cell.priceLabel.text = item.price
                 cell.titleLabel.text = item.name
                 cell.categoryLabel.text = item.category
@@ -105,5 +105,9 @@ extension ListViewController{
             self.navigationController?.pushViewController(writeVC, animated: true)
         }
     }
-    
+}
+
+struct ListDependency: Dependency{
+    typealias ViewModelType = ListViewModel
+    let viewmodel: ListViewModel
 }

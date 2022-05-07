@@ -17,7 +17,6 @@ struct RegularExpression{
         return regExTest.evaluate(with: price)
     }
 }
-
 extension RegularExpression: WriteExpressionCheckable{
     func checkPrice(price: String) -> Bool{
         return isPriceExpression(price: price)

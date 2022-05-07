@@ -34,8 +34,5 @@ class ListView: BaseView{
             make.trailing.equalTo(self).offset(-15)
             make.leading.equalTo(self).offset(15)
         }
-        
     }
-    
-    
 }

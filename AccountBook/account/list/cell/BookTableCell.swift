@@ -16,8 +16,17 @@ class BookTableCell: UITableViewCell{
     lazy var categoryLabel = UILabel()
     lazy var priceLabel = UILabel()
     
-    override func awakeFromNib(){
-        super.awakeFromNib()
+    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
+        super.init(style: style, reuseIdentifier: reuseIdentifier)
+        setupUI()
+    }
+    
+    required init?(coder: NSCoder) {
+        super.init(coder: coder)
+        setupUI()
+    }
+    
+    private func setupUI(){
         contentView.addSubViews(dateLabel, titleLabel, categoryLabel, priceLabel)
 
         contentView.snp.makeConstraints { make in
@@ -60,8 +69,5 @@ class BookTableCell: UITableViewCell{
             make.height.equalTo(20)
             make.centerX.equalTo(titleLabel.snp.centerX)
         }
-        
-        
     }
-    
 }
