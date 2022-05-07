@@ -10,7 +10,6 @@ import RxCocoa
 import RxViewController
 import CoreLocation
 import MapKit
-import RxMKMapView
 
 class WriteViewController: BaseViewController, DependencySetable{
     typealias DependencyType = WriteDependency
@@ -28,6 +27,7 @@ class WriteViewController: BaseViewController, DependencySetable{
     func setDependency(dependency: WriteDependency) {
         self.dependency = dependency
     }
+    
     private var viewModel: WriteViewModel?
     var dependency: DependencyType?{
         didSet{
@@ -36,8 +36,7 @@ class WriteViewController: BaseViewController, DependencySetable{
     }
 
     private var mapViewDelegate: WriteMapViewDelegate?
-    lazy var v = WriteView(frame: view.frame)
-    
+    private lazy var writeView = WriteView(frame: view.frame)
     private let disposeBag = DisposeBag()
     private var permissionCheck: PermissionCheck?
     private var locationManager = CLLocationManager()
@@ -49,12 +48,12 @@ class WriteViewController: BaseViewController, DependencySetable{
     lazy var input = WriteViewModel.Input(viewState: self.rx.viewDidLoad.map{ViewState.viewDidLoad},
                                           locState: locationStatusSubject.distinctUntilChanged().asObservable(),
                                           coorState: coordiSubject.filter{$0.latitude != 0.0}.asObservable(),
-                                          mode: v.setLocModeButton.rx.tap.map{_ in Void()},
-                                          nameInput: v.nameTF.rx.text.orEmpty.distinctUntilChanged(),
-                                          priceInput: v.priceTF.rx.text.orEmpty.distinctUntilChanged(),
-                                          categoryInput: v.categoryPicker.rx.itemSelected.map{$0.row},
+                                          mode: writeView.setLocModeButton.rx.tap.map{_ in Void()},
+                                          nameInput: writeView.nameTF.rx.text.orEmpty.distinctUntilChanged(),
+                                          priceInput: writeView.priceTF.rx.text.orEmpty.distinctUntilChanged(),
+                                          categoryInput: writeView.categoryPicker.rx.itemSelected.map{$0.row},
                                           writeAction: writeButton.rx.tap.map{_ in Void()},
-                                          dateInput: v.datePicker.rx.date.asObservable(),
+                                          dateInput: writeView.datePicker.rx.date.asObservable(),
                                           backAction: backButton.rx.tap.map{ _ in Void()})
     
     lazy var output = viewModel?.bind(input: input)
@@ -80,7 +79,7 @@ class WriteViewController: BaseViewController, DependencySetable{
         
         output.state?.map{$0.categoryData ?? []}
         .distinctUntilChanged()
-        .drive(v.categoryPicker.rx.itemTitles){ _, item in
+        .drive(writeView.categoryPicker.rx.itemTitles){ _, item in
             return item
         }.disposed(by: disposeBag)
         
@@ -128,7 +127,7 @@ class WriteViewController: BaseViewController, DependencySetable{
         .distinctUntilChanged()
         .drive(onNext: { [weak self] check in
             guard let self = self else { return }
-            check == .possible ? self.v.availableUI() : self.v.unavailableUI()
+            check == .possible ? self.writeView.availableUI() : self.writeView.unavailableUI()
         }).disposed(by: disposeBag)
         
         output.state?.map{$0.resultMsg}
@@ -145,7 +144,7 @@ class WriteViewController: BaseViewController, DependencySetable{
             }
         }).disposed(by: disposeBag)
         
-        output.state?.map{$0.presentVC}
+        output.state?.map{$0.presentViewController}
         .filter{$0 != .write}
         .drive(onNext: { [weak self] viewController in
             guard let self = self else { return }
@@ -157,10 +156,14 @@ class WriteViewController: BaseViewController, DependencySetable{
 
 extension WriteViewController{
     private func setUpView(){
-        view = v
+        view = writeView
         locationManager.delegate = permissionCheck
         permissionCheck?.getLocationPermission()
-        v.mapView.delegate = mapViewDelegate
+        writeView.mapView.delegate = mapViewDelegate
+        setNavigationItemFactor()
+    }
+    
+    private func setNavigationItemFactor(){
         writeButton.title = "작성하기"
         backButton.title = "뒤로가기"
         self.navigationItem.setRightBarButton(self.writeButton, animated: false)
@@ -169,11 +172,11 @@ extension WriteViewController{
     }
     
     private func mapViewInitSet(coordi: CLLocationCoordinate2D){
-        v.mapViewInitSet(coordi: coordi)
+        writeView.mapViewInitSet(coordi: coordi)
     }
     
     private func setMapMode(mapMode: LocationSetMode){
-        v.setMapMode(mapMode: mapMode)
+        writeView.setMapMode(mapMode: mapMode)
     }
     
     private func presentViewController(to viewController: ViewControllerType){

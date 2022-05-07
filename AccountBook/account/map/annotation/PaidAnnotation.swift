@@ -5,10 +5,9 @@
 //  Created by 김동준 on 2021/11/22.
 //
 
-import Foundation
 import MapKit
 
-class PaidAnnotation: NSObject, Decodable, MKAnnotation{
+final class PaidAnnotation: NSObject, Decodable, MKAnnotation{
     
     init(index: Int, latitude: Double?, longitude: Double?, bookInfo: BookInfo) {
         self.index = index
@@ -17,8 +16,8 @@ class PaidAnnotation: NSObject, Decodable, MKAnnotation{
         self.bookInfo = bookInfo
     }
     
-    public var bookInfo: BookInfo
-    public var index: Int
+    private var bookInfo: BookInfo
+    private var index: Int
     private var latitude: CLLocationDegrees = 0
     private var longitude: CLLocationDegrees = 0
     
@@ -33,6 +32,5 @@ class PaidAnnotation: NSObject, Decodable, MKAnnotation{
             longitude = newValue.longitude
         }
     }
-    
 }
 

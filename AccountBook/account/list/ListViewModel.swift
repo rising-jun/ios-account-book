@@ -5,12 +5,11 @@
 //  Created by 김동준 on 2021/11/04.
 //
 
-import Foundation
 import RxSwift
 import RxCocoa
 import FirebaseFirestore
 
-class ListViewModel{
+final class ListViewModel: ViewModelType{
     var input: Input?
     var output: Output?
     
@@ -40,11 +39,12 @@ class ListViewModel{
         input.viewState?
             .withLatestFrom(state)
             .map{[weak self] state -> ListViewState in
+                guard let self = self else { return state }
                 var newState = state
                 newState.viewLogic = .setUpView
                 newState.filterData = ["높은금액순", "최신순", "카테고리 별"]
-                self?.firebaseReadable.readBookInfo(completion: { result in
-                    self?.bookInfoList(result: result)
+                self.firebaseReadable.readBookInfo(completion: { result in
+                    self.bookInfoList(result: result)
                 })
                 return newState
             }.bind(to: self.state)
@@ -54,7 +54,7 @@ class ListViewModel{
             .withLatestFrom(state)
             .map{ state -> ListViewState in
                 var newState = state
-                newState.presentVC = .write
+                newState.presentViewController = .write
                 return newState
             }.bind(to: self.state)
             .disposed(by: disposeBag)
@@ -69,18 +69,16 @@ class ListViewModel{
         input.returnListView?
             .withLatestFrom(state)
             .map{ [weak self] state -> ListViewState in
+                guard let self = self else { return state }
                 var newState = state
-                newState.presentVC = .list
-                self?.firebaseReadable.readBookInfo(completion: { result in
-                    self?.bookInfoList(result: result)
+                newState.presentViewController = .list
+                self.firebaseReadable.readBookInfo(completion: { result in
+                    self.bookInfoList(result: result)
                 })
                 return newState
             }.bind(to: self.state)
             .disposed(by: disposeBag)
-        
-        
-        output = Output(state: state.asDriver())
-        return output!
+        return Output(state: state.asDriver())
     }
 }
 
@@ -96,7 +94,7 @@ extension ListViewModel{
 }
 
 struct ListViewState{
-    var presentVC: ViewControllerType?
+    var presentViewController: ViewControllerType?
     var viewLogic: ViewLogic?
     var filterData: [String]?
     var listData: [BookInfo]?

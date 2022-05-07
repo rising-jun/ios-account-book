@@ -5,12 +5,11 @@
 //  Created by 김동준 on 2021/11/04.
 //
 
-import Foundation
 import SnapKit
-import UIKit
 
-class BookTableCell: UITableViewCell{
+final class BookTableCell: UITableViewCell{
     
+    static let identifier = "BookTableCell"
     lazy var dateLabel = UILabel()
     lazy var titleLabel = UILabel()
     lazy var categoryLabel = UILabel()
@@ -69,5 +68,12 @@ class BookTableCell: UITableViewCell{
             make.height.equalTo(20)
             make.centerX.equalTo(titleLabel.snp.centerX)
         }
+    }
+    
+    func setCellInfo(from bookInfo: BookInfo){
+        dateLabel.text = bookInfo.date
+        priceLabel.text = bookInfo.price
+        titleLabel.text = bookInfo.name
+        categoryLabel.text = bookInfo.category
     }
 }

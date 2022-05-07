@@ -5,7 +5,6 @@
 //  Created by 김동준 on 2021/11/10.
 //
 
-import Foundation
 import MapKit
 
 protocol MapDraggedDelegate: AnyObject{

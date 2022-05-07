@@ -5,13 +5,11 @@
 //  Created by 김동준 on 2021/11/18.
 //
 
-import Foundation
 import SnapKit
 import UIKit
 import MapKit
 
-class MapView: BaseView{
-    
+final class MapView: BaseView{
     lazy var mapView: MKMapView = {
         let mapView = MKMapView()
         mapView.mapType = .standard

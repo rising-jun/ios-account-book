@@ -5,12 +5,10 @@
 //  Created by 김동준 on 2021/11/08.
 //
 
-import Foundation
 import SnapKit
-import UIKit
 import MapKit
 
-class WriteView: BaseView{
+final class WriteView: BaseView{
     
     lazy var nameLabel: UILabel = {
        let label = UILabel()

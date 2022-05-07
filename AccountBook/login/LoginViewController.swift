@@ -5,7 +5,6 @@
 //  Created by 김동준 on 2021/11/04.
 //
 
-import Foundation
 import RxSwift
 import RxViewController
 import RxGesture
@@ -33,14 +32,13 @@ final class LoginViewController: BaseViewController, DependencySetable {
         }
     }
     private var viewModel: LoginViewModel?
-    lazy var v = LoginView(frame: view.frame)
+    private lazy var loginView = LoginView(frame: view.frame)
     private let disposeBag = DisposeBag()
-    let nav = UINavigationController()
-    lazy var vcArr = [ListViewController(), MapViewController(), ChartViewController(), MyPageViewController()]
-    lazy var vcNameArr = ["리스트", "맵", "차트", "내정보"]
+    private lazy var viewControllers = [ListViewController(), MapViewController(), ChartViewController(), MyPageViewController()]
+    private lazy var ViewControllerTitles = ["리스트", "맵", "차트", "내정보"]
     
     private lazy var input = LoginViewModel.Input(viewState: rx.viewDidLoad.map{ViewState.viewDidLoad},
-                                                  googleLoginTap: self.v.googleBtn.rx.tapGesture().skip(1).map{ _ in return Void()} )
+                                                  googleLoginTap: self.loginView.googleBtn.rx.tapGesture().skip(1).map{ _ in return Void()} )
     private lazy var output = viewModel?.bind(input: input)
     
     override func bindViewModel(){
@@ -53,32 +51,30 @@ final class LoginViewController: BaseViewController, DependencySetable {
             self?.setUpView()
         }).disposed(by: disposeBag)
         
-        output.state?.map{$0.presentVC ?? .login}
+        output.state?.map{$0.presentViewController ?? .login}
             .distinctUntilChanged()
-            .drive(onNext: { [weak self] presentVC in
-            self?.presentVC(vcName: presentVC)
+            .drive(onNext: { [weak self] presentViewController in
+            self?.presentViewController(viewController: presentViewController)
         }).disposed(by: disposeBag)
     }
 }
 extension LoginViewController{
-    
-    func setUpView(){
-        view = v
+    private func setUpView(){
+        view = loginView
         UIApplication.shared.windows.first?.rootViewController = self
     }
     
-    func presentVC(vcName: ViewControllerType){
-        
-        if vcName == .list{
-            let nav = UINavigationController()
-            let tabBar = UITabBarController()
-            for i in 0 ..< vcArr.count{
-                tabBar.addChild(vcArr[i])
-                vcArr[i].tabBarItem = UITabBarItem(title: vcNameArr[i], image: UIImage(), tag: i)
+    private func presentViewController(viewController: ViewControllerType){
+        if viewController == .list{
+            let navigationController = UINavigationController()
+            let tabBarController = UITabBarController()
+            for (index, viewController) in viewControllers.enumerated(){
+                tabBarController.addChild(viewController)
+                viewController.tabBarItem = UITabBarItem(title: ViewControllerTitles[index], image: UIImage(), tag: index)
             }
-            nav.modalPresentationStyle = .fullScreen
-            nav.pushViewController(tabBar, animated: true)
-            self.present(nav, animated: true, completion: nil)
+            navigationController.modalPresentationStyle = .fullScreen
+            navigationController.pushViewController(tabBarController, animated: true)
+            self.present(navigationController, animated: true, completion: nil)
         }
     }
 }

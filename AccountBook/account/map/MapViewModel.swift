@@ -5,7 +5,6 @@
 //  Created by 김동준 on 2021/11/18.
 //
 
-import Foundation
 import RxSwift
 import RxCocoa
 
@@ -58,8 +57,7 @@ final class MapViewModel: ViewModelType{
             }.bind(to: self.state)
             .disposed(by: disposeBag)
         
-        output = Output(state: state.asDriver())
-        return output!
+        return Output(state: state.asDriver())
     }
     
 }
@@ -74,7 +72,7 @@ extension MapViewModel{
     }
 }
 struct MapState{
-    var presentVC: ViewControllerType?
+    var presentViewController: ViewControllerType?
     var viewLogic: ViewLogic?
     var annotationEntities: [PaidAnnotationEntity]?
 }

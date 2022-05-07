@@ -5,12 +5,11 @@
 //  Created by 김동준 on 2021/11/04.
 //
 
-import Foundation
 import RxSwift
 import RxCocoa
 import RxViewController
 
-class MyPageViewController: BaseViewController, DependencySetable{
+final class MyPageViewController: BaseViewController, DependencySetable{
     typealias DependencyType = MyPageDependency
     
     override init(){
@@ -33,8 +32,7 @@ class MyPageViewController: BaseViewController, DependencySetable{
         }
     }
     private var viewModel: MyPageViewModel?
-    
-    lazy var v = MyPageView(frame: view.frame)
+    private lazy var myPageView = MyPageView(frame: view.frame)
     private let disposeBag = DisposeBag()
     private lazy var input = MyPageViewModel.Input(viewState: self.rx.viewDidLoad.map{_ in Void()})
     private lazy var output = viewModel?.bind(input: input)
@@ -54,13 +52,13 @@ class MyPageViewController: BaseViewController, DependencySetable{
         .filter{$0 > 0}
         .distinctUntilChanged()
         .map{String($0)}
-        .drive(v.sumValLabel.rx.text)
+        .drive(myPageView.sumValLabel.rx.text)
         .disposed(by: disposeBag)
     }
 }
 
 extension MyPageViewController{
     func setUpView(){
-        view = v
+        view = myPageView
     }
 }

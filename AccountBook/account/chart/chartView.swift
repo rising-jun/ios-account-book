@@ -5,13 +5,11 @@
 //  Created by 김동준 on 2021/11/23.
 //
 
-import Foundation
+
 import SnapKit
-import UIKit
 import Charts
 
-class ChartView: BaseView{
-    
+final class ChartView: BaseView{
     lazy var pieView = PieChartView()
     
     override func setup() {
@@ -23,8 +21,5 @@ class ChartView: BaseView{
             make.width.equalTo(self)
             make.height.equalTo(600)
         }
-        
-        
     }
-    
 }

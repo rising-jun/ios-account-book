@@ -5,7 +5,6 @@
 //  Created by 김동준 on 2021/11/08.
 //
 
-import Foundation
 import RxSwift
 import RxCocoa
 import CoreLocation
@@ -46,7 +45,7 @@ final class WriteViewModel: ViewModelType{
     
     func bind(input: Input) -> Output{
         self.input = input
-
+        
         input.locState?
             .withLatestFrom(state){ locStatus, state -> WriteState in
                 var newState = state
@@ -72,7 +71,7 @@ final class WriteViewModel: ViewModelType{
                 newState.viewLogic = .setUpView
                 newState.categoryData = ["식비", "생활비", "유흥비"]
                 guard let categoryData = newState.categoryData else { return state }
-                newState.writeObject.category = categoryData[0]
+                newState.writeObject.setCategory(value: categoryData[0])
                 return newState
             }.bind(to: self.state)
             .disposed(by: disposeBag)
@@ -81,15 +80,14 @@ final class WriteViewModel: ViewModelType{
             .withLatestFrom(state){ coor, state -> WriteState in
                 var newState = state
                 newState.coordi = coor
-                newState.writeObject.lat = coor.latitude
-                newState.writeObject.long = coor.longitude
+                newState.writeObject.setPoint(lat: coor.latitude, long: coor.longitude)
                 return newState
             }.bind(to: self.state)
             .disposed(by: disposeBag)
         
         input.mode?
             .withLatestFrom(state)
-            .map{ [weak self] state -> WriteState in
+            .map{ state -> WriteState in
                 var newState = state
                 if newState.locaSetMode == .auto{
                     newState.locaSetMode = .directly
@@ -102,8 +100,8 @@ final class WriteViewModel: ViewModelType{
         
         input.nameInput?
             .withLatestFrom(state){ name, state -> WriteState in
-                var newState = state
-                newState.writeObject.name = name
+                let newState = state
+                newState.writeObject.setName(value: name)
                 return newState
             }.bind(to: self.state)
             .disposed(by: disposeBag)
@@ -113,7 +111,7 @@ final class WriteViewModel: ViewModelType{
                 guard let self = self else { return state }
                 var newState = state
                 if self.writeExpressionCheckable.checkPrice(price: price){
-                    newState.writeObject.price = price
+                    newState.writeObject.setPrice(value: price)
                     newState.priceformError = .possible
                 }else{
                     newState.priceformError = .impossible
@@ -124,17 +122,17 @@ final class WriteViewModel: ViewModelType{
         
         input.categoryInput?
             .withLatestFrom(state){ row, state -> WriteState in
-                var newState = state
+                let newState = state
                 guard let categoryData = newState.categoryData else { return state }
-                newState.writeObject.category = categoryData[row]
+                newState.writeObject.setCategory(value: categoryData[row])
                 return newState
             }.bind(to: self.state)
             .disposed(by: disposeBag)
         
         input.dateInput?
             .withLatestFrom(state){ date, state -> WriteState in
-                var newState = state
-                newState.writeObject.date = date.formatted()
+                let newState = state
+                newState.writeObject.setDate(value: date.formatted())
                 return newState
             }.bind(to: self.state)
             .disposed(by: disposeBag)
@@ -143,15 +141,12 @@ final class WriteViewModel: ViewModelType{
             .withLatestFrom(state)
             .map{ [weak self] state in
                 guard let self = self else { return state }
-                var newState = state
+                let newState = state
                 if newState.priceformError == .impossible{
                     
                 }else{
-                    print("write possible now!")
-                    //write!
-                    newState.writeObject.userId = UserDefaults.standard.string(forKey: "token") ?? "null"
+                    newState.writeObject.setUserId(value: UserDefaults.standard.string(forKey: "token") ?? "null")
                     self.firebaseWriteable?.writeBookInfo(bookInfo: newState.writeObject) { result in
-                        
                     }
                 }
                 return newState
@@ -162,7 +157,7 @@ final class WriteViewModel: ViewModelType{
             .withLatestFrom(state)
             .map{ state -> WriteState in
                 var newState = state
-                newState.presentVC = .list
+                newState.presentViewController = .list
                 return newState
             }.bind(to: self.state)
             .disposed(by: disposeBag)
@@ -171,22 +166,28 @@ final class WriteViewModel: ViewModelType{
             var newState = state
             switch result{
             case .success:
-                newState.presentVC = .list
+                newState.presentViewController = .list
                 newState.resultMsg = .success
-            case .failed(let error):
+            case .failed(_):
                 newState.resultMsg = .failed
             }
             return newState
         }.bind(to: self.state)
-        .disposed(by: disposeBag)
-        
-        output = Output(state: state.asDriver())
-        return output!
+            .disposed(by: disposeBag)
+        return Output(state: state.asDriver())
     }
 }
 
+extension WriteViewModel{
+    private func writeResult(result: FirebaseWriteResult) {
+        print("writeResult!! : \(result)")
+        writeResult.onNext(result)
+    }
+}
+
+
 struct WriteState{
-    var presentVC: ViewControllerType?
+    var presentViewController: ViewControllerType?
     var viewLogic: ViewLogic?
     var categoryData: [String]?
     var locationPermission: PermissionState?
@@ -198,12 +199,6 @@ struct WriteState{
     var resultMsg: WriteResultMsg?
 }
 
-extension WriteViewModel{
-    func writeResult(result: FirebaseWriteResult) {
-        print("writeResult!! : \(result)")
-        writeResult.onNext(result)
-    }
-}
 
 enum LocationSetMode{
     case auto

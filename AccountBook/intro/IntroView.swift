@@ -5,12 +5,10 @@
 //  Created by 김동준 on 2021/11/04.
 //
 
-import Foundation
 import SnapKit
-import UIKit
 import Lottie
 
-class IntroView: BaseView{
+final class IntroView: BaseView{
     
     let animationView = AnimationView(name:"money-lottie")
 
@@ -40,6 +38,5 @@ class IntroView: BaseView{
             make.height.equalTo(40)
             make.centerX.equalTo(self)
         }
-    
     }
 }

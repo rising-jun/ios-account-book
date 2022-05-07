@@ -5,11 +5,9 @@
 //  Created by 김동준 on 2021/11/04.
 //
 
-import Foundation
 import SnapKit
-import UIKit
 
-class ListView: BaseView{
+final class ListView: BaseView{
     lazy var filterPicker = UIPickerView()
     lazy var tableView = UITableView()
     

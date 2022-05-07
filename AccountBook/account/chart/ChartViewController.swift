@@ -5,12 +5,11 @@
 //  Created by 김동준 on 2021/11/04.
 //
 
-import Foundation
 import RxSwift
 import RxCocoa
 import Charts
 
-class ChartViewController: BaseViewController, DependencySetable{
+final class ChartViewController: BaseViewController, DependencySetable{
     typealias DependencyType = ChartDependency
     
     override init(){
@@ -33,7 +32,7 @@ class ChartViewController: BaseViewController, DependencySetable{
         }
     }
     private var viewModel: ChartViewModel?
-    lazy var v = ChartView(frame: view.frame)
+    private lazy var chartView = ChartView(frame: view.frame)
     private lazy var input = ChartViewModel.Input(viewState: self.rx.viewDidLoad.map{_ in Void()})
     private lazy var output = viewModel?.bind(input: input)
     private let disposeBag = DisposeBag()
@@ -54,26 +53,26 @@ class ChartViewController: BaseViewController, DependencySetable{
         .drive(onNext: { [weak self] chartList in
             guard let self = self else { return }
             var entryList: [PieChartDataEntry] = []
-            for i in chartList{
-                let entry = PieChartDataEntry(value: i.val, label: i.category)
+            
+            for chart in chartList{
+                let entry = PieChartDataEntry(value: chart.value, label: chart.category)
                 entryList.append(entry)
             }
+            
             let dataSet = PieChartDataSet(entries: entryList, label: "PieChart")
             dataSet.entryLabelColor = UIColor.black
             dataSet.colors = ChartColorTemplates.joyful()
             dataSet.valueColors = [UIColor.black]
             let data = PieChartData(dataSet: dataSet)
             
-            self.v.pieView.data = data
-            self.v.pieView.notifyDataSetChanged()
+            self.chartView.pieView.data = data
+            self.chartView.pieView.notifyDataSetChanged()
         }).disposed(by: disposeBag)
     }
 }
 
 extension ChartViewController{
-    func setUpView(){
-        view = v
+    private func setUpView(){
+        view = chartView
     }
-    
-    
 }

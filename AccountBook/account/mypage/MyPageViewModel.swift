@@ -5,11 +5,10 @@
 //  Created by 김동준 on 2021/12/01.
 //
 
-import Foundation
 import RxSwift
 import RxCocoa
 
-class MyPageViewModel: ViewModelType{
+final class MyPageViewModel: ViewModelType{
     var input: Input?
     var output: Output?
     
@@ -35,10 +34,11 @@ class MyPageViewModel: ViewModelType{
         
         input.viewState?
             .withLatestFrom(state){ [weak self] _, state -> MyPageState in
+                guard let self = self else { return state }
                 var newState = state
                 newState.viewLogic = .setUpView
-                self!.firebaseReadable.readBookInfo { result in
-                    self!.bookInfoList(result: result)
+                self.firebaseReadable.readBookInfo { result in
+                    self.bookInfoList(result: result)
                 }
                 return newState
             }.bind(to: self.state)
@@ -53,18 +53,18 @@ class MyPageViewModel: ViewModelType{
             }.bind(to: self.state)
             .disposed(by: disposeBag)
         
-        output = Output(state: state.asDriver())
-        return output!
+        return Output(state: state.asDriver())
     }
     
 }
 extension MyPageViewModel{
-    func bookInfoList(result: Result<[BookInfo], FireBaseError>) {
+    private func bookInfoList(result: Result<[BookInfo], FireBaseError>) {
         switch result{
         case .success(let bookList):
             var sum: Int = 0
-            for i in bookList{
-                sum += Int(i.price) ?? 0
+            for book in bookList{
+                guard let price = Int(book.price) else { return }
+                sum += price
             }
             paySumPublish.onNext(sum)
         case .failure(let error):

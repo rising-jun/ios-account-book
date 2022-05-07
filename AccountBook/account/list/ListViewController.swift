@@ -5,14 +5,13 @@
 //  Created by 김동준 on 2021/11/04.
 //
 
-import Foundation
 import UIKit
 import RxSwift
 import RxCocoa
 import RxViewController
 import RxDataSources
 
-class ListViewController: BaseViewController, DependencySetable{
+final class ListViewController: BaseViewController, DependencySetable{
     typealias DependencyType = ListDependency
     
     override init(){
@@ -35,12 +34,18 @@ class ListViewController: BaseViewController, DependencySetable{
         }
     }
     private var viewModel: ListViewModel?
-    lazy var v = ListView(frame: view.frame)
-    lazy var myInfoBtn = UIBarButtonItem()
-    private var dataSource: RxTableViewSectionedReloadDataSource<MySection>!
+    private lazy var listView = ListView(frame: view.frame)
+    private lazy var myInfoButton = UIBarButtonItem()
+    private var dataSource = RxTableViewSectionedReloadDataSource<MySection>(
+        configureCell: { dataSource, tableView, indexPath, item in
+            guard let cell = tableView.dequeueReusableCell(withIdentifier: "BookTableCell", for: indexPath) as? BookTableCell else { return UITableViewCell() }
+            cell.setCellInfo(from: item)
+            return cell
+        })
+    
     private var delegate: BookTableDelegate?
     private lazy var input = ListViewModel.Input(viewState: rx.viewDidLoad.map{_ in Void()},
-                                                 writeTouch: myInfoBtn.rx.tap.map{ _ in Void()},
+                                                 writeTouch: myInfoButton.rx.tap.map{ _ in Void()},
                                                  returnListView: rx.viewWillAppear.map{_ in Void()})
     private lazy var output = viewModel?.bind(input: input)
     private let disposeBag = DisposeBag()
@@ -58,57 +63,43 @@ class ListViewController: BaseViewController, DependencySetable{
         
         output.state?.map{$0.filterData ?? []}
         .distinctUntilChanged()
-        .drive(v.filterPicker.rx.itemTitles){_, item in
+        .drive(listView.filterPicker.rx.itemTitles){_, item in
             return "\(item)"
         }.disposed(by: disposeBag)
         
         output.state?.map{$0.listData ?? []}
         .filter{$0.count > 0}
         .map{[MySection(header: "a", items: $0)]}
-        .drive(v.tableView.rx.items(dataSource: dataSource))
+        .drive(listView.tableView.rx.items(dataSource: dataSource))
         .disposed(by: disposeBag)
         
-        output.state?.map{$0.presentVC ?? .list}
+        output.state?.map{$0.presentViewController ?? .list}
             .distinctUntilChanged()
-            .drive(onNext: { [weak self] presentVC in
-            self?.presentVC(vcName: presentVC)
+            .drive(onNext: { [weak self] presentViewController in
+            self?.presentViewController(viewController: presentViewController)
         }).disposed(by: disposeBag)
     }
     
     override func setup() {
         super.setup()
-        v.tableView.register(BookTableCell.self, forCellReuseIdentifier: "BookTableCell")
-        dataSource = RxTableViewSectionedReloadDataSource<MySection>(
-            configureCell: { dataSource, tableView, indexPath, item in
-                let cell = tableView.dequeueReusableCell(withIdentifier: "BookTableCell", for: indexPath) as! BookTableCell
-                cell.priceLabel.text = item.price
-                cell.titleLabel.text = item.name
-                cell.categoryLabel.text = item.category
-                cell.dateLabel.text = "12"
-                return cell
-            })
+        listView.tableView.register(BookTableCell.self, forCellReuseIdentifier: BookTableCell.identifier)
     }
-    
 }
 
 extension ListViewController{
-    
-    func setUpView(){
-        view = v
+
+    private func setUpView(){
+        view = listView
         view.backgroundColor = .white
-        self.myInfoBtn.title = "작성하기"
-        self.tabBarController?.navigationItem.setRightBarButton(self.myInfoBtn, animated: false)
+        self.myInfoButton.title = "작성하기"
+        self.tabBarController?.navigationItem.setRightBarButton(self.myInfoButton, animated: false)
     }
     
-    func presentVC(vcName: ViewControllerType){
-        if vcName == .write{
-            let writeVC = WriteViewController()
-            self.navigationController?.pushViewController(writeVC, animated: true)
+    private func presentViewController(viewController: ViewControllerType){
+        if viewController == .write{
+            let writeViewController = WriteViewController()
+            self.navigationController?.pushViewController(writeViewController, animated: true)
         }
     }
 }
 
-struct ListDependency: Dependency{
-    typealias ViewModelType = ListViewModel
-    let viewModel: ListViewModel
-}

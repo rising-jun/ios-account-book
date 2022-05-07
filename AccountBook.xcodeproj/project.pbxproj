@@ -30,6 +30,7 @@
 		72567F3E282651AE0038EEC0 /* MapDependency.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72567F3D282651AE0038EEC0 /* MapDependency.swift */; };
 		72567F402826575D0038EEC0 /* ChartDependency.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72567F3F2826575D0038EEC0 /* ChartDependency.swift */; };
 		72567F4228265EEF0038EEC0 /* MyPageDependency.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72567F4128265EEF0038EEC0 /* MyPageDependency.swift */; };
+		72567F4428267F280038EEC0 /* ListDependency.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72567F4328267F280038EEC0 /* ListDependency.swift */; };
 		7259B2FA281E83850009C31A /* Timer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7259B2F9281E83850009C31A /* Timer.swift */; };
 		7259B2FD281E8F440009C31A /* DependencyInjector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7259B2FC281E8F440009C31A /* DependencyInjector.swift */; };
 		7259B2FF281E934F0009C31A /* IntroDependency.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7259B2FE281E934F0009C31A /* IntroDependency.swift */; };
@@ -88,6 +89,7 @@
 		72567F3D282651AE0038EEC0 /* MapDependency.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapDependency.swift; sourceTree = "<group>"; };
 		72567F3F2826575D0038EEC0 /* ChartDependency.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChartDependency.swift; sourceTree = "<group>"; };
 		72567F4128265EEF0038EEC0 /* MyPageDependency.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPageDependency.swift; sourceTree = "<group>"; };
+		72567F4328267F280038EEC0 /* ListDependency.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListDependency.swift; sourceTree = "<group>"; };
 		7259B2F9281E83850009C31A /* Timer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Timer.swift; sourceTree = "<group>"; };
 		7259B2FC281E8F440009C31A /* DependencyInjector.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DependencyInjector.swift; sourceTree = "<group>"; };
 		7259B2FE281E934F0009C31A /* IntroDependency.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntroDependency.swift; sourceTree = "<group>"; };
@@ -322,6 +324,7 @@
 				7290EDEE2733C39000292E88 /* ListViewController.swift */,
 				7290EDF92733CF7B00292E88 /* ListView.swift */,
 				7290EDFB2733CF8700292E88 /* ListViewModel.swift */,
+				72567F4328267F280038EEC0 /* ListDependency.swift */,
 			);
 			path = list;
 			sourceTree = "<group>";
@@ -502,6 +505,7 @@
 				721956D5274B7F4300FDB085 /* PaidAnnotationView.swift in Sources */,
 				72567F4228265EEF0038EEC0 /* MyPageDependency.swift in Sources */,
 				721956D2274B6BC000FDB085 /* MapDelegate.swift in Sources */,
+				72567F4428267F280038EEC0 /* ListDependency.swift in Sources */,
 				723173812733A8D900FF27A4 /* IntroViewController.swift in Sources */,
 				72567F402826575D0038EEC0 /* ChartDependency.swift in Sources */,
 				7290EDF52733C5B000292E88 /* ChartViewController.swift in Sources */,

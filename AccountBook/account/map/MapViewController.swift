@@ -5,11 +5,9 @@
 //  Created by 김동준 on 2021/11/04.
 //
 
-import Foundation
 import RxSwift
 import RxCocoa
 import RxViewController
-import RxMKMapView
 import MapKit
 
 final class MapViewController: BaseViewController, DependencySetable{
@@ -35,7 +33,7 @@ final class MapViewController: BaseViewController, DependencySetable{
         }
     }
     private var viewModel: MapViewModel?
-    lazy var v = MapView(frame: view.frame)
+    private lazy var mapView = MapView(frame: view.frame)
     private var mapDelegate = MapDelegate()
     private lazy var annotations: [MKPointAnnotation] = []
     private lazy var input = MapViewModel.Input(viewState: rx.viewDidLoad.map{_ in Void()})
@@ -58,7 +56,7 @@ final class MapViewController: BaseViewController, DependencySetable{
         .drive(onNext: { [weak self] annotationEntities in
             guard let self = self else { return }
             self.makeAnnotationViews(by: annotationEntities)
-            self.addAnnotation(to: self.v.mapView)
+            self.addAnnotation(to: self.mapView.mapView)
         }).disposed(by: disposeBag)
     }
     
@@ -73,20 +71,20 @@ final class MapViewController: BaseViewController, DependencySetable{
     }
     
     private func addAnnotation(to mapView: MKMapView){
-        self.v.mapView.addAnnotations(annotations)
-        self.v.mapView.delegate = self.mapDelegate
+        self.mapView.mapView.addAnnotations(annotations)
+        self.mapView.mapView.delegate = self.mapDelegate
     }
     
     private func setUpView(){
-        view = v
+        view = mapView
         mapViewInitSet(coordi: CLLocationCoordinate2D(latitude: 37.533544, longitude: 127.146997))
         
     }
     
     private func mapViewInitSet(coordi: CLLocationCoordinate2D){
-        self.v.mapView.showsUserLocation = true
-        self.v.mapView.showsBuildings = true
-        self.v.mapView.isPitchEnabled = true
+        self.mapView.mapView.showsUserLocation = true
+        self.mapView.mapView.showsBuildings = true
+        self.mapView.mapView.isPitchEnabled = true
         
         let lat = coordi.latitude
         let long = coordi.longitude
@@ -94,6 +92,6 @@ final class MapViewController: BaseViewController, DependencySetable{
         camera.centerCoordinate = CLLocationCoordinate2D(latitude: lat, longitude: long)
         camera.pitch = 80.0
         camera.altitude = 100.0
-        self.v.mapView.setCamera(camera, animated: false)
+        self.mapView.mapView.setCamera(camera, animated: false)
     }
 }
