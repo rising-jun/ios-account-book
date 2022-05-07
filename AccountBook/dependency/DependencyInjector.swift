@@ -25,7 +25,12 @@ final class DependencyInjector{
         
         if compose is ListViewController{
             guard let viewController = compose as? ListViewController else { return }
-            viewController.setDependency(dependency: ListDependency(viewmodel: ListViewModel(firebaseReadable: FirebaseReadRepository())))
+            viewController.setDependency(dependency: ListDependency(viewModel: ListViewModel(firebaseReadable: FirebaseReadRepository())))
+        }
+        
+        if compose is MapViewController{
+            guard let viewController = compose as? MapViewController else { return }
+            viewController.setDependency(dependency: MapDependency(viewModel: MapViewModel(firebaseReadable: FirebaseReadRepository())))
         }
     }
 }

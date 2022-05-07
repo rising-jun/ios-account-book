@@ -27,6 +27,7 @@
 		7247EFAF2734141500FDEE7B /* BookTableDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7247EFAE2734141500FDEE7B /* BookTableDelegate.swift */; };
 		72508DF7282552D40025C5C7 /* WriteDependency.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72508DF6282552D40025C5C7 /* WriteDependency.swift */; };
 		72508DF92825556A0025C5C7 /* RegularExpression.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72508DF82825556A0025C5C7 /* RegularExpression.swift */; };
+		72567F3E282651AE0038EEC0 /* MapDependency.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72567F3D282651AE0038EEC0 /* MapDependency.swift */; };
 		7259B2FA281E83850009C31A /* Timer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7259B2F9281E83850009C31A /* Timer.swift */; };
 		7259B2FD281E8F440009C31A /* DependencyInjector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7259B2FC281E8F440009C31A /* DependencyInjector.swift */; };
 		7259B2FF281E934F0009C31A /* IntroDependency.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7259B2FE281E934F0009C31A /* IntroDependency.swift */; };
@@ -82,6 +83,7 @@
 		7247EFAE2734141500FDEE7B /* BookTableDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookTableDelegate.swift; sourceTree = "<group>"; };
 		72508DF6282552D40025C5C7 /* WriteDependency.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WriteDependency.swift; sourceTree = "<group>"; };
 		72508DF82825556A0025C5C7 /* RegularExpression.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegularExpression.swift; sourceTree = "<group>"; };
+		72567F3D282651AE0038EEC0 /* MapDependency.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapDependency.swift; sourceTree = "<group>"; };
 		7259B2F9281E83850009C31A /* Timer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Timer.swift; sourceTree = "<group>"; };
 		7259B2FC281E8F440009C31A /* DependencyInjector.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DependencyInjector.swift; sourceTree = "<group>"; };
 		7259B2FE281E934F0009C31A /* IntroDependency.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntroDependency.swift; sourceTree = "<group>"; };
@@ -335,6 +337,7 @@
 				7290EDF22733C5A500292E88 /* MapViewController.swift */,
 				72AE47FD27464D59003FA631 /* MapView.swift */,
 				72AE47FF27464D61003FA631 /* MapViewModel.swift */,
+				72567F3D282651AE0038EEC0 /* MapDependency.swift */,
 			);
 			path = map;
 			sourceTree = "<group>";
@@ -525,6 +528,7 @@
 				7290EDD62733B3E300292E88 /* IntroViewModel.swift in Sources */,
 				72AE480027464D61003FA631 /* MapViewModel.swift in Sources */,
 				7247EFAF2734141500FDEE7B /* BookTableDelegate.swift in Sources */,
+				72567F3E282651AE0038EEC0 /* MapDependency.swift in Sources */,
 				7290EDDD2733B54600292E88 /* LoginViewController.swift in Sources */,
 				7259B2FA281E83850009C31A /* Timer.swift in Sources */,
 				7290EDF82733C9D500292E88 /* MyPageViewController.swift in Sources */,
