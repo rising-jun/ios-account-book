@@ -28,16 +28,15 @@ class WriteViewController: BaseViewController, DependencySetable{
     func setDependency(dependency: WriteDependency) {
         self.dependency = dependency
     }
-    
-    lazy var v = WriteView(frame: view.frame)
-    private var dependency: WriteDependency?{
+    private var viewModel: WriteViewModel?
+    var dependency: DependencyType?{
         didSet{
             viewModel = dependency?.viewModel
         }
     }
 
     private var mapViewDelegate: WriteMapViewDelegate?
-    private var viewModel: WriteViewModel?
+    lazy var v = WriteView(frame: view.frame)
     
     private let disposeBag = DisposeBag()
     private var permissionCheck: PermissionCheck?

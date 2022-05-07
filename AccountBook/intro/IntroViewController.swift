@@ -11,11 +11,8 @@ import RxCocoa
 import RxViewController
 
 class IntroViewController: BaseViewController, DependencySetable {
-    func setDependency(dependency: IntroDependency) {
-        self.dependency = dependency
-    }
-    
     typealias DependencyType = IntroDependency
+    
     override init(){
         super.init()
         DependencyInjector.injecting(to: self)
@@ -26,18 +23,19 @@ class IntroViewController: BaseViewController, DependencySetable {
         DependencyInjector.injecting(to: self)
     }
     
-    private var viewModel: IntroViewModel?
-    private var dependency: IntroDependency?{
+    func setDependency(dependency: IntroDependency) {
+        self.dependency = dependency
+    }
+    
+    var dependency: DependencyType?{
         didSet{
             self.viewModel = dependency?.viewModel
         }
     }
+    private var viewModel: IntroViewModel?
     private lazy var v = IntroView(frame: view.frame)
     private let disposeBag = DisposeBag()
-    
-    
     let loginVC = LoginViewController()
-    
     private lazy var input = IntroViewModel.Input(viewState: rx.viewDidLoad.map{ViewState.viewDidLoad})
     private lazy var output = viewModel?.bind(input: input)
     
