@@ -10,11 +10,15 @@ import RxSwift
 import RxCocoa
 import FirebaseFirestore
 
+protocol FirebaseReadable{
+    func readBookInfo(completion: @escaping(Result<[BookInfo], FireBaseError>) -> Void)
+}
+
 struct FirebaseReadRepository{
     private let disposeBag = DisposeBag()
 }
 
-extension FirebaseReadRepository{
+extension FirebaseReadRepository: FirebaseReadable{
     func readBookInfo(completion: @escaping(Result<[BookInfo], FireBaseError>) -> Void){
         let db = Firestore.firestore()
         let ref = db.collection("account_array").document("accountData")
