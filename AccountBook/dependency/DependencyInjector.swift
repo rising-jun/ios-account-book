@@ -38,6 +38,10 @@ final class DependencyInjector{
             viewController.setDependency(dependency: ChartDependency(viewModel: ChartViewModel(firebaseReadable: FirebaseReadRepository())))
         }
         
+        if compose is MyPageViewController{
+            guard let viewController = compose as? MyPageViewController else { return }
+            viewController.setDependency(dependency: MyPageDependency(viewModel: MyPageViewModel(firebaseReadable: FirebaseReadRepository())))
+        }
     }
 }
 

@@ -15,15 +15,15 @@ class MyPageViewModel: ViewModelType{
     
     private let state = BehaviorRelay<MyPageState>(value: MyPageState())
     private let disposeBag = DisposeBag()
-    
-    private var fbReadModel: FirebaseReadRepository!
-    
+    private let firebaseReadable: FirebaseReadable
     private var paySumPublish = PublishSubject<Int>()
     
+    init(firebaseReadable: FirebaseReadable){
+        self.firebaseReadable = firebaseReadable
+    }
     
     struct Input{
         let viewState: Observable<Void>?
-        
     }
     
     struct Output{
@@ -37,7 +37,7 @@ class MyPageViewModel: ViewModelType{
             .withLatestFrom(state){ [weak self] _, state -> MyPageState in
                 var newState = state
                 newState.viewLogic = .setUpView
-                self!.fbReadModel.readBookInfo { result in
+                self!.firebaseReadable.readBookInfo { result in
                     self!.bookInfoList(result: result)
                 }
                 return newState

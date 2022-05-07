@@ -10,22 +10,40 @@ import RxSwift
 import RxCocoa
 import RxViewController
 
-class MyPageViewController: BaseViewController{
+class MyPageViewController: BaseViewController, DependencySetable{
+    
+    typealias DependencyType = MyPageDependency
+    
+    override init(){
+        super.init()
+        DependencyInjector.injecting(to: self)
+    }
+    
+    required init?(coder: NSCoder) {
+        super.init(coder: coder)
+        DependencyInjector.injecting(to: self)
+    }
+    
+    func setDependency(dependency: MyPageDependency) {
+        self.dependency = dependency
+    }
     
     lazy var v = MyPageView(frame: view.frame)
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        
-    }
-    
     private let disposeBag = DisposeBag()
-    private let viewModel = MyPageViewModel()
+    private var dependency: DependencyType?{
+        didSet{
+            viewModel = dependency?.viewModel
+        }
+    }
+    private var viewModel: MyPageViewModel?
     private lazy var input = MyPageViewModel.Input(viewState: self.rx.viewDidLoad.map{_ in Void()})
-    private lazy var output = viewModel.bind(input: input)
+    private lazy var output = viewModel?.bind(input: input)
     
     override func bindViewModel() {
         super.bindViewModel()
+        guard let output = output else { return }
+        
         output.state?.map{$0.viewLogic}
         .filter{$0 == .setUpView}
         .distinctUntilChanged()
@@ -39,12 +57,7 @@ class MyPageViewController: BaseViewController{
         .map{String($0)}
         .drive(v.sumValLabel.rx.text)
         .disposed(by: disposeBag)
-    
     }
-    
-    
-    
-    
 }
 
 extension MyPageViewController{
