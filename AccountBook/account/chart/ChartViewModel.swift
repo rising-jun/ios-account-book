@@ -15,15 +15,15 @@ class ChartViewModel: ViewModelType{
     
     private let state = BehaviorRelay<ChartState>(value: ChartState())
     private let disposeBag = DisposeBag()
-    
-    private var fbReadModel = FirebaseReadRepository()
-    
+    private var firebaseReadable: FirebaseReadable?
     private var bookListPublish = PublishSubject<[ChartInfo]>()
     
+    init(firebaseReadable: FirebaseReadable){
+        self.firebaseReadable = firebaseReadable
+    }
     
     struct Input{
         let viewState: Observable<Void>?
-        
     }
     
     struct Output{
@@ -32,14 +32,13 @@ class ChartViewModel: ViewModelType{
     
     func bind(input: Input) -> Output{
         self.input = input
-        //fbReadModel = FirebaseReadRepository(fbCallBack: self)
-        
         input.viewState?
             .withLatestFrom(state){ [weak self] _, state -> ChartState in
+                guard let self = self else { return state }
                 var newState = state
                 newState.viewLogic = .setUpView
-                self!.fbReadModel.readBookInfo { result in
-                    self!.bookInfoList(result: result)
+                self.firebaseReadable?.readBookInfo { result in
+                    self.bookInfoList(result: result)
                 }
                 return newState
             }.bind(to: self.state)
@@ -48,7 +47,6 @@ class ChartViewModel: ViewModelType{
         bookListPublish
             .withLatestFrom(state){ list, state -> ChartState in
                 var newState = state
-                print("get list successly")
                 newState.chartList = list
                 return newState
             }.bind(to: self.state)
@@ -78,7 +76,6 @@ extension ChartViewModel{
     }
     
     func categoryColor(_ category: String) -> UIColor{
-        
         switch category{
         case "생활비":
             return .blue
@@ -91,7 +88,6 @@ extension ChartViewModel{
         default:
             return .darkGray
         }
-        
     }
     
     func convertChartList(_ bookList: [BookInfo]) -> [ChartInfo]{
@@ -112,9 +108,6 @@ extension ChartViewModel{
                 break
             }
         }
-        
         return chartList
     }
-    
-    
 }

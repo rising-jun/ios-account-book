@@ -10,24 +10,39 @@ import RxSwift
 import RxCocoa
 import Charts
 
-class ChartViewController: BaseViewController{
+class ChartViewController: BaseViewController, DependencySetable{
     
-    lazy var v = ChartView(frame: view.frame)
+    typealias DependencyType = ChartDependency
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        
-        view.backgroundColor = .green
+    override init(){
+        super.init()
+        DependencyInjector.injecting(to: self)
     }
     
+    required init?(coder: NSCoder) {
+        super.init(coder: coder)
+        DependencyInjector.injecting(to: self)
+    }
     
-    private let viewModel = ChartViewModel()
+    func setDependency(dependency: ChartDependency) {
+        self.dependency = dependency
+    }
+    
+    private var dependency: ChartDependency?{
+        didSet{
+            viewModel = dependency?.viewModel
+        }
+    }
+    
+    lazy var v = ChartView(frame: view.frame)
+    private var viewModel: ChartViewModel?
     private lazy var input = ChartViewModel.Input(viewState: self.rx.viewDidLoad.map{_ in Void()})
-    private lazy var output = viewModel.bind(input: input)
+    private lazy var output = viewModel?.bind(input: input)
     private let disposeBag = DisposeBag()
     
     override func bindViewModel() {
         super.bindViewModel()
+        guard let output = output else { return }
         
         output.state?.map{$0.viewLogic}
         .filter{$0 == .setUpView}
@@ -52,15 +67,9 @@ class ChartViewController: BaseViewController{
             let data = PieChartData(dataSet: dataSet)
             
             self.v.pieView.data = data
-            //All other additions to this function will go here
-
-            //This must stay at end of function
             self.v.pieView.notifyDataSetChanged()
         }).disposed(by: disposeBag)
-        
-        
     }
-    
 }
 
 extension ChartViewController{

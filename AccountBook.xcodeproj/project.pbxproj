@@ -28,6 +28,7 @@
 		72508DF7282552D40025C5C7 /* WriteDependency.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72508DF6282552D40025C5C7 /* WriteDependency.swift */; };
 		72508DF92825556A0025C5C7 /* RegularExpression.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72508DF82825556A0025C5C7 /* RegularExpression.swift */; };
 		72567F3E282651AE0038EEC0 /* MapDependency.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72567F3D282651AE0038EEC0 /* MapDependency.swift */; };
+		72567F402826575D0038EEC0 /* ChartDependency.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72567F3F2826575D0038EEC0 /* ChartDependency.swift */; };
 		7259B2FA281E83850009C31A /* Timer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7259B2F9281E83850009C31A /* Timer.swift */; };
 		7259B2FD281E8F440009C31A /* DependencyInjector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7259B2FC281E8F440009C31A /* DependencyInjector.swift */; };
 		7259B2FF281E934F0009C31A /* IntroDependency.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7259B2FE281E934F0009C31A /* IntroDependency.swift */; };
@@ -84,6 +85,7 @@
 		72508DF6282552D40025C5C7 /* WriteDependency.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WriteDependency.swift; sourceTree = "<group>"; };
 		72508DF82825556A0025C5C7 /* RegularExpression.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegularExpression.swift; sourceTree = "<group>"; };
 		72567F3D282651AE0038EEC0 /* MapDependency.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapDependency.swift; sourceTree = "<group>"; };
+		72567F3F2826575D0038EEC0 /* ChartDependency.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChartDependency.swift; sourceTree = "<group>"; };
 		7259B2F9281E83850009C31A /* Timer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Timer.swift; sourceTree = "<group>"; };
 		7259B2FC281E8F440009C31A /* DependencyInjector.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DependencyInjector.swift; sourceTree = "<group>"; };
 		7259B2FE281E934F0009C31A /* IntroDependency.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntroDependency.swift; sourceTree = "<group>"; };
@@ -263,13 +265,6 @@
 			path = dependency;
 			sourceTree = "<group>";
 		};
-		726B03072757627700F1D66D /* chartview */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = chartview;
-			sourceTree = "<group>";
-		};
 		7290EDCF2733B37200292E88 /* intro */ = {
 			isa = PBXGroup;
 			children = (
@@ -345,10 +340,10 @@
 		7290EDF12733C3A200292E88 /* chart */ = {
 			isa = PBXGroup;
 			children = (
-				726B03072757627700F1D66D /* chartview */,
 				7290EDF42733C5B000292E88 /* ChartViewController.swift */,
 				72356DE7274CD1F700CA9DF4 /* ChartView.swift */,
 				72356DE9274CD23500CA9DF4 /* ChartViewModel.swift */,
+				72567F3F2826575D0038EEC0 /* ChartDependency.swift */,
 			);
 			path = chart;
 			sourceTree = "<group>";
@@ -504,6 +499,7 @@
 				721956D5274B7F4300FDB085 /* PaidAnnotationView.swift in Sources */,
 				721956D2274B6BC000FDB085 /* MapDelegate.swift in Sources */,
 				723173812733A8D900FF27A4 /* IntroViewController.swift in Sources */,
+				72567F402826575D0038EEC0 /* ChartDependency.swift in Sources */,
 				7290EDF52733C5B000292E88 /* ChartViewController.swift in Sources */,
 				726B0304275742DF00F1D66D /* MyPageView.swift in Sources */,
 				723152A22744D48100014FF6 /* FirebaseWriteRepository.swift in Sources */,
