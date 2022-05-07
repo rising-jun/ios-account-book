@@ -29,17 +29,15 @@ final class MapViewController: BaseViewController, DependencySetable{
         self.dependency = dependency
     }
     
-    lazy var v = MapView(frame: view.frame)
-    private var mapDelegate = MapDelegate()
-    private lazy var annotations: [MKPointAnnotation] = []
-    
-    private var dependency: MapDependency?{
+    var dependency: DependencyType?{
         didSet{
             viewModel = dependency?.viewModel
         }
     }
-    
     private var viewModel: MapViewModel?
+    lazy var v = MapView(frame: view.frame)
+    private var mapDelegate = MapDelegate()
+    private lazy var annotations: [MKPointAnnotation] = []
     private lazy var input = MapViewModel.Input(viewState: rx.viewDidLoad.map{_ in Void()})
     private lazy var output = viewModel?.bind(input: input)
     private let disposeBag = DisposeBag()

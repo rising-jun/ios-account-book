@@ -11,7 +11,6 @@ import RxCocoa
 import Charts
 
 class ChartViewController: BaseViewController, DependencySetable{
-    
     typealias DependencyType = ChartDependency
     
     override init(){
@@ -28,14 +27,13 @@ class ChartViewController: BaseViewController, DependencySetable{
         self.dependency = dependency
     }
     
-    private var dependency: ChartDependency?{
+    var dependency: DependencyType?{
         didSet{
             viewModel = dependency?.viewModel
         }
     }
-    
-    lazy var v = ChartView(frame: view.frame)
     private var viewModel: ChartViewModel?
+    lazy var v = ChartView(frame: view.frame)
     private lazy var input = ChartViewModel.Input(viewState: self.rx.viewDidLoad.map{_ in Void()})
     private lazy var output = viewModel?.bind(input: input)
     private let disposeBag = DisposeBag()

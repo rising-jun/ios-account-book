@@ -11,12 +11,8 @@ import RxViewController
 import RxGesture
 
 final class LoginViewController: BaseViewController, DependencySetable {
-    func setDependency(dependency: LoginDependency) {
-        self.dependency = dependency
-    }
-    
     typealias DependencyType = LoginDependency
-    
+
     override init(){
         super.init()
         DependencyInjector.injecting(to: self)
@@ -27,14 +23,17 @@ final class LoginViewController: BaseViewController, DependencySetable {
         DependencyInjector.injecting(to: self)
     }
     
-    lazy var v = LoginView(frame: view.frame)
-    private var viewModel: LoginViewModel?
-    private var dependency: LoginDependency?{
+    func setDependency(dependency: LoginDependency) {
+        self.dependency = dependency
+    }
+    
+    var dependency: LoginDependency?{
         didSet{
             self.viewModel = dependency?.viewModel
         }
     }
-    
+    private var viewModel: LoginViewModel?
+    lazy var v = LoginView(frame: view.frame)
     private let disposeBag = DisposeBag()
     let nav = UINavigationController()
     lazy var vcArr = [ListViewController(), MapViewController(), ChartViewController(), MyPageViewController()]

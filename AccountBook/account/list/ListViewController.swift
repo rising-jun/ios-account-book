@@ -25,24 +25,25 @@ class ListViewController: BaseViewController, DependencySetable{
         DependencyInjector.injecting(to: self)
     }
     
-    lazy var myInfoBtn = UIBarButtonItem()
-    lazy var v = ListView(frame: view.frame)
-    private var dataSource: RxTableViewSectionedReloadDataSource<MySection>!
-    private var dependency: ListDependency?{
+    func setDependency(dependency: ListDependency) {
+        self.dependency = dependency
+    }
+    
+    var dependency: DependencyType?{
         didSet{
             self.viewModel = dependency?.viewModel
         }
     }
     private var viewModel: ListViewModel?
+    lazy var v = ListView(frame: view.frame)
+    lazy var myInfoBtn = UIBarButtonItem()
+    private var dataSource: RxTableViewSectionedReloadDataSource<MySection>!
     private var delegate: BookTableDelegate?
     private lazy var input = ListViewModel.Input(viewState: rx.viewDidLoad.map{_ in Void()},
                                                  writeTouch: myInfoBtn.rx.tap.map{ _ in Void()},
                                                  returnListView: rx.viewWillAppear.map{_ in Void()})
     private lazy var output = viewModel?.bind(input: input)
     private let disposeBag = DisposeBag()
-    func setDependency(dependency: ListDependency) {
-        self.dependency = dependency
-    }
     
     override func bindViewModel(){
         super.bindViewModel()

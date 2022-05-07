@@ -11,7 +11,6 @@ import RxCocoa
 import RxViewController
 
 class MyPageViewController: BaseViewController, DependencySetable{
-    
     typealias DependencyType = MyPageDependency
     
     override init(){
@@ -28,15 +27,15 @@ class MyPageViewController: BaseViewController, DependencySetable{
         self.dependency = dependency
     }
     
-    lazy var v = MyPageView(frame: view.frame)
-    
-    private let disposeBag = DisposeBag()
-    private var dependency: DependencyType?{
+    var dependency: MyPageDependency?{
         didSet{
             viewModel = dependency?.viewModel
         }
     }
     private var viewModel: MyPageViewModel?
+    
+    lazy var v = MyPageView(frame: view.frame)
+    private let disposeBag = DisposeBag()
     private lazy var input = MyPageViewModel.Input(viewState: self.rx.viewDidLoad.map{_ in Void()})
     private lazy var output = viewModel?.bind(input: input)
     
