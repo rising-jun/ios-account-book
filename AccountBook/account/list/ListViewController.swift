@@ -30,7 +30,7 @@ class ListViewController: BaseViewController, DependencySetable{
     private var dataSource: RxTableViewSectionedReloadDataSource<MySection>!
     private var dependency: ListDependency?{
         didSet{
-            self.viewModel = dependency?.viewmodel
+            self.viewModel = dependency?.viewModel
         }
     }
     private var viewModel: ListViewModel?
@@ -109,5 +109,5 @@ extension ListViewController{
 
 struct ListDependency: Dependency{
     typealias ViewModelType = ListViewModel
-    let viewmodel: ListViewModel
+    let viewModel: ListViewModel
 }

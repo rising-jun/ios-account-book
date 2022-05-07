@@ -12,19 +12,41 @@ import RxViewController
 import RxMKMapView
 import MapKit
 
-class MapViewController: BaseViewController{
+final class MapViewController: BaseViewController, DependencySetable{
+    typealias DependencyType = MapDependency
+    
+    override init(){
+        super.init()
+        DependencyInjector.injecting(to: self)
+    }
+    
+    required init?(coder: NSCoder) {
+        super.init(coder: coder)
+        DependencyInjector.injecting(to: self)
+    }
+    
+    func setDependency(dependency: MapDependency) {
+        self.dependency = dependency
+    }
     
     lazy var v = MapView(frame: view.frame)
     private var mapDelegate = MapDelegate()
     private lazy var annotations: [MKPointAnnotation] = []
     
-    private let viewModel = MapViewModel()
+    private var dependency: MapDependency?{
+        didSet{
+            viewModel = dependency?.viewModel
+        }
+    }
+    
+    private var viewModel: MapViewModel?
     private lazy var input = MapViewModel.Input(viewState: rx.viewDidLoad.map{_ in Void()})
-    private lazy var output = viewModel.bind(input: input)
+    private lazy var output = viewModel?.bind(input: input)
     private let disposeBag = DisposeBag()
     
     override func bindViewModel(){
         super.bindViewModel()
+        guard let output = output else { return }
         
         output.state?.map{$0.viewLogic}
         .filter{$0 == .setUpView}

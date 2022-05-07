@@ -9,14 +9,18 @@ import Foundation
 import RxSwift
 import RxCocoa
 
-class MapViewModel: ViewModelType{
+final class MapViewModel: ViewModelType{
     var input: Input?
     var output: Output?
     
     private let state = BehaviorRelay<MapState>(value: MapState())
     private let disposeBag = DisposeBag()
-    private var fbReadModel = FirebaseReadRepository()
+    private var firebaseReadable: FirebaseReadable?
     private var bookListPublish = PublishSubject<[BookInfo]>()
+    
+    init(firebaseReadable: FirebaseReadable){
+        self.firebaseReadable = firebaseReadable
+    }
     
     struct Input{
         let viewState: Observable<Void>?
@@ -31,10 +35,11 @@ class MapViewModel: ViewModelType{
         
         input.viewState?
             .withLatestFrom(state){ [weak self] _, state -> MapState in
+                guard let self = self else { return state }
                 var newState = state
                 newState.viewLogic = .setUpView
-                self!.fbReadModel.readBookInfo { result in
-                    self!.updateBooks(result: result)
+                self.firebaseReadable?.readBookInfo { result in
+                    self.updateBooks(result: result)
                 }
                 return newState
             }.bind(to: self.state)
