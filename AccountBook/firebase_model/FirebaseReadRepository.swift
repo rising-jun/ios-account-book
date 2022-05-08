@@ -8,6 +8,7 @@
 import RxSwift
 import RxCocoa
 import FirebaseFirestore
+import Foundation
 
 protocol FirebaseReadable{
     func readBookInfo(completion: @escaping(Result<[BookInfo], FireBaseError>) -> Void)
@@ -15,27 +16,31 @@ protocol FirebaseReadable{
 
 struct FirebaseReadRepository{
     private let disposeBag = DisposeBag()
+    
+ 
 }
 
 extension FirebaseReadRepository: FirebaseReadable{
     func readBookInfo(completion: @escaping(Result<[BookInfo], FireBaseError>) -> Void){
-        let firebaseDatabase = Firestore.firestore()
-        let _ = firebaseDatabase.collection("account_array").document("accountData")
-            .getDocument{ (document, error) in
-                guard let data = document?.data() else { return completion(.failure(.nilDataError))}
-                guard let profileJson = try? JSONSerialization.data(withJSONObject: data, options: .prettyPrinted) else {
+        let documentSnapshotCompletion: ((DocumentSnapshot?, Error?) -> ()) = { document, error in
+            DispatchQueue.global().async {
+                guard let booksJson = document?.data() else { return completion(.failure(.nilDataError))}
+                guard let profileJson = try? JSONSerialization.data(withJSONObject: booksJson, options: .prettyPrinted) else {
                     return completion(.failure(.jsonParsingError))
                 }
-                Observable<Data>.just(profileJson)
-                    .decode(type: SnapInfo.self, decoder: JSONDecoder())
-                    .subscribe(onNext: { snapInfo in
-                        completion(.success(snapInfo.book_list))
-                    }, onError: { error in
-                        completion(.failure(.snapError))
-                    }).disposed(by: self.disposeBag)
+                guard let bookList = try? JSONDecoder().decode(SnapInfo.self, from: profileJson).book_list else {
+                    return completion(.failure(.jsonParsingError))
+                }
+                completion(.success(bookList))
             }
+        }
+        
+        DispatchQueue.global().async {
+            let firebaseDatabase = Firestore.firestore()
+            let _ = firebaseDatabase.collection("account_array").document("accountData")
+                .getDocument(completion: documentSnapshotCompletion)
+        }
     }
-    
 }
 enum FireBaseError: Error{
     case snapError
