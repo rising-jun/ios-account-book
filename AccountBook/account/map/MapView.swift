@@ -6,7 +6,6 @@
 //
 
 import SnapKit
-import UIKit
 import MapKit
 
 final class MapView: BaseView{

@@ -61,6 +61,7 @@ final class MapViewModel: ViewModelType{
     }
     
 }
+
 extension MapViewModel{
     private func updateBooks(result: Result<[BookInfo], FireBaseError>){
         switch result{
