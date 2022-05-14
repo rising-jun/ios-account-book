@@ -60,6 +60,7 @@
 		72AE480027464D61003FA631 /* MapViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72AE47FF27464D61003FA631 /* MapViewModel.swift */; };
 		72C955F6273B9C590044C1E9 /* MapViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72C955F5273B9C590044C1E9 /* MapViewDelegate.swift */; };
 		72FEC18C282FB085006A4054 /* AccountBookTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72FEC18B282FB085006A4054 /* AccountBookTests.swift */; };
+		72FEC1CF282FB29C006A4054 /* MockTimer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72FEC1CE282FB29C006A4054 /* MockTimer.swift */; };
 		9EB26F4F367847B9D75E9B26 /* Pods_AccountBookTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 13F61E4140509220130CE33D /* Pods_AccountBookTests.framework */; };
 		BA1BF4779E5D1784188B3816 /* Pods_AccountBook.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6B4118FAD393A51CB7B8B27B /* Pods_AccountBook.framework */; };
 /* End PBXBuildFile section */
@@ -134,6 +135,7 @@
 		72C955F5273B9C590044C1E9 /* MapViewDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewDelegate.swift; sourceTree = "<group>"; };
 		72FEC189282FB085006A4054 /* AccountBookTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = AccountBookTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		72FEC18B282FB085006A4054 /* AccountBookTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountBookTests.swift; sourceTree = "<group>"; };
+		72FEC1CE282FB29C006A4054 /* MockTimer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockTimer.swift; sourceTree = "<group>"; };
 		7BDD2B5C10DDF41297A5CB34 /* Pods-AccountBook.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AccountBook.release.xcconfig"; path = "Target Support Files/Pods-AccountBook/Pods-AccountBook.release.xcconfig"; sourceTree = "<group>"; };
 		CBBBCB28CF694D556499CBEE /* Pods-AccountBook.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AccountBook.debug.xcconfig"; path = "Target Support Files/Pods-AccountBook/Pods-AccountBook.debug.xcconfig"; sourceTree = "<group>"; };
 		FBEE1D94497F4F6A19C54F4A /* Pods-AccountBookTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AccountBookTests.debug.xcconfig"; path = "Target Support Files/Pods-AccountBookTests/Pods-AccountBookTests.debug.xcconfig"; sourceTree = "<group>"; };
@@ -404,6 +406,7 @@
 			isa = PBXGroup;
 			children = (
 				72FEC18B282FB085006A4054 /* AccountBookTests.swift */,
+				72FEC1CE282FB29C006A4054 /* MockTimer.swift */,
 			);
 			path = AccountBookTests;
 			sourceTree = "<group>";
@@ -644,6 +647,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				72FEC18C282FB085006A4054 /* AccountBookTests.swift in Sources */,
+				72FEC1CF282FB29C006A4054 /* MockTimer.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
