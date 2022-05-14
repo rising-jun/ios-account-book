@@ -5,7 +5,6 @@
 //  Created by 김동준 on 2021/11/04.
 //
 
-import UIKit
 import SnapKit
 import GoogleSignIn
 
@@ -40,12 +39,5 @@ final class LoginView: BaseView{
             make.trailing.equalTo(self).offset(-30)
             make.height.equalTo(50)
         }
-    
-        
-        
-        
     }
-    
-    
-    
 }
