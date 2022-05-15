@@ -12,10 +12,10 @@
   
   - View는 하나의 ViewModel과 Binding되어 있습니다.
   - View에서의 Action들은 input을 통하여 ViewModel로 전달됩니다.
-  - ViewModel은 전달받은 Action에 맞는 로직을 한 후 State를 업데이트 합니다.
-  - Firebase등 네트워크가 필요한 작업은 그에 맞는 Model에게 요청합니다.
-  - ViewController는 ViewModel의 State를 구독하여 변경되는 값이 있다면 Binding을 통하여 View를 업데이트 합니다.
-  - RxCocoa의 Drive를 사용하였습니다.
+  - ViewModel은 전달받은 Action에 맞는 로직을 한 후 State를 업데이트 합니다. 
+  - Firebase등 네트워크가 필요한 작업은 그에 맞는 Model에게 요청합니다. 
+  - ViewController는 ViewModel의 State를 구독하여 변경되는 값이 있다면 Binding을 통하여 View를 업데이트 합니다. ( RxCocoa 사용 )
+  - RxCocoa의 Drive를 사용하였습니다. ( MainSchedular에서의 실행 보장. UI변경작업. )
   
 ## 앱 화면
      
@@ -23,6 +23,4 @@
    
 ## 사용 라이브러리
      
-     'RxSwift', 'RxViewController', 'Charts', 'RxCocoa', 'RxGesture', 
-     'Firebase/Auth', 'Firebase/Storage', 'RxMKMapView', 'RxDataSources', 
-     'Firebase/Firestore', 'SnapKit', 'GoogleSignIn', 'Firebase/Database', 'lottie-ios'
+https://github.com/rising-jun/ios-account-book/wiki/%EA%B0%80%EA%B3%84%EB%B6%80%EC%95%B1-%EC%82%AC%EC%9A%A9-%EA%B8%B0%EC%88%A0-%EC%A0%95%EB%A6%AC.
