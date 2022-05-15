@@ -7,7 +7,6 @@
 
 import RxSwift
 import RxCocoa
-import FirebaseFirestore
 
 final class ListViewModel: ViewModelType{
     var input: Input?
