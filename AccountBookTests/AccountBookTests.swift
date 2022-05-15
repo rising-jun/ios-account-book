@@ -12,7 +12,6 @@ class AccountBookTests: XCTestCase {
     var timerUsable: TimerUsable?
     var googleLoginable: GoogleLoginable?
     
-    
     func testSplashTimer() throws {
         var isSuccess = false
         let expectation = self.expectation(description: "Timer")
@@ -30,13 +29,29 @@ class AccountBookTests: XCTestCase {
         XCTAssertEqual(isSuccess, true)
     }
     
-
+    func testGetGoogleLogin() throws {
+        let expectation = self.expectation(description: "FirebaseRead")
+        var isSuccess = false
+        let googleLoginable: GoogleLoginable = GoogleLoginStub(isSuccess: true)
+        googleLoginable.getGoogleToken(completion: { result in
+            switch result{
+            case .success(_):
+                isSuccess = true
+            case .failure(_):
+                XCTAssertTrue(false)
+            }
+            expectation.fulfill()
+        })
+        waitForExpectations(timeout: 5, handler: nil)
+        XCTAssertEqual(isSuccess, true)
+        
+    }
+    
     func testReadBooksFromFirebase() throws {
         let expectation = self.expectation(description: "FirebaseRead")
         var isSuccess = false
-        var firebaseReadable: FirebaseReadable?
-        firebaseReadable = FirebaseReadRepository()
-        firebaseReadable?.readBookInfo(completion: { result in
+        let firebaseReadable: FirebaseReadable = FirebaseReadRepositoryStub(isSuccess: true)
+        firebaseReadable.readBookInfo(completion: { result in
             switch result{
             case .success(_):
                 isSuccess = true
@@ -48,13 +63,12 @@ class AccountBookTests: XCTestCase {
         waitForExpectations(timeout: 5, handler: nil)
         XCTAssertEqual(isSuccess, true)
     }
-
+    
     func testWriteBooksFromFirebase() throws {
         let expectation = self.expectation(description: "FirebaseWrite")
         var isSuccess = false
-        var firebaseWriteable: FirebaseWriteable?
-        firebaseWriteable = FirebaseWriteRepository()
-        firebaseWriteable?.writeBookInfo(bookInfo: BookInfo(), completion: { result in
+        var firebaseWriteable: FirebaseWriteable = FirebaseWriteRepositoryStub(isSuccess: true)
+        firebaseWriteable.writeBookInfo(bookInfo: BookInfo(), completion: { result in
             switch result{
             case .success(_):
                 isSuccess = true
@@ -66,4 +80,16 @@ class AccountBookTests: XCTestCase {
         waitForExpectations(timeout: 5, handler: nil)
         XCTAssertEqual(isSuccess, true)
     }
+    
+    func testIsPriceExpression() throws {
+        var expressionCheckable: WriteExpressionCheckable?
+        expressionCheckable = RegularExpression()
+        guard let result = expressionCheckable?.checkPrice(price: "2134987234893721894") else {
+            XCTAssertTrue(false)
+            return
+        }
+        XCTAssertTrue(result)
+    }
 }
+
+

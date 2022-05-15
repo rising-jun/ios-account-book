@@ -20,6 +20,9 @@
 		723173812733A8D900FF27A4 /* IntroViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 723173802733A8D900FF27A4 /* IntroViewController.swift */; };
 		723173862733A8DB00FF27A4 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 723173852733A8DB00FF27A4 /* Assets.xcassets */; };
 		723173892733A8DB00FF27A4 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 723173872733A8DB00FF27A4 /* LaunchScreen.storyboard */; };
+		723266C52830D3950063A9A7 /* GoogleLoginStub.swift in Sources */ = {isa = PBXBuildFile; fileRef = 723266C42830D3950063A9A7 /* GoogleLoginStub.swift */; };
+		723266C82830D3FF0063A9A7 /* FirebaseReadRepositoryStub.swift in Sources */ = {isa = PBXBuildFile; fileRef = 723266C72830D3FF0063A9A7 /* FirebaseReadRepositoryStub.swift */; };
+		723266CA2830D46E0063A9A7 /* FirebaseWriteRepositoryStub.swift in Sources */ = {isa = PBXBuildFile; fileRef = 723266C92830D46E0063A9A7 /* FirebaseWriteRepositoryStub.swift */; };
 		72356DE8274CD1F700CA9DF4 /* ChartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72356DE7274CD1F700CA9DF4 /* ChartView.swift */; };
 		72356DEA274CD23500CA9DF4 /* ChartViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72356DE9274CD23500CA9DF4 /* ChartViewModel.swift */; };
 		7247EFA92734004A00FDEE7B /* BookInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7247EFA82734004A00FDEE7B /* BookInfo.swift */; };
@@ -60,7 +63,6 @@
 		72AE480027464D61003FA631 /* MapViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72AE47FF27464D61003FA631 /* MapViewModel.swift */; };
 		72C955F6273B9C590044C1E9 /* MapViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72C955F5273B9C590044C1E9 /* MapViewDelegate.swift */; };
 		72FEC18C282FB085006A4054 /* AccountBookTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72FEC18B282FB085006A4054 /* AccountBookTests.swift */; };
-		72FEC1CF282FB29C006A4054 /* MockTimer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72FEC1CE282FB29C006A4054 /* MockTimer.swift */; };
 		9EB26F4F367847B9D75E9B26 /* Pods_AccountBookTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 13F61E4140509220130CE33D /* Pods_AccountBookTests.framework */; };
 		BA1BF4779E5D1784188B3816 /* Pods_AccountBook.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6B4118FAD393A51CB7B8B27B /* Pods_AccountBook.framework */; };
 /* End PBXBuildFile section */
@@ -94,6 +96,9 @@
 		723173852733A8DB00FF27A4 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		723173882733A8DB00FF27A4 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		7231738A2733A8DB00FF27A4 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		723266C42830D3950063A9A7 /* GoogleLoginStub.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoogleLoginStub.swift; sourceTree = "<group>"; };
+		723266C72830D3FF0063A9A7 /* FirebaseReadRepositoryStub.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseReadRepositoryStub.swift; sourceTree = "<group>"; };
+		723266C92830D46E0063A9A7 /* FirebaseWriteRepositoryStub.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseWriteRepositoryStub.swift; sourceTree = "<group>"; };
 		72356DE7274CD1F700CA9DF4 /* ChartView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChartView.swift; sourceTree = "<group>"; };
 		72356DE9274CD23500CA9DF4 /* ChartViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChartViewModel.swift; sourceTree = "<group>"; };
 		7247EFA82734004A00FDEE7B /* BookInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookInfo.swift; sourceTree = "<group>"; };
@@ -135,7 +140,6 @@
 		72C955F5273B9C590044C1E9 /* MapViewDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewDelegate.swift; sourceTree = "<group>"; };
 		72FEC189282FB085006A4054 /* AccountBookTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = AccountBookTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		72FEC18B282FB085006A4054 /* AccountBookTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountBookTests.swift; sourceTree = "<group>"; };
-		72FEC1CE282FB29C006A4054 /* MockTimer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockTimer.swift; sourceTree = "<group>"; };
 		7BDD2B5C10DDF41297A5CB34 /* Pods-AccountBook.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AccountBook.release.xcconfig"; path = "Target Support Files/Pods-AccountBook/Pods-AccountBook.release.xcconfig"; sourceTree = "<group>"; };
 		CBBBCB28CF694D556499CBEE /* Pods-AccountBook.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AccountBook.debug.xcconfig"; path = "Target Support Files/Pods-AccountBook/Pods-AccountBook.debug.xcconfig"; sourceTree = "<group>"; };
 		FBEE1D94497F4F6A19C54F4A /* Pods-AccountBookTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AccountBookTests.debug.xcconfig"; path = "Target Support Files/Pods-AccountBookTests/Pods-AccountBookTests.debug.xcconfig"; sourceTree = "<group>"; };
@@ -265,6 +269,16 @@
 				7231738A2733A8DB00FF27A4 /* Info.plist */,
 			);
 			path = AccountBook;
+			sourceTree = "<group>";
+		};
+		723266C62830D3ED0063A9A7 /* mock */ = {
+			isa = PBXGroup;
+			children = (
+				723266C42830D3950063A9A7 /* GoogleLoginStub.swift */,
+				723266C72830D3FF0063A9A7 /* FirebaseReadRepositoryStub.swift */,
+				723266C92830D46E0063A9A7 /* FirebaseWriteRepositoryStub.swift */,
+			);
+			path = mock;
 			sourceTree = "<group>";
 		};
 		7247EFA72734003800FDEE7B /* entity */ = {
@@ -405,8 +419,8 @@
 		72FEC18A282FB085006A4054 /* AccountBookTests */ = {
 			isa = PBXGroup;
 			children = (
+				723266C62830D3ED0063A9A7 /* mock */,
 				72FEC18B282FB085006A4054 /* AccountBookTests.swift */,
-				72FEC1CE282FB29C006A4054 /* MockTimer.swift */,
 			);
 			path = AccountBookTests;
 			sourceTree = "<group>";
@@ -646,8 +660,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				723266C52830D3950063A9A7 /* GoogleLoginStub.swift in Sources */,
 				72FEC18C282FB085006A4054 /* AccountBookTests.swift in Sources */,
-				72FEC1CF282FB29C006A4054 /* MockTimer.swift in Sources */,
+				723266CA2830D46E0063A9A7 /* FirebaseWriteRepositoryStub.swift in Sources */,
+				723266C82830D3FF0063A9A7 /* FirebaseReadRepositoryStub.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
