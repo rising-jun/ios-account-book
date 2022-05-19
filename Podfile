@@ -7,7 +7,7 @@ target 'AccountBook' do
 
   # Pods for AccountBook
   pod 'Firebase/Firestore'
-  pod 'RxViewController'
+  pod 'RxAppState'
   pod 'Charts'
   pod 'RxCocoa'
   pod 'RxGesture'

@@ -7,7 +7,7 @@
 
 import RxSwift
 import RxCocoa
-import RxViewController
+import RxAppState
 
 final class IntroViewController: BaseViewController, DependencySetable {
     typealias DependencyType = IntroDependency

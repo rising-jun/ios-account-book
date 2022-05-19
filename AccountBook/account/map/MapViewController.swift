@@ -7,7 +7,7 @@
 
 import RxSwift
 import RxCocoa
-import RxViewController
+import RxAppState
 import MapKit
 
 final class MapViewController: BaseViewController, DependencySetable{

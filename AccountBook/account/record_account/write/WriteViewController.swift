@@ -7,7 +7,7 @@
 
 import RxSwift
 import RxCocoa
-import RxViewController
+import RxAppState
 import CoreLocation
 import MapKit
 
@@ -46,7 +46,7 @@ class WriteViewController: BaseViewController, DependencySetable{
     private let backButton = UIBarButtonItem()
 
     lazy var input = WriteViewModel.Input(viewState: self.rx.viewDidLoad.map{ViewState.viewDidLoad},
-                                          locState: locationStatusSubject.distinctUntilChanged().asObservable(),
+                                          locState: locationStatusSubject.distinctUntilChanged().observe(on: MainScheduler.asyncInstance).asObservable(),
                                           coorState: coordiSubject.filter{$0.latitude != 0.0}.asObservable(),
                                           mode: writeView.setLocModeButton.rx.tap.map{_ in Void()},
                                           nameInput: writeView.nameTF.rx.text.orEmpty.distinctUntilChanged(),
@@ -55,7 +55,7 @@ class WriteViewController: BaseViewController, DependencySetable{
                                           writeAction: writeButton.rx.tap.map{_ in Void()},
                                           dateInput: writeView.datePicker.rx.date.asObservable(),
                                           backAction: backButton.rx.tap.map{ _ in Void()})
-    
+  
     lazy var output = viewModel?.bind(input: input)
 
     override func setup() {

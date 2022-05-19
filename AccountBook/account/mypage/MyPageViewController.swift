@@ -7,7 +7,7 @@
 
 import RxSwift
 import RxCocoa
-import RxViewController
+import RxAppState
 
 final class MyPageViewController: BaseViewController, DependencySetable{
     typealias DependencyType = MyPageDependency
