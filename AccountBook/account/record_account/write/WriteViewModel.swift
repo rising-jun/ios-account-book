@@ -8,7 +8,6 @@
 import RxSwift
 import RxCocoa
 import CoreLocation
-import FirebaseDatabase
 
 final class WriteViewModel: ViewModelType{
     var input: Input?
