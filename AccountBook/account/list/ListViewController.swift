@@ -7,7 +7,7 @@
 
 import RxSwift
 import RxCocoa
-import RxViewController
+import RxAppState
 import RxDataSources
 
 final class ListViewController: BaseViewController, DependencySetable{
@@ -43,9 +43,9 @@ final class ListViewController: BaseViewController, DependencySetable{
         })
     
     private var delegate: BookTableDelegate?
-    private lazy var input = ListViewModel.Input(viewState: rx.viewDidLoad.map{_ in Void()},
-                                                 writeTouch: myInfoButton.rx.tap.map{ _ in Void()},
-                                                 returnListView: rx.viewWillAppear.map{_ in Void()})
+    private lazy var input = ListViewModel.Input(
+        viewState: rx.viewState.asObservable(),
+        writeTouch: myInfoButton.rx.tap.map{ _ in Void()})
     private lazy var output = viewModel?.bind(input: input)
     private let disposeBag = DisposeBag()
     
@@ -73,8 +73,8 @@ final class ListViewController: BaseViewController, DependencySetable{
         .disposed(by: disposeBag)
         
         output.state?.map{$0.presentViewController ?? .list}
-            .distinctUntilChanged()
-            .drive(onNext: { [weak self] presentViewController in
+        .distinctUntilChanged()
+        .drive(onNext: { [weak self] presentViewController in
             self?.presentViewController(viewController: presentViewController)
         }).disposed(by: disposeBag)
     }
@@ -86,7 +86,7 @@ final class ListViewController: BaseViewController, DependencySetable{
 }
 
 extension ListViewController{
-
+    
     private func setUpView(){
         view = listView
         view.backgroundColor = .white
@@ -102,3 +102,11 @@ extension ListViewController{
     }
 }
 
+enum ViewLifeCycle{
+    case viewDidLoad
+    case viewDidLayoutSubviews
+    case viewWillAppear
+    case viewDidAppear
+    case viewWillDisappear
+    case viewDidDisappear
+}

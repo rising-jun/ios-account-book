@@ -6,7 +6,7 @@
 //
 
 import RxSwift
-import RxViewController
+import RxAppState
 import RxGesture
 
 final class LoginViewController: BaseViewController, DependencySetable {

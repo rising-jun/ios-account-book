@@ -7,6 +7,8 @@
 
 import RxSwift
 import RxCocoa
+import FirebaseFirestore
+import RxAppState
 
 final class ListViewModel: ViewModelType{
     var input: Input?
@@ -21,9 +23,9 @@ final class ListViewModel: ViewModelType{
     }
     
     struct Input{
-        let viewState: Observable<Void>?
-        let writeTouch: Observable<Void>?
-        let returnListView: Observable<Void>?
+        let viewState: Observable<ViewControllerViewState>?
+        var writeTouch: Observable<Void>?
+        //var returnListView: Observable<Bool>?
     }
     
     struct Output{
@@ -36,19 +38,27 @@ final class ListViewModel: ViewModelType{
         self.input = input
         
         input.viewState?
-            .withLatestFrom(state)
-            .map{[weak self] state -> ListViewState in
-                guard let self = self else { return state }
+            .withLatestFrom(state){ viewLife, state -> ListViewState in
                 var newState = state
-                newState.viewLogic = .setUpView
-                newState.filterData = ["높은금액순", "최신순", "카테고리 별"]
-                self.firebaseReadable.readBookInfo(completion: { result in
-                    self.bookInfoList(result: result)
-                })
+                if viewLife == .viewDidLoad{
+                    newState.viewLogic = .setUpView
+                    newState.filterData = ["높은금액순", "최신순", "카테고리 별"]
+                    self.firebaseReadable.readBookInfo(completion: { result in
+                        self.bookInfoList(result: result)
+                    })
+                }
+                
+                if viewLife == .viewWillDisappear{
+                    newState.presentViewController = .list
+                    self.firebaseReadable.readBookInfo(completion: { result in
+                        self.bookInfoList(result: result)
+                    })
+                }
                 return newState
-            }.bind(to: self.state)
+            }
+            .bind(to: self.state)
             .disposed(by: disposeBag)
-        
+
         input.writeTouch?
             .withLatestFrom(state)
             .map{ state -> ListViewState in
@@ -57,26 +67,14 @@ final class ListViewModel: ViewModelType{
                 return newState
             }.bind(to: self.state)
             .disposed(by: disposeBag)
-        
+
         listData.withLatestFrom(state){ list, state -> ListViewState in
             var newState = state
             newState.listData = list
             return newState
         }.bind(to: self.state)
         .disposed(by: disposeBag)
-        
-        input.returnListView?
-            .withLatestFrom(state)
-            .map{ [weak self] state -> ListViewState in
-                guard let self = self else { return state }
-                var newState = state
-                newState.presentViewController = .list
-                self.firebaseReadable.readBookInfo(completion: { result in
-                    self.bookInfoList(result: result)
-                })
-                return newState
-            }.bind(to: self.state)
-            .disposed(by: disposeBag)
+
         return Output(state: state.asDriver())
     }
 }

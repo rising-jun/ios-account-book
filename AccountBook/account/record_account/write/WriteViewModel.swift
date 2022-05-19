@@ -74,7 +74,7 @@ final class WriteViewModel: ViewModelType{
                 return newState
             }.bind(to: self.state)
             .disposed(by: disposeBag)
-        
+
         input.coorState?
             .withLatestFrom(state){ coor, state -> WriteState in
                 var newState = state
@@ -83,7 +83,7 @@ final class WriteViewModel: ViewModelType{
                 return newState
             }.bind(to: self.state)
             .disposed(by: disposeBag)
-        
+
         input.mode?
             .withLatestFrom(state)
             .map{ state -> WriteState in
@@ -96,7 +96,7 @@ final class WriteViewModel: ViewModelType{
                 return newState
             }.bind(to: self.state)
             .disposed(by: disposeBag)
-        
+
         input.nameInput?
             .withLatestFrom(state){ name, state -> WriteState in
                 let newState = state
@@ -104,7 +104,7 @@ final class WriteViewModel: ViewModelType{
                 return newState
             }.bind(to: self.state)
             .disposed(by: disposeBag)
-        
+
         input.priceInput?
             .withLatestFrom(state){ [weak self] price, state -> WriteState in
                 guard let self = self else { return state }
@@ -118,7 +118,7 @@ final class WriteViewModel: ViewModelType{
                 return newState
             }.bind(to: self.state)
             .disposed(by: disposeBag)
-        
+
         input.categoryInput?
             .withLatestFrom(state){ row, state -> WriteState in
                 let newState = state
@@ -127,7 +127,7 @@ final class WriteViewModel: ViewModelType{
                 return newState
             }.bind(to: self.state)
             .disposed(by: disposeBag)
-        
+
         input.dateInput?
             .withLatestFrom(state){ date, state -> WriteState in
                 let newState = state
@@ -135,23 +135,30 @@ final class WriteViewModel: ViewModelType{
                 return newState
             }.bind(to: self.state)
             .disposed(by: disposeBag)
-        
+
         input.writeAction?
             .withLatestFrom(state)
             .map{ [weak self] state in
                 guard let self = self else { return state }
+                print("write button tapped")
                 let newState = state
                 if newState.priceformError == .impossible{
-                    
+                    print("priceform error")
                 }else{
                     newState.writeObject.setUserId(value: UserDefaults.standard.string(forKey: "token") ?? "null")
                     self.firebaseWriteable?.writeBookInfo(bookInfo: newState.writeObject) { result in
+                        switch result {
+                        case .success(let value):
+                            self.writeResult(result: value)
+                        case .failure(let error):
+                            print("Firebase Write \(error)")
+                        }
                     }
                 }
                 return newState
             }.bind(to: self.state)
             .disposed(by: disposeBag)
-        
+
         input.backAction?
             .withLatestFrom(state)
             .map{ state -> WriteState in
@@ -160,7 +167,7 @@ final class WriteViewModel: ViewModelType{
                 return newState
             }.bind(to: self.state)
             .disposed(by: disposeBag)
-        
+
         writeResult.withLatestFrom(state){ result, state -> WriteState in
             var newState = state
             switch result{
