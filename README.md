@@ -8,7 +8,7 @@
 ## 앱 구조
 
   RxSwift + MVVM을 사용하였습니다.
-  <img width="1132" alt="스크린샷 2021-12-02 오후 4 44 38" src="https://user-images.githubusercontent.com/62687919/144379303-a4d588ba-33db-40c5-a769-0720adb2c1da.png">
+<img width="1642" alt="스크린샷 2022-07-25 오후 4 03 01" src="https://user-images.githubusercontent.com/62687919/180717589-18c5b8bb-ec3e-46d2-877c-9334c68279f5.png">
   
   - View는 하나의 ViewModel과 Binding되어 있습니다.
   - View에서의 Action들은 input을 통하여 ViewModel로 전달됩니다.
@@ -17,10 +17,30 @@
   - ViewController는 ViewModel의 State를 구독하여 변경되는 값이 있다면 Binding을 통하여 View를 업데이트 합니다. ( RxCocoa 사용 )
   - RxCocoa의 Drive를 사용하였습니다. ( MainSchedular에서의 실행 보장. UI변경작업. )
   
+## 테스트 코드
+  ```swift 
+  func testGetGoogleLogin() throws {
+        let expectation = self.expectation(description: "FirebaseRead")
+        var isSuccess = false
+        let googleLoginable: GoogleLoginable = GoogleLoginStub(isSuccess: true)
+        googleLoginable.getGoogleToken(completion: { result in
+            switch result{
+            case .success(_):
+                isSuccess = true
+            case .failure(_):
+                XCTAssertTrue(false)
+            }
+            expectation.fulfill()
+        })
+        waitForExpectations(timeout: 5, handler: nil)
+        XCTAssertEqual(isSuccess, true) 
+    }
+    ```
+    구글 로그인 객체의 동작을 추상화 한 GoogleLoginable을 사용하여 Stub객체를 구현하였고 이를 이용하여 테스트하였습니다.
+   
 ## 앱 화면
      
    <img width="344" alt="스크린샷 2021-12-02 오후 4 55 59" src="https://user-images.githubusercontent.com/62687919/144380728-afe156bc-3eb4-4f37-a026-4804cb3291e6.png"><img width="325" alt="스크린샷 2021-12-02 오후 4 58 20" src="https://user-images.githubusercontent.com/62687919/144381024-02e9ac1d-3a32-4f28-a3f5-a7ff795c8a79.png"><img width="323" alt="스크린샷 2021-12-02 오후 4 59 14" src="https://user-images.githubusercontent.com/62687919/144381122-8ddaf6db-0afc-4a12-ba92-5f864a011b60.png">
    
-## 사용 라이브러리
-     
-https://github.com/rising-jun/ios-account-book/wiki/%EA%B0%80%EA%B3%84%EB%B6%80%EC%95%B1-%EC%82%AC%EC%9A%A9-%EA%B8%B0%EC%88%A0-%EC%A0%95%EB%A6%AC.
+## 사용 라이브러리     
+https://github.com/rising-jun/ios-account-book/wiki/Account-Library
